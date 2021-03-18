@@ -1,0 +1,20 @@
+# Fichero de configuración para los contenedores del cliente de la aplicación CarShare
+version: "3.7"
+services:
+  # Crea un contenedor con la api de la aplicación
+  agenda-client:
+    # La imagen del contenedor se construye sobre una adecuando las necesidades
+    build: .
+    # Nombre asignado al contenedor
+    container_name: agenda-client
+    # Para la versión de desarrollo se mapea la carpeta con una local
+    ports: 
+      - 4200:4200
+    volumes:
+      - ./client:/usr/src/app
+    networks:
+      - agenda-client
+
+networks:
+    agenda-client:
+        driver: bridge
