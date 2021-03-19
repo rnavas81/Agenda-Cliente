@@ -8,7 +8,6 @@ RUN apk add --update nodejs nodejs-npm &&\
 
 COPY client/package*.json ./
 
-RUN mkdir ./node_modules; npm install; 
-CMD npm start;
+CMD mkdir ./node_modules; npm install; npm start;
 
 EXPOSE 4200

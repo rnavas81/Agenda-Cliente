@@ -1,9 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+// TODO: Pasar variables a producción
 export const environment = {
-  production: false
+  production: false,
+  LOCALSTORAGE_REMEMBERME:'lanlnasd92boca930jq9hdasf-asdflasi8-slidjfp9u80',
+  API_SERVER:'http://localhost:81/api',
 };
 
 /*

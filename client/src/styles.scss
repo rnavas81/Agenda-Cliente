@@ -1,1 +1,112 @@
 /* You can add global styles to this file, and also import other style files */
+/**
+Hoja de estilo para la aplicación
+ */
+ body {
+    min-height: 100vh;
+}
+main.init {
+    height: calc(100vh - 60px);
+}
+.cursor-default {
+    cursor: default;
+}
+.fondo {
+    background-image: linear-gradient(#edc56e, transparent);
+    background-size: auto;
+}
+.logo {
+    max-width: 100px;
+}
+.imagen-central {
+    max-width: 300px;
+}
+.navbar-brand {
+    font-size: 1rem;
+}
+.z-index-100 {
+    z-index: 100;
+}
+.z-index-200 {
+    z-index: 200;
+}
+.z-index-300 {
+    z-index: 300;
+}
+.z-index-400 {
+    z-index: 400;
+}
+.z-index-500 {
+    z-index: 500;
+}
+.contenido {
+    height: calc(100vh - 105px);
+    overflow: auto;
+}
+.no-resize {
+    resize: none;
+}
+/* Media querys desde cierto tamaño */
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .logo {
+        max-width: 83px;
+    }
+    .imagen-central {
+        max-width: 500px;
+    }
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .logo {
+        max-width: 130px;
+    }
+    .imagen-central {
+        max-width: 700px;
+    }
+
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
+/* Media querys  hasta cierto tamaño*/
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+    .d-hidden-sm {
+        display: none;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (max-width: 768px) {
+    .d-hidden-ml {
+        display: none;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (max-width: 992px) {
+    .d-hidden-lg {
+        display: none;
+    }
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (max-width: 1200px) {
+    .d-hidden-xl {
+        display: none;
+    }
+
+}
