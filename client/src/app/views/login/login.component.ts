@@ -33,21 +33,30 @@ export class LoginComponent implements OnInit {
 
   }
   onSubmit = () => {
+    this.mensaje = "";
     this.cargando=true;
+    document.getElementById('btn-acceder').classList.add('disabled');
     const data = this.formulario.value;
     
     if(this.formulario.valid){
       this.userService.login(data.username,data.password).subscribe(
         (response:any) => {
-          console.log(response);
           if(response.hasOwnProperty.user) this.userService.set(response.user);
           if(response.hasOwnProperty.token) this.userService.setToken(response.token);
           if(data.recordar){
             localStorage.setItem(environment.LOCALSTORAGE_REMEMBERME,data.username);
           }
-          this.router.navigate(['main']);
-        }, error => {
-          console.error(error);          
+          this.cargando = false;
+          document.getElementById('btn-acceder').classList.remove('disabled');
+          this.router.navigate(['/agenda']);
+        }, (error: any) => {
+          switch (error.status) {
+            case 403: this.mensaje = "Error en el usuario o la contraseña"; break;
+            case 404: this.mensaje = "Problemas para acceder a la aplicación"; break;
+            default:  this.mensaje = "Problema no registrado"; break;
+          }
+          this.cargando = false;
+          document.getElementById('btn-acceder').classList.remove('disabled');
         }
       );
     }

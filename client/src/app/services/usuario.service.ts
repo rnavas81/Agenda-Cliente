@@ -1,15 +1,13 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class UsuarioService {
-  private static readonly SESSIONSTORAGE_USER: string =
-    "b49a78ee7c36d704b76b23297ded54e9";
-  private static readonly SESSIONSTORAGE_TOKEN: string =
-    "4a945fb7d809dd183d67f0a33570c713";
+  public static readonly SESSIONSTORAGE_USER: string = "b49a78ee7c36d704b76b23297ded54e9";
+  public static readonly SESSIONSTORAGE_TOKEN: string = "4a945fb7d809dd183d67f0a33570c713";
   username: string;
   name: string;
   lastname: string;
