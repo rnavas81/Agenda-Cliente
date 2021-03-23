@@ -1,9 +1,9 @@
 <nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top">
     <div class="btn-group">
-        <button class="btn btn-sm btn-light" title="Retroceder una semana" (click)="anterior()">
+        <button class="btn btn-sm btn-light" title="Retroceder una semana" (click)="anterior()" [class.disabled]="isLoading">
             <i class="fas fa-step-backward"></i>
         </button>
-        <button class="btn btn-sm btn-light" title="Avanzar una semana" (click)="posterior()">
+        <button class="btn btn-sm btn-light" title="Avanzar una semana" (click)="posterior()" [class.disabled]="isLoading">
             <i class="fas fa-step-forward"></i>
         </button>
     </div>
@@ -15,7 +15,7 @@
             <i class="fas fa-search"></i>
         </button>
         <!-- <button class="btn btn-sm btn-light" title="Buscar fecha" data-mdb-toggle="modal" data-mdb-target="#calendario"> -->
-        <button title="Buscar fecha" class="btn btn-sm btn-light" (click)="calendarModal.show()" mdbWavesEffect>
+        <button title="Buscar fecha" class="btn btn-sm btn-light" (click)="calendarModal.show()" mdbWavesEffect [class.disabled]="isLoading">
             <i class="fas fa-calendar-alt"></i>
         </button>
         <a class="btn btn-sm btn-light" title="Agregar entrada" (click)="agregarEntrada()">

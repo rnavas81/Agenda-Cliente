@@ -11,52 +11,49 @@ import { AgendaService } from "src/app/services/agenda.service";
 export class AgendaComponent implements OnInit {
   fecha: any;
   datos: any;
+  isLoading: boolean;
 
   constructor(
     private router: Router,
     public agendaService: AgendaService) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
-    this.fecha = moment(hash ? hash : undefined);
+    if (hash) this.fecha = moment(hash, 'Y-M-D');
+    else this.fecha = moment();
     this.fechaALunes();
+    this.isLoading = false;
   }
 
   ngOnInit(): void {
-    document.getElementById('toolbar').classList.add('disabled');
-    // Carga los datos de la semana
-    this.datos = {};
-    var fecha2 = moment(this.fecha.format("Y-M-D"));
-    for (let index = 0; index < 7; index++) {
-      this.datos[fecha2.format("Y-M-D")] = [];
-      this.recuperarDatos(fecha2.format("Y-M-D"),index);
-      fecha2.add(1, "d");
-    }
+    this.cargarDatos();
   }
   fechaALunes = () => {
     // Situa la fecha en lunes
     this.fecha.subtract(this.fecha.day() - 1, "days");
   }
 
-  anterior = () => {
-    this.fecha.subtract(1, "w");
-    this.cargarFecha();
-    return;
-  };
-  posterior = () => {
-    this.fecha.add(1, "w");
-    this.cargarFecha();
-    return;
-  };
-  recuperarDatos = (fecha,index) => {
+  cargarDatos = () => {
+    // document.getElementById('toolbar').classList.add('disabled');
+    this.isLoading = true;
+    // Carga los datos de la semana
+    this.datos = {};
+    var fecha2 = moment(this.fecha.format("Y-M-D"),'Y-M-D');
+    for (let index = 0; index < 7; index++) {
+      this.datos[fecha2.format("Y-M-D")] = [];
+      this.recuperarDatos(fecha2.format("Y-M-D"), index);
+      fecha2.add(1, "d");
+    }
+  }
+  recuperarDatos = (fecha, index) => {
     setTimeout(() => {
       this.agendaService.getByFecha(fecha).subscribe(
         (response: any) => {
           this.datos[fecha] = response;
+          this.isLoading = index !== 6;
         },
         (error) => { }
       );
-    }, 200*index);
-    if(index==6)document.getElementById('toolbar').classList.remove('disabled');
+    }, 200 * index);
   };
 
   abrirDia = dia => {
@@ -76,7 +73,6 @@ export class AgendaComponent implements OnInit {
   onClickCalendario = () => {
     let calendario = <HTMLInputElement>document.getElementById('modal-calendario');
     const fecha = calendario.value;
-    console.log(fecha, !fecha, !!fecha);
     document.getElementById('calendar-modal-close').click();
     if (!!fecha) {
       this.fecha = moment(fecha);
@@ -84,9 +80,18 @@ export class AgendaComponent implements OnInit {
       this.cargarFecha();
     }
   }
+  anterior = () => {
+    this.fecha.subtract(1, "w");
+    this.cargarFecha();
+    return;
+  };
+  posterior = () => {
+    this.fecha.add(1, "w");
+    this.cargarFecha();
+    return;
+  };
   cargarFecha = () => {
-    this.router.navigate([`/agenda`], { fragment: this.fecha.format("Y-M-D") });
-    this.ngOnInit();
+    this.cargarDatos();
     return;
   }
 
