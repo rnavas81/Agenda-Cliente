@@ -9,12 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgendaComponent } from './views/agenda/agenda.component';
+import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AgendaComponent,
+    AgendaDiaComponent,
   ],
   imports: [
     BrowserModule,

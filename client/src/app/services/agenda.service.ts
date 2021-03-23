@@ -33,4 +33,29 @@ export class AgendaService {
     };
     return this.http.get(url, extra);
   }
+  // Confirma una entrada de agenda
+  confirmarEntrada = id => {
+    const url = environment.API_SERVER + `/agenda/confirmar/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+      }),
+    };
+    return this.http.put(url, extra);
+  }
+
+  // Elimina una entrada de agenda
+  eliminarEntrada = id => {
+    const url = environment.API_SERVER + `/agenda/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+      }),
+    };
+    return this.http.delete(url, extra);
+  }
 }
