@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
   }
   onSubmit = () => {
     this.mensaje = "";
-    this.cargando=true;
-    document.getElementById('btn-acceder').classList.add('disabled');
     const data = this.formulario.value;
     
     if(this.formulario.valid){
+      this.cargando=true;
+      document.getElementById('btn-acceder').classList.add('disabled');
       this.userService.login(data.username,data.password).subscribe(
         (response:any) => {
           if(response.hasOwnProperty.user) this.userService.set(response.user);
@@ -59,6 +59,8 @@ export class LoginComponent implements OnInit {
           document.getElementById('btn-acceder').classList.remove('disabled');
         }
       );
+    } else {
+
     }
     
   }
