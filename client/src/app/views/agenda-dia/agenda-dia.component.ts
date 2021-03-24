@@ -37,12 +37,12 @@ export class AgendaDiaComponent implements OnInit {
 
   anterior = () => {
     this.fecha.subtract(1, "d");
-    this.cargarDatos();
+    this.cargarDia();
     return;
   };
   posterior = () => {
     this.fecha.add(1, "d");
-    this.cargarDatos();
+    this.cargarDia();
     return;
   };
   volver = () => {
@@ -54,7 +54,7 @@ export class AgendaDiaComponent implements OnInit {
     document.getElementById('calendar-modal-close').click();
     if (!!fecha) {
       this.fecha = moment(fecha);
-      this.cargarDatos();
+      this.cargarDia();
     }
 
   }
@@ -90,10 +90,10 @@ export class AgendaDiaComponent implements OnInit {
     )
   }
   editar = id => {
-    this.router.navigate(["agenda/entrada"], { fragment: id });
+    this.router.navigate([`/agenda/dia/entrada`], { fragment: id.toString() });
   }
   nuevaEntrada = () => {
-
+    this.router.navigate(["agenda/dia/entrada"]);
   }
 
 }

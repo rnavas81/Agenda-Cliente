@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
+import { AgendaEntradaComponent } from './views/agenda-entrada/agenda-entrada.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
     LoginComponent,
     AgendaComponent,
     AgendaDiaComponent,
+    AgendaEntradaComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,8 +10,8 @@ export class AgendaService {
 
   constructor(private http: HttpClient) { }
 
-  get = () => {
-    const url = environment.API_SERVER + '/agenda';
+  get = (id:number=null) => {
+    const url = environment.API_SERVER + '/agenda'+(id!=null?`/${id}`:'');
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -57,5 +57,33 @@ export class AgendaService {
       }),
     };
     return this.http.delete(url, extra);
+  }
+
+  // Agrega una nueva entrada
+  agregarEntrada = data => {
+    const url = environment.API_SERVER + `/agenda`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+      }),
+    };
+    return this.http.post(url, data, extra);
+
+  }
+
+  // Modifica una entrada existente
+  modificarEntrada = (id,data) => {
+    const url = environment.API_SERVER + `/agenda/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+      }),
+    };
+    return this.http.put(url, data, extra);
+
   }
 }
