@@ -20,17 +20,17 @@ export class UsuarioService {
     private http: HttpClient,
     public router: Router,
   ) {
-    this.initial();
   }
 
   initial() {
+    console.log("pasa por aqui");
     this.username = "";
     this.name = "";
     this.lastname = "";
     this.email = "";
     this.id = 0;
     sessionStorage.removeItem(UsuarioService.SESSIONSTORAGE_USER);
-    document.cookie = `${UsuarioService.SESSIONSTORAGE_TOKEN}=;max-age=0;`
+    sessionStorage.removeItem(UsuarioService.SESSIONSTORAGE_TOKEN);
   }
 
   set = (data: any) => {
@@ -52,20 +52,10 @@ export class UsuarioService {
     );
   };
   setToken = (token) => {
-    // sessionStorage.setItem(UsuarioService.SESSIONSTORAGE_TOKEN, token);
-    var expire = 8 * 60 * 60;
-
-    document.cookie = `${UsuarioService.SESSIONSTORAGE_TOKEN}=${token};max-age=${expire};`
+    sessionStorage.setItem(UsuarioService.SESSIONSTORAGE_TOKEN, token);
   };
   getToken() {
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var cookies = decodedCookie.split(';');
-    var value = null;
-    for (let index = 0; index < cookies.length && value == null; index++) {
-      const cookie = cookies[index].split("=");
-      if (cookie[0].trim() == UsuarioService.SESSIONSTORAGE_TOKEN) value = cookie[1].trim();
-    }
-    return value;
+    return sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN);
   }
 
   login(username, password) {
