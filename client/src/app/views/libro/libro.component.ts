@@ -1,22 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
-import { AgendaService } from "src/app/services/agenda.service";
+import { LibroService } from "src/app/services/libro.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 
 @Component({
-  selector: "app-agenda",
-  templateUrl: "./agenda.component.html",
-  styleUrls: ["./agenda.component.scss"],
+  selector: 'app-libro',
+  templateUrl: './libro.component.html',
+  styleUrls: ['./libro.component.scss']
 })
-export class AgendaComponent implements OnInit {
+export class LibroComponent implements OnInit {
   fecha: any;
   datos: any;
   isLoading: boolean=false;
 
   constructor(
     private router: Router,
-    public agendaService: AgendaService,
+    public libroservice: LibroService,
     public usuarioService: UsuarioService,
   ) {
     // Recupera la fecha de la cabecera
@@ -40,7 +40,7 @@ export class AgendaComponent implements OnInit {
     // Carga los datos de la semana
     this.datos = {};
     var fecha2 = moment(this.fecha.format("Y-M-D"), 'Y-M-D');
-    for (let index = 0; index < 7 && this.isLoading; index++) {
+    for (let index = 0; index < 7; index++) {
       this.datos[fecha2.format("Y-M-D")] = [];
       this.recuperarDatos(fecha2.format("Y-M-D"), index);
       fecha2.add(1, "d");
@@ -48,27 +48,26 @@ export class AgendaComponent implements OnInit {
   }
   recuperarDatos = (fecha, index) => {
     setTimeout(() => {
-      this.agendaService.getByFecha(fecha).subscribe(
+      this.libroservice.getByFecha(fecha).subscribe(
         (response: any) => {
           this.datos[fecha] = response;
           this.isLoading = index !== 6;
         },
         (error) => {
           if (error.status === 401) this.usuarioService.salir();
-          this.isLoading=false;
         }
       );
     }, 200 * index);
   };
 
   abrirDia = dia => {
-    this.router.navigate([`/agenda/dia`], { fragment: dia });
+    this.router.navigate([`/libro/dia`], { fragment: dia });
   }
   agregarEntrada = () => {
-    this.router.navigate([`/agenda/dia/entrada`]);
+    this.router.navigate([`/libro/dia/entrada`]);
   }
   buscar = () => {
-    this.router.navigate([`/agenda/buscar`]);
+    this.router.navigate([`/libro/buscar`]);
   }
   /**
    * Recupera la fecha del caledario
@@ -96,7 +95,7 @@ export class AgendaComponent implements OnInit {
     return;
   };
   cargarFecha = () => {
-    this.router.navigate([`/agenda`], { fragment: this.fecha.format("Y-M-D") });
+    this.router.navigate([`/libro`], { fragment: this.fecha.format("Y-M-D") });
     this.cargarDatos();
     return;
   }

@@ -13,6 +13,7 @@ import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
 import { AgendaEntradaComponent } from './views/agenda-entrada/agenda-entrada.component';
 import { MainComponent } from './views/main/main.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LibroComponent } from './views/libro/libro.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
     AgendaEntradaComponent,
     MainComponent,
     HeaderComponent,
+    LibroComponent,
   ],
   imports: [
     BrowserModule,
