@@ -238,7 +238,6 @@ export class AgendaEntradaComponent implements OnInit {
       this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
       data.conductores = [];
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.matricula));
-      console.log(this.datos.id);
 
       if (this.id == 0) {
         this.agendaService.agregarEntrada(data).subscribe(

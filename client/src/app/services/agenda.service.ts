@@ -7,7 +7,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class AgendaService {
-  private url:string = environment.API_SERVER + '/agenda';
+  private url: string = environment.API_SERVER + '/agenda';
 
   constructor(
     private http: HttpClient,
@@ -25,6 +25,17 @@ export class AgendaService {
     };
     return this.http.get(url, extra);
 
+  }
+  getSemana = fecha => {
+    const url = this.url + `/semana/${fecha}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      }),
+    };
+    return this.http.get(url, extra);
   }
   getByFecha = (fecha) => {
     const url = this.url + `/entradas/${fecha}`;
@@ -47,7 +58,7 @@ export class AgendaService {
         'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
-    return this.http.put(url, extra);
+    return this.http.put(url, {}, extra);
   }
 
   // Elimina una entrada de agenda
@@ -88,6 +99,5 @@ export class AgendaService {
       }),
     };
     return this.http.put(url, data, extra);
-
   }
 }

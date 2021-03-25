@@ -71,7 +71,6 @@ export class UsuarioService {
   };
   logout() {
     const url = `${environment.API_SERVER}/logout`;
-    console.log(this.getToken());
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

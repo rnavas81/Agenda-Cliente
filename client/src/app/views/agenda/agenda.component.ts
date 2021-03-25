@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
+import { format } from "node:path";
 import { AgendaService } from "src/app/services/agenda.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 
@@ -12,7 +13,7 @@ import { UsuarioService } from "src/app/services/usuario.service";
 export class AgendaComponent implements OnInit {
   fecha: any;
   datos: any;
-  isLoading: boolean=false;
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -34,33 +35,20 @@ export class AgendaComponent implements OnInit {
     this.fecha.subtract(this.fecha.day() - 1, "days");
   }
 
+  // Carga los datos de la semana
   cargarDatos = () => {
-    // document.getElementById('toolbar').classList.add('disabled');
     this.isLoading = true;
-    // Carga los datos de la semana
     this.datos = {};
-    var fecha2 = moment(this.fecha.format("Y-M-D"), 'Y-M-D');
-    for (let index = 0; index < 7 && this.isLoading; index++) {
-      this.datos[fecha2.format("Y-M-D")] = [];
-      this.recuperarDatos(fecha2.format("Y-M-D"), index);
-      fecha2.add(1, "d");
-    }
+    this.agendaService.getSemana(this.fecha.format("Y-M-D")).subscribe(
+      (response: any) => {
+        this.datos = response;
+        this.isLoading = false;
+      },
+      (error) => {
+        if (error.status === 401) this.usuarioService.salir();
+      }
+    );
   }
-  recuperarDatos = (fecha, index) => {
-    setTimeout(() => {
-      this.agendaService.getByFecha(fecha).subscribe(
-        (response: any) => {
-          this.datos[fecha] = response;
-          this.isLoading = index !== 6;
-        },
-        (error) => {
-          if (error.status === 401) this.usuarioService.salir();
-          this.isLoading=false;
-        }
-      );
-    }, 200 * index);
-  };
-
   abrirDia = dia => {
     this.router.navigate([`/agenda/dia`], { fragment: dia });
   }

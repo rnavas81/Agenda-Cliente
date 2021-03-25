@@ -7,7 +7,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class LibroService {
-  private url:string = environment.API_SERVER + '/libro';
+  private url: string = environment.API_SERVER + '/libro';
 
   constructor(
     private http: HttpClient,
@@ -28,6 +28,17 @@ export class LibroService {
   }
   getByFecha = (fecha) => {
     const url = this.url + `/entradas/${fecha}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      }),
+    };
+    return this.http.get(url, extra);
+  }
+  getSemana = fecha => {
+    const url = this.url + `/semana/${fecha}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
