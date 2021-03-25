@@ -7,6 +7,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class AgendaService {
+  private url:string = environment.API_SERVER + '/agenda';
 
   constructor(
     private http: HttpClient,
@@ -14,7 +15,7 @@ export class AgendaService {
   ) { }
 
   get = (id: number = null) => {
-    const url = environment.API_SERVER + '/agenda' + (id != null ? `/${id}` : '');
+    const url = this.url + (id != null ? `/${id}` : '');
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ export class AgendaService {
 
   }
   getByFecha = (fecha) => {
-    const url = environment.API_SERVER + `/agenda/entradas/${fecha}`;
+    const url = this.url + `/entradas/${fecha}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ export class AgendaService {
   }
   // Confirma una entrada de agenda
   confirmarEntrada = id => {
-    const url = environment.API_SERVER + `/agenda/confirmar/${id}`;
+    const url = this.url + `/confirmar/${id}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ export class AgendaService {
 
   // Elimina una entrada de agenda
   eliminarEntrada = id => {
-    const url = environment.API_SERVER + `/agenda/${id}`;
+    const url = this.url + `/${id}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export class AgendaService {
 
   // Agrega una nueva entrada
   agregarEntrada = data => {
-    const url = environment.API_SERVER + `/agenda`;
+    const url = this.url + ``;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ export class AgendaService {
 
   // Modifica una entrada existente
   modificarEntrada = (id, data) => {
-    const url = environment.API_SERVER + `/agenda/${id}`;
+    const url = this.url + `/${id}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
