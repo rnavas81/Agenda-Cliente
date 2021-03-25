@@ -8,15 +8,18 @@ import { UsuarioService } from './usuario.service';
 })
 export class ClienteService {
 
-  constructor(private http: HttpClient) { }
-  
-  get = (id:number=null) => {
-    const url = environment.API_SERVER + '/cliente'+(id>0?`/${id}`:'');
+  constructor(
+    private http: HttpClient,
+    public usuarioService: UsuarioService,
+  ) { }
+
+  get = (id: number = null) => {
+    const url = environment.API_SERVER + '/cliente' + (id > 0 ? `/${id}` : '');
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN)
+        'Authorization': 'Bearer ' + this.usuarioService.getToken()
       }),
     };
     return this.http.get(url, extra);

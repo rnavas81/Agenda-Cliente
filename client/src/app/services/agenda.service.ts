@@ -8,15 +8,18 @@ import { UsuarioService } from './usuario.service';
 })
 export class AgendaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    public usuarioService: UsuarioService,
+  ) { }
 
-  get = (id:number=null) => {
-    const url = environment.API_SERVER + '/agenda'+(id!=null?`/${id}`:'');
+  get = (id: number = null) => {
+    const url = environment.API_SERVER + '/agenda' + (id != null ? `/${id}` : '');
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN)
+        'Authorization': 'Bearer ' + this.usuarioService.getToken()
       }),
     };
     return this.http.get(url, extra);
@@ -28,7 +31,7 @@ export class AgendaService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
     return this.http.get(url, extra);
@@ -40,7 +43,7 @@ export class AgendaService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
     return this.http.put(url, extra);
@@ -53,7 +56,7 @@ export class AgendaService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
     return this.http.delete(url, extra);
@@ -66,7 +69,7 @@ export class AgendaService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
     return this.http.post(url, data, extra);
@@ -74,13 +77,13 @@ export class AgendaService {
   }
 
   // Modifica una entrada existente
-  modificarEntrada = (id,data) => {
+  modificarEntrada = (id, data) => {
     const url = environment.API_SERVER + `/agenda/${id}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN),
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
     return this.http.put(url, data, extra);

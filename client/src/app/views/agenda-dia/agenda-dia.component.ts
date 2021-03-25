@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { AgendaService } from 'src/app/services/agenda.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-agenda-dia',
@@ -14,14 +15,16 @@ export class AgendaDiaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public agendaService: AgendaService) {
+    public agendaService: AgendaService,
+    public usuarioService: UsuarioService,
+  ) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
     this.datos = [];
   }
-  
+
   ngOnInit(): void {
     this.cargarDatos();
   }
@@ -30,9 +33,9 @@ export class AgendaDiaComponent implements OnInit {
       (response: any) => {
         this.datos = response;
       }, (error: any) => {
-  
+        if (error.status === 401) this.usuarioService.salir();
       }
-    )    
+    )
   }
 
   anterior = () => {
@@ -72,7 +75,7 @@ export class AgendaDiaComponent implements OnInit {
         const index = this.datos.findIndex(e => e.id == id);
         this.datos.splice(index, 1);
       }, (error: any) => {
-
+        if (error.status === 401) this.usuarioService.salir();
       }
     )
     const index = this.datos.findIndex(e => e.id == id);
@@ -85,6 +88,7 @@ export class AgendaDiaComponent implements OnInit {
         const index = this.datos.findIndex(e => e.id == id);
         this.datos.splice(index, 1);
       }, (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
 
       }
     )

@@ -1,0 +1,30 @@
+<header class="container-fluid bg-light sticky-top">
+    <div class="row">
+        <div class="col-4 col-sm-2 d-hidden-sm align-self-center">
+            <img class="logo btn m-0 p-0" [src]="'assets/logo.png'" alt="Autobuses Rivilla" srcset=""
+                routerLink="/main">
+        </div>
+        <div class="align-items-center col-9 col-md col-sm-8 d-flex p-0">
+            <nav class="navbar navbar-expand navbar-light ">
+                <a class="navbar-brand" routerLink="/agenda" [class.text-black-50]="selected != 'agenda'">Agenda</a>
+                <a class="navbar-brand" routerLink="/libro" [class.text-black-50]="selected != 'libro'">Libro</a>
+                <a class="navbar-brand" routerLink="#usuarios"
+                    [class.text-black-50]="selected != 'usuarios'">Usuarios</a>
+                <a class="navbar-brand" routerLink="#configuracion"
+                    [class.text-black-50]="selected != 'configuracion'">Configuración</a>
+            </nav>
+        </div>
+        <div class="align-items-center col-3 col-sm-2 d-flex justify-content-end p-0">
+            <div class="align-self-center d-hidden-ml">
+                <p class="m-0 mr-3 text-black-50 font-weight-bold text-uppercase cursor-default">
+                    {{usuarioService.username}}</p>
+            </div>
+            <div class="btn btn-sm btn-dark ml-md-2" title="Editar perfil" routerLink="/profile">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="btn btn-sm btn-outline-dark ml-1 ml-md-2 mr-2" title="Salir" (click)="salir()">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </div>
+    </div>
+</header>

@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AgendaComponent } from './views/agenda/agenda.component';
 import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
 import { AgendaEntradaComponent } from './views/agenda-entrada/agenda-entrada.component';
+import { MainComponent } from './views/main/main.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AgendaEntradaComponent } from './views/agenda-entrada/agenda-entrada.co
     AgendaComponent,
     AgendaDiaComponent,
     AgendaEntradaComponent,
+    MainComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

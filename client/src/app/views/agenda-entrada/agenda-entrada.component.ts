@@ -6,6 +6,7 @@ import { CocheService } from 'src/app/services/coche.service';
 import { ConductorService } from 'src/app/services/conductor.service';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-agenda-entrada',
@@ -43,6 +44,7 @@ export class AgendaEntradaComponent implements OnInit {
     private cocheService: CocheService,
     private clienteService: ClienteService,
     private _location: Location,
+    public usuarioService: UsuarioService,
   ) {
     // Recupera el id de la cabecera
     const hash = location.hash.substr(1);
@@ -51,17 +53,26 @@ export class AgendaEntradaComponent implements OnInit {
     // Recupera los conductores
     this.conductorService.get().subscribe(
       (response: any) => this.conductores = response,
-      (error: any) => this.mensaje = "Error al recuperar los conductores"
+      (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
+        else this.mensaje = "Error al recuperar los conductores"
+      }
     )
     // Recupera los coches
     this.cocheService.get().subscribe(
       (response: any) => this.coches = response,
-      (error: any) => this.mensaje = "Error al recuperar los coches"
+      (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
+        else this.mensaje = "Error al recuperar los coches"
+      }
     )
     // Recupera los clientes
     this.clienteService.get().subscribe(
       (response: any) => this.clientes = response,
-      (error: any) => this.mensaje = "Error al recuperar los clientes"
+      (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
+        else this.mensaje = "Error al recuperar los clientes"
+      }
     )
     // Crea el formulario
     this.formulario = this.formBuilder.group({
@@ -82,7 +93,10 @@ export class AgendaEntradaComponent implements OnInit {
     if (this.id > 0) {
       this.agendaService.get(this.id).subscribe(
         (response: any) => this.cargarDatos(response),
-        (error: any) => this.mensaje = "Error al recuperar los datos"
+        (error: any) => {
+          if (error.status === 401) this.usuarioService.salir();
+          else this.mensaje = "Error al recuperar los datos"
+        }
       );
     }
   }
@@ -150,7 +164,7 @@ export class AgendaEntradaComponent implements OnInit {
    * Agrega un nuevo coche
    * @param input Matricula del nuevo coche
    * @param select Id del coche a agregar
-   * @returns 
+   * @returns
    */
   onClickCoches = (input, select): void => {
     input = input.trim().toUpperCase();
@@ -177,10 +191,10 @@ export class AgendaEntradaComponent implements OnInit {
     return;
   }
   /**
-   * Agrega un conductor 
+   * Agrega un conductor
    * @param input texto para un nuevo conductor
    * @param select id del conductor a agregar
-   * @returns 
+   * @returns
    */
   onClickConductores = (input, select): void => {
     input = input.trim().toUpperCase();
@@ -219,28 +233,34 @@ export class AgendaEntradaComponent implements OnInit {
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
-      data.cliente = this.clientes.find(e=>e.id == data.cliente);
+      data.cliente = this.clientes.find(e => e.id == data.cliente);
       data.coches = [];
       this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
       data.conductores = [];
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.matricula));
       console.log(this.datos.id);
-      
+
       if (this.id == 0) {
         this.agendaService.agregarEntrada(data).subscribe(
           response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
-          error => this.mensaje = "Error al guardar los datos"
+          error => {
+            if (error.status === 401) this.usuarioService.salir();
+            else this.mensaje = "Error al guardar los datos"
+          }
         )
       } else {
         this.agendaService.modificarEntrada(this.id, data).subscribe(
           response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
-          error => this.mensaje = "Error al guardar los datos"
+          error => {
+            if (error.status === 401) this.usuarioService.salir();
+            else this.mensaje = "Error al guardar los datos"
+          }
         )
       }
       this.cargando = false;
       document.getElementById('btn-guardar').classList.remove('disabled');
     } else {
-      
+
     }
 
   }

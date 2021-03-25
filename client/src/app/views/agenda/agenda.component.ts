@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
 import { AgendaService } from "src/app/services/agenda.service";
+import { UsuarioService } from "src/app/services/usuario.service";
 
 @Component({
   selector: "app-agenda",
@@ -15,7 +16,9 @@ export class AgendaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public agendaService: AgendaService) {
+    public agendaService: AgendaService,
+    public usuarioService: UsuarioService,
+  ) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
     if (hash) this.fecha = moment(hash, 'Y-M-D');
@@ -37,7 +40,7 @@ export class AgendaComponent implements OnInit {
     this.isLoading = true;
     // Carga los datos de la semana
     this.datos = {};
-    var fecha2 = moment(this.fecha.format("Y-M-D"),'Y-M-D');
+    var fecha2 = moment(this.fecha.format("Y-M-D"), 'Y-M-D');
     for (let index = 0; index < 7; index++) {
       this.datos[fecha2.format("Y-M-D")] = [];
       this.recuperarDatos(fecha2.format("Y-M-D"), index);
@@ -51,7 +54,9 @@ export class AgendaComponent implements OnInit {
           this.datos[fecha] = response;
           this.isLoading = index !== 6;
         },
-        (error) => { }
+        (error) => {
+          if (error.status === 401) this.usuarioService.salir();
+        }
       );
     }, 200 * index);
   };

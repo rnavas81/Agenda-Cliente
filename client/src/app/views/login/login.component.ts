@@ -15,18 +15,22 @@ export class LoginComponent implements OnInit {
   mensaje: string;
   cargando: boolean;
 
-  constructor(private formBuilder: FormBuilder,private userService: UsuarioService,private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    public usuarioService: UsuarioService,
+    private router: Router
+  ) {
     var recordar = '';
-    if(localStorage.getItem(environment.LOCALSTORAGE_REMEMBERME)){
+    if (localStorage.getItem(environment.LOCALSTORAGE_REMEMBERME)) {
       recordar = localStorage.getItem(environment.LOCALSTORAGE_REMEMBERME);
     }
     this.formulario = this.formBuilder.group({
-      username:[recordar,[Validators.required]],
-      password:['',[Validators.required]],
-      recordar:[recordar]
+      username: [recordar, [Validators.required]],
+      password: ['', [Validators.required]],
+      recordar: [recordar]
     });
     this.mensaje = '';
-    this.cargando=false;
+    this.cargando = false;
   }
 
   ngOnInit(): void {
@@ -35,25 +39,25 @@ export class LoginComponent implements OnInit {
   onSubmit = () => {
     this.mensaje = "";
     const data = this.formulario.value;
-    
-    if(this.formulario.valid){
-      this.cargando=true;
+
+    if (this.formulario.valid) {
+      this.cargando = true;
       document.getElementById('btn-acceder').classList.add('disabled');
-      this.userService.login(data.username,data.password).subscribe(
-        (response:any) => {
-          if(response.hasOwnProperty.user) this.userService.set(response.user);
-          if(response.hasOwnProperty.token) this.userService.setToken(response.token);
-          if(data.recordar){
-            localStorage.setItem(environment.LOCALSTORAGE_REMEMBERME,data.username);
+      this.usuarioService.login(data.username, data.password).subscribe(
+        (response: any) => {
+          if (response.hasOwnProperty("user")) this.usuarioService.set(response.user);
+          if (response.hasOwnProperty("token")) this.usuarioService.setToken(response.token);
+          if (data.recordar) {
+            localStorage.setItem(environment.LOCALSTORAGE_REMEMBERME, data.username);
           }
           this.cargando = false;
           document.getElementById('btn-acceder').classList.remove('disabled');
-          this.router.navigate(['/agenda']);
+          this.router.navigate(['/main']);
         }, (error: any) => {
           switch (error.status) {
             case 403: this.mensaje = "Error en el usuario o la contraseña"; break;
             case 404: this.mensaje = "Problemas para acceder a la aplicación"; break;
-            default:  this.mensaje = "Problema no registrado"; break;
+            default: this.mensaje = "Problema no registrado"; break;
           }
           this.cargando = false;
           document.getElementById('btn-acceder').classList.remove('disabled');
@@ -62,6 +66,6 @@ export class LoginComponent implements OnInit {
     } else {
 
     }
-    
+
   }
 }
