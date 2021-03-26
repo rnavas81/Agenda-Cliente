@@ -4,6 +4,7 @@ import { AgendaDiaComponent } from "./views/agenda-dia/agenda-dia.component";
 import { AgendaEntradaComponent } from "./views/agenda-entrada/agenda-entrada.component";
 import { AgendaComponent } from "./views/agenda/agenda.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
+import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
 import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: "agenda/dia/entrada", component: AgendaEntradaComponent },
   { path: "libro", component: LibroComponent },
   { path: "libro/dia", component: LibroDiaComponent },
+  { path: "libro/dia/entrada", component: LibroEntradaComponent },
   { path: "**", redirectTo: "" },
 ];
 

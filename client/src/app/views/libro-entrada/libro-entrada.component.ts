@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AgendaService } from 'src/app/services/agenda.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CocheService } from 'src/app/services/coche.service';
 import { ConductorService } from 'src/app/services/conductor.service';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { LibroService } from 'src/app/services/libro.service';
 
 @Component({
-  selector: 'app-agenda-entrada',
-  templateUrl: './agenda-entrada.component.html',
-  styleUrls: ['./agenda-entrada.component.scss']
+  selector: 'app-libro-entrada',
+  templateUrl: './libro-entrada.component.html',
+  styleUrls: ['./libro-entrada.component.scss']
 })
-export class AgendaEntradaComponent implements OnInit {
+export class LibroEntradaComponent implements OnInit {
   id: number = 0;
   mensaje: string = "";
   coches: any = [];
@@ -39,7 +39,7 @@ export class AgendaEntradaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    public agendaService: AgendaService,
+    public libroService: LibroService,
     private conductorService: ConductorService,
     private cocheService: CocheService,
     private clienteService: ClienteService,
@@ -83,15 +83,25 @@ export class AgendaEntradaComponent implements OnInit {
       llegadaHora: ['', []],
       llegadaLugar: ['', []],
       itinerario: ['', []],
+      contacto:['',[]],
+      contactoTlf:['',[]],
+      kms:['',[]],
       cliente: ['', []],
       clienteDetalle: ['', []],
-      presupuesto: ['', []],
+      importe: ['', []],
+      cobrado: ['', []],
+      cobradoFecha: ['',[]],
+      cobradoForma: ['',[]],
+      cobradoDetalles: ['',[]],
+      gastos: ['',[]],
+      facturaNombre: ['',[]],
+      factura: ['',[]],
     });
-  }
+   }
 
   ngOnInit(): void {
     if (this.id > 0) {
-      this.agendaService.get(this.id).subscribe(
+      this.libroService.get(this.id).subscribe(
         (response: any) => this.cargarDatos(response),
         (error: any) => {
           if (error.status === 401) this.usuarioService.salir();
@@ -106,6 +116,7 @@ export class AgendaEntradaComponent implements OnInit {
    */
   cargarDatos = data => {
     this.datos = data;
+
     this.formulario.controls.salidaFecha.setValue(data.salidaFecha);
     this.formulario.controls.salidaHora.setValue(data.salidaHora);
     this.formulario.controls.salidaLugar.setValue(data.salidaLugar);
@@ -113,9 +124,38 @@ export class AgendaEntradaComponent implements OnInit {
     this.formulario.controls.llegadaHora.setValue(data.llegadaHora);
     this.formulario.controls.llegadaLugar.setValue(data.llegadaLugar);
     this.formulario.controls.itinerario.setValue(data.itinerario);
-    this.formulario.controls.cliente.setValue(data.cliente.id);
+    this.formulario.controls.contacto.setValue(data.contacto);
+    this.formulario.controls.contactoTlf.setValue(data.contactoTlf);
+    this.formulario.controls.kms.setValue(data.kms);
+    this.formulario.controls.cliente.setValue(data.cliente);
     this.formulario.controls.clienteDetalle.setValue(data.clienteDetalle);
-    this.formulario.controls.presupuesto.setValue(data.presupuesto);
+    this.formulario.controls.importe.setValue(data.importe);
+    this.formulario.controls.cobrado.setValue(data.cobrado);
+    this.formulario.controls.cobradoFecha.setValue(data.cobradoFecha);
+    this.formulario.controls.cobradoForma.setValue(data.cobradoForma);
+    this.formulario.controls.cobradoDetalles.setValue(data.cobradoDetalles);
+    this.formulario.controls.gastos.setValue(data.gastos);
+    this.formulario.controls.facturaNombre.setValue(data.facturaNombre);
+    this.formulario.controls.factura.setValue(data.factura);
+
+  }
+  showTab(idTab){
+    var tabs = document.querySelectorAll("[role='tab']");
+    var contents = document.querySelectorAll("[role='tabpanel']");
+    tabs.forEach(item => {
+      if(item.id == `tab-${idTab}`){
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    })
+    contents.forEach(item => {
+      if(item.id == `tabpanel-${idTab}`){
+        item.classList.add('active','show');
+      } else {
+        item.classList.remove('active','show');
+      }
+    })
   }
 
   volver = () => {
@@ -240,16 +280,16 @@ export class AgendaEntradaComponent implements OnInit {
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.nombre));
 
       if (this.id == 0) {
-        this.agendaService.agregarEntrada(data).subscribe(
-          response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
+        this.libroService.agregarEntrada(data).subscribe(
+          response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.mensaje = "Error al guardar los datos"
           }
         )
       } else {
-        this.agendaService.modificarEntrada(this.id, data).subscribe(
-          response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
+        this.libroService.modificarEntrada(this.id, data).subscribe(
+          response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.mensaje = "Error al guardar los datos"
@@ -263,5 +303,6 @@ export class AgendaEntradaComponent implements OnInit {
     }
 
   }
+
 
 }

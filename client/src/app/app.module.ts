@@ -15,6 +15,7 @@ import { MainComponent } from './views/main/main.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LibroComponent } from './views/libro/libro.component';
 import { LibroDiaComponent } from './views/libro-dia/libro-dia.component';
+import { LibroEntradaComponent } from './views/libro-entrada/libro-entrada.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LibroDiaComponent } from './views/libro-dia/libro-dia.component';
     HeaderComponent,
     LibroComponent,
     LibroDiaComponent,
+    LibroEntradaComponent,
   ],
   imports: [
     BrowserModule,
