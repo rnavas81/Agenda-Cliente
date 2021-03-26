@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AgendaDiaComponent } from "./views/agenda-dia/agenda-dia.component";
 import { AgendaEntradaComponent } from "./views/agenda-entrada/agenda-entrada.component";
 import { AgendaComponent } from "./views/agenda/agenda.component";
+import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
 import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "agenda/dia", component: AgendaDiaComponent },
   { path: "agenda/dia/entrada", component: AgendaEntradaComponent },
   { path: "libro", component: LibroComponent },
+  { path: "libro/dia", component: LibroDiaComponent },
   { path: "**", redirectTo: "" },
 ];
 
