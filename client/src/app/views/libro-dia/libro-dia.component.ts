@@ -12,8 +12,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class LibroDiaComponent implements OnInit {
   fecha: any;
   datos: any;
-  modalBorrar:any;
-  seleccionado:number = null;
+  modalBorrar: any;
+  seleccionado: number = null;
 
   constructor(
     private router: Router,
@@ -25,7 +25,7 @@ export class LibroDiaComponent implements OnInit {
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
     this.datos = [];
-    
+
   }
 
   ngOnInit(): void {
@@ -82,9 +82,13 @@ export class LibroDiaComponent implements OnInit {
         const index = this.datos.findIndex(e => e.id == this.seleccionado);
         this.datos.splice(index, 1);
         document.getElementById('borrar-modal-close').click();
+        this.seleccionado = null;
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
-        document.getElementById('borrar-modal-close').click();
+        else {
+          document.getElementById('borrar-modal-close').click();
+          this.seleccionado = null;
+        }
       }
     )
   }

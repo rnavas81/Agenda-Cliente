@@ -12,6 +12,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class AgendaDiaComponent implements OnInit {
   fecha: any;
   datos: any;
+  seleccionado: number = null;
 
   constructor(
     private router: Router,
@@ -67,29 +68,60 @@ export class AgendaDiaComponent implements OnInit {
     return;
 
   }
-
-  // TODO:incluir mensajes de feedback
-  confirmar = id => {
-    this.agendaService.confirmarEntrada(id).subscribe(
-      (response: any) => {
-        const index = this.datos.findIndex(e => e.id == id);
-        this.datos.splice(index, 1);
-      }, (error: any) => {
-        if (error.status === 401) this.usuarioService.salir();
-      }
-    )
-    const index = this.datos.findIndex(e => e.id == id);
-    this.datos.splice(index, 1);;
+  /**
+   * Abre el modal de confirmar entrada
+   * @param id 
+   */
+  modalConfirmar(id){
+    this.seleccionado = id;
+    document.getElementById('confirmar-modal-open').click();
   }
   // TODO:incluir mensajes de feedback
-  eliminar = id => {
-    this.agendaService.eliminarEntrada(id).subscribe(
+  /**
+   * Confirma una entrada
+   */
+  confirmar () {
+    this.agendaService.confirmarEntrada(this.seleccionado).subscribe(
       (response: any) => {
-        const index = this.datos.findIndex(e => e.id == id);
+        const index = this.datos.findIndex(e => e.id == this.seleccionado);
         this.datos.splice(index, 1);
+        document.getElementById('confirmar-modal-close').click();
+        this.seleccionado = null;
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
+        else {
+          document.getElementById('confirmar-modal-close').click();
+          this.seleccionado = null;
+        }
+      }
+    )
+  }
+  /**
+   * Abre el modal para eliminar una entrada
+   * @param id 
+   */
+  modalEliminar(id) {
+    this.seleccionado = id;
+    document.getElementById('borrar-modal-open').click();
+  }
+  // TODO:incluir mensajes de feedback
+  /**
+   * Elimina una entrada
+   */
+  eliminar() {
+    this.agendaService.eliminarEntrada(this.seleccionado).subscribe(
+      (response: any) => {
+        const index = this.datos.findIndex(e => e.id == this.seleccionado);
+        this.datos.splice(index, 1);
+        document.getElementById('borrar-modal-close').click();
+        this.seleccionado = null;
 
+      }, (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
+        else {
+          document.getElementById('borrar-modal-close').click();
+          this.seleccionado = null;
+        }
       }
     )
   }

@@ -37,7 +37,7 @@
                     <p><b>Salida:</b> {{entrada.salidaLugar}}</p>
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center" title="Confirmar entrada"
-                    (click)="confirmar(entrada.id)">
+                    (click)="modalConfirmar(entrada.id)">
                     <i class="fas fa-check-double"></i>
                 </button>
                 <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center" title="Editar entrada"
@@ -45,7 +45,7 @@
                     <i class="fas fa-pencil-alt"></i>
                 </button>
                 <button type="submit" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
-                    (click)="eliminar(entrada.id)">
+                    (click)="modalEliminar(entrada.id)">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
@@ -75,6 +75,52 @@
                 <button type="button" class="btn btn-primary" (click)="onClickCalendario()">Buscar fecha</button>
                 <button id="calendar-modal-close" type="button" class="btn btn-secondary"
                     (click)="calendarModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL BORRAR -->
+<button (click)="borrarModal.show()" id="borrar-modal-open"></button>
+<div mdbModal #borrarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="borrarModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar entrada</h5>
+            </div>
+            <div class="modal-body">
+                <p>Va a eliminar esta entrada<br>¿Desea continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="this.eliminar()" data-dismiss="modal">
+                    SI
+                </button>
+                <button id="borrar-modal-close" type="button" class="btn btn-secondary" (click)="borrarModal.hide()">
+                    NO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL CONFIRMAR -->
+<button (click)="confirmarModal.show()" id="confirmar-modal-open"></button>
+<div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar entrada</h5>
+            </div>
+            <div class="modal-body">
+                <p>Va a confirmar esta entrada<br>¿Desea continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="this.confirmar()" data-dismiss="modal">
+                    SI
+                </button>
+                <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="confirmarModal.hide()">
+                    NO
+                </button>
             </div>
         </div>
     </div>

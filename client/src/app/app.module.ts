@@ -27,7 +27,6 @@ import { LibroDiaComponent } from './views/libro-dia/libro-dia.component';
     HeaderComponent,
     LibroComponent,
     LibroDiaComponent,
-    ModalEliminarComponent,
   ],
   imports: [
     BrowserModule,
