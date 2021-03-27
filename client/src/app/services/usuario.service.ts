@@ -78,8 +78,18 @@ export class UsuarioService {
         'Authorization': 'Bearer ' + this.getToken()
       })
     }
-    return this.http.post(url, extra);
-
+    return this.http.post(url, {}, extra);
+  }
+  isLogged() {
+    const url = `${environment.API_SERVER}/test`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'text/html',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken()
+      })
+    }
+    return this.http.post(url, {}, extra);
   }
   salir() {
     this.logout().subscribe(

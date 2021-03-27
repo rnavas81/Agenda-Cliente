@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { IsLoggedService } from "./security/is-logged.service";
+import { TestLoginService } from "./security/test-login.service";
 import { AgendaDiaComponent } from "./views/agenda-dia/agenda-dia.component";
 import { AgendaEntradaComponent } from "./views/agenda-entrada/agenda-entrada.component";
 import { AgendaComponent } from "./views/agenda/agenda.component";
@@ -10,16 +12,16 @@ import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
 
 const routes: Routes = [
-  { path: "", component: LoginComponent },
-  { path: "login", component: LoginComponent },
-  { path: "main", component: MainComponent },
-  { path: "agenda", component: AgendaComponent },
-  { path: "agenda/dia", component: AgendaDiaComponent },
-  { path: "agenda/dia/entrada", component: AgendaEntradaComponent },
-  { path: "libro", component: LibroComponent },
-  { path: "libro/dia", component: LibroDiaComponent },
-  { path: "libro/dia/entrada", component: LibroEntradaComponent },
-  { path: "**", redirectTo: "" },
+  { path: "", component: LoginComponent, canActivate:[TestLoginService] },
+  { path: "login", component: LoginComponent, canActivate:[TestLoginService] },
+  { path: "main", component: MainComponent, canActivate: [IsLoggedService] },
+  { path: "agenda", component: AgendaComponent, canActivate: [IsLoggedService] },
+  { path: "agenda/dia", component: AgendaDiaComponent, canActivate: [IsLoggedService] },
+  { path: "agenda/dia/entrada", component: AgendaEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "libro", component: LibroComponent, canActivate: [IsLoggedService] },
+  { path: "libro/dia", component: LibroDiaComponent, canActivate: [IsLoggedService] },
+  { path: "libro/dia/entrada", component: LibroEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 
 @NgModule({
