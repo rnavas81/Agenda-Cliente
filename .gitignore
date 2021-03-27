@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-src/enviroments/enviroments.ts
 /dist
 /tmp
 /out-tsc
@@ -47,5 +46,3 @@ package-lock.json
 .DS_Store
 Thumbs.db
 
-# Local enviroments
-/src/environments/environment.prod.ts
