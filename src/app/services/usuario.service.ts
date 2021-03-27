@@ -8,8 +8,6 @@ import * as moment from "moment";
   providedIn: "root",
 })
 export class UsuarioService {
-  public static readonly SESSIONSTORAGE_USER: string = "b49a78ee7c36d704b76b23297ded54e9";
-  public static readonly SESSIONSTORAGE_TOKEN: string = "4a945fb7d809dd183d67f0a33570c713";
   username: string;
   name: string;
   lastname: string;
@@ -29,8 +27,8 @@ export class UsuarioService {
     this.lastname = "";
     this.email = "";
     this.id = 0;
-    sessionStorage.removeItem(UsuarioService.SESSIONSTORAGE_USER);
-    sessionStorage.removeItem(UsuarioService.SESSIONSTORAGE_TOKEN);
+    sessionStorage.removeItem(environment.SESSIONSTORAGE_USER);
+    sessionStorage.removeItem(environment.SESSIONSTORAGE_TOKEN);
   }
 
   set = (data: any) => {
@@ -47,15 +45,15 @@ export class UsuarioService {
       email: this.email,
     };
     sessionStorage.setItem(
-      UsuarioService.SESSIONSTORAGE_USER,
+      environment.SESSIONSTORAGE_USER,
       JSON.stringify(user)
     );
   };
   setToken = (token) => {
-    sessionStorage.setItem(UsuarioService.SESSIONSTORAGE_TOKEN, token);
+    sessionStorage.setItem(environment.SESSIONSTORAGE_TOKEN, token);
   };
   getToken() {
-    return sessionStorage.getItem(UsuarioService.SESSIONSTORAGE_TOKEN);
+    return sessionStorage.getItem(environment.SESSIONSTORAGE_TOKEN);
   }
 
   login(username, password) {

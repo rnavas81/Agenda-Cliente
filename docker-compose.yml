@@ -11,7 +11,7 @@ services:
     ports: 
       - 4200:4200
     volumes:
-      - ./client:/usr/src/app
+      - .:/usr/src/app
     networks:
       - agenda-client
 
