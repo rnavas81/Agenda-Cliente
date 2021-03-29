@@ -17,7 +17,6 @@ export class IsLoggedService {
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
     return this.usuarioService.isLogged().pipe(map((response: {
       authenticated: boolean}) => {
-        console.log(response);
         if (response) {
           this.router.navigate(['/main']);
           return false;

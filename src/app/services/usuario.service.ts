@@ -21,7 +21,6 @@ export class UsuarioService {
   }
 
   initial() {
-    console.log("pasa por aqui");
     this.username = "";
     this.name = "";
     this.lastname = "";

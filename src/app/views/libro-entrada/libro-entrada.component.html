@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 px-5">
+                    <div class="col-md-6 px-3">
                         <div class="mb-1">
                             <button class="btn btn-sm btn-success" type="button" (click)="conductoresModal.show()"
                                 title="Agregar un conductor">
@@ -122,10 +122,10 @@
                             </button>
                             <label class="m-0" for="conductores">Conductores</label>
                         </div>
-                        <div id="conductores" class="d-flex flex-wrap">
-                            <div *ngFor="let conductor of datos.conductores;index as i"
-                                class="form-group form-inline p-1" [attr.data-id]="conductor.conductor.id">
-                                <input class="form-control bg-light flex-grow-1 text-uppercase" type="text" disabled
+                        <div id="conductores" class="d-flex flex-wrap flex-column">
+                            <div *ngFor="let conductor of datos.conductores;index as i" class="d-flex form-group"
+                                [attr.data-id]="conductor.conductor.id">
+                                <input class="form-control bg-light text-uppercase w-responsive" type="text" disabled
                                     [value]="conductor.conductor.nombre">
                                 <button class="btn btn-sm btn-danger eliminar-item" type="button"
                                     (click)="eliminarItem($event,1,i)">
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 px-5 ">
+                    <div class="col-md-6 px-3">
                         <div class="mb-1">
                             <button class="btn btn-sm btn-success" type="button" (click)="cochesModal.show()"
                                 title="Agregar un coche">
@@ -142,10 +142,10 @@
                             </button>
                             <label class="m-0" for="coches">Coches</label>
                         </div>
-                        <div id="coches" class="d-flex flex-wrap">
-                            <div *ngFor="let coche of datos.coches;index as i" class="form-group form-inline p-1"
+                        <div id="coches" class="d-flex flex-wrap flex-column">
+                            <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group"
                                 [attr.data-id]="coche.coche.id">
-                                <input class="form-control bg-light flex-grow-1 text-uppercase" type="text" disabled
+                                <input class="form-control bg-light text-uppercase w-responsive" type="text" disabled
                                     [value]="coche.coche.matricula">
                                 <button class="btn btn-sm btn-danger eliminar-item" type="button"
                                     (click)="eliminarItem($event,2,i)">
