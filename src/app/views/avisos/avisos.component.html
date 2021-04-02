@@ -1,5 +1,5 @@
 <!-- Cabecera -->
-<app-header selected="agenda"></app-header>
+<app-header selected="avisos"></app-header>
 <!-- Barra de herramientas -->
 <nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top">
     <div class="btn-group">
@@ -13,7 +13,7 @@
         </button>
     </div>
     <div class="btn-group d-flex">
-        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">Agenda</p>
+        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">Avisos</p>
     </div>
     <div class="btn-group">
         <button class="btn btn-sm btn-light" title="Filtrar" (click)="buscar()">
@@ -42,8 +42,16 @@
             </div>
             <!-- @foreach($dia AS $entrada) -->
             <div *ngFor="let viaje of dia.value" class="border-bottom border-grey ">
-                <h5 class="pt-1">{{viaje.salidaHora}}</h5>
-                <p><b>Salida:</b> {{viaje.salidaLugar}}</p>
+                <h5 class="pt-1">
+                    {{viaje.salidaHora}}
+                    <div class="btn btn-sm btn-primary" (click)="abrirViaje(viaje.id)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                </h5>
+                <!-- <p><b>Salida:</b> {{viaje.salidaLugar}}</p> -->
+                <p><b>Destino:</b> {{viaje.llegadaLugar}}</p>
+                <p><b>Cliente:</b> {{viaje.cliente.nombre}}</p>
+
             </div>
         </div>
     </div>

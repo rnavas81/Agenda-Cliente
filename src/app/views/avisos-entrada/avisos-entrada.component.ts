@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AgendaService } from 'src/app/services/agenda.service';
+import { AvisosService } from 'src/app/services/avisos.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CocheService } from 'src/app/services/coche.service';
 import { ConductorService } from 'src/app/services/conductor.service';
@@ -9,11 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-agenda-entrada',
-  templateUrl: './agenda-entrada.component.html',
-  styleUrls: ['./agenda-entrada.component.scss']
+  selector: 'app-avisos-entrada',
+  templateUrl: './avisos-entrada.component.html',
+  styleUrls: ['./avisos-entrada.component.scss']
 })
-export class AgendaEntradaComponent implements OnInit {
+export class AvisosEntradaComponent implements OnInit {
   id: number = 0;
   mensaje: string = "";
   coches: any = [];
@@ -39,7 +39,7 @@ export class AgendaEntradaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    public agendaService: AgendaService,
+    public avisosService: AvisosService,
     private conductorService: ConductorService,
     private cocheService: CocheService,
     private clienteService: ClienteService,
@@ -91,7 +91,7 @@ export class AgendaEntradaComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.id > 0) {
-      this.agendaService.get(this.id).subscribe(
+      this.avisosService.get(this.id).subscribe(
         (response: any) => this.cargarDatos(response),
         (error: any) => {
           if (error.status === 401) this.usuarioService.salir();
@@ -240,16 +240,16 @@ export class AgendaEntradaComponent implements OnInit {
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.nombre));
 
       if (this.id == 0) {
-        this.agendaService.agregarEntrada(data).subscribe(
-          response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
+        this.avisosService.agregarEntrada(data).subscribe(
+          response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.mensaje = "Error al guardar los datos"
           }
         )
       } else {
-        this.agendaService.modificarEntrada(this.id, data).subscribe(
-          response => this.router.navigate(["/agenda/dia"], { fragment: this.datos.salidaFecha }),
+        this.avisosService.modificarEntrada(this.id, data).subscribe(
+          response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.mensaje = "Error al guardar los datos"

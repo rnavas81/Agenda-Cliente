@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { AgendaService } from 'src/app/services/agenda.service';
+import { AvisosService } from 'src/app/services/avisos.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-agenda-dia',
-  templateUrl: './agenda-dia.component.html',
-  styleUrls: ['./agenda-dia.component.scss']
+  selector: 'app-avisos-dia',
+  templateUrl: './avisos-dia.component.html',
+  styleUrls: ['./avisos-dia.component.scss']
 })
-export class AgendaDiaComponent implements OnInit {
+export class AvisosDiaComponent implements OnInit {
   fecha: any;
   datos: any;
   seleccionado: number = null;
 
   constructor(
     private router: Router,
-    public agendaService: AgendaService,
+    public avisosService: AvisosService,
     public usuarioService: UsuarioService,
   ) {
     // Recupera la fecha de la cabecera
@@ -30,7 +30,7 @@ export class AgendaDiaComponent implements OnInit {
     this.cargarDatos();
   }
   cargarDatos = () => {
-    this.agendaService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
+    this.avisosService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
       (response: any) => {
         this.datos = response;
       }, (error: any) => {
@@ -50,7 +50,7 @@ export class AgendaDiaComponent implements OnInit {
     return;
   };
   volver = () => {
-    this.router.navigate([`/agenda`], { fragment: this.fecha.format("Y-M-D") });
+    this.router.navigate([`/avisos`], { fragment: this.fecha.format("Y-M-D") });
   }
   onClickCalendario = () => {
     let calendario = <HTMLInputElement>document.getElementById('modal-calendario');
@@ -63,7 +63,7 @@ export class AgendaDiaComponent implements OnInit {
 
   }
   cargarDia = () => {
-    this.router.navigate([`/agenda/dia`], { fragment: this.fecha.format("Y-M-D") });
+    this.router.navigate([`/avisos/dia`], { fragment: this.fecha.format("Y-M-D") });
     this.ngOnInit();
     return;
 
@@ -81,7 +81,7 @@ export class AgendaDiaComponent implements OnInit {
    * Confirma una entrada
    */
   confirmar () {
-    this.agendaService.confirmarEntrada(this.seleccionado).subscribe(
+    this.avisosService.confirmarEntrada(this.seleccionado).subscribe(
       (response: any) => {
         const index = this.datos.findIndex(e => e.id == this.seleccionado);
         this.datos.splice(index, 1);
@@ -109,7 +109,7 @@ export class AgendaDiaComponent implements OnInit {
    * Elimina una entrada
    */
   eliminar() {
-    this.agendaService.eliminarEntrada(this.seleccionado).subscribe(
+    this.avisosService.eliminarEntrada(this.seleccionado).subscribe(
       (response: any) => {
         const index = this.datos.findIndex(e => e.id == this.seleccionado);
         this.datos.splice(index, 1);
@@ -126,10 +126,10 @@ export class AgendaDiaComponent implements OnInit {
     )
   }
   editar = id => {
-    this.router.navigate([`/agenda/dia/entrada`], { fragment: id.toString() });
+    this.router.navigate([`/avisos/dia/entrada`], { fragment: id.toString() });
   }
   nuevaEntrada = () => {
-    this.router.navigate(["agenda/dia/entrada"]);
+    this.router.navigate(["avisos/dia/entrada"]);
   }
 
 }

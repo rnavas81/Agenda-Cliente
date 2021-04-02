@@ -1,22 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
-import { AgendaService } from "src/app/services/agenda.service";
+import { AvisosService } from "src/app/services/avisos.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 
 @Component({
-  selector: "app-agenda",
-  templateUrl: "./agenda.component.html",
-  styleUrls: ["./agenda.component.scss"],
+  selector: "app-avisos",
+  templateUrl: "./avisos.component.html",
+  styleUrls: ["./avisos.component.scss"],
 })
-export class AgendaComponent implements OnInit {
+export class AvisosComponent implements OnInit {
   fecha: any;
   datos: any;
   isLoading: boolean = false;
 
   constructor(
     private router: Router,
-    public agendaService: AgendaService,
+    public avisosService: AvisosService,
     public usuarioService: UsuarioService,
   ) {
     // Recupera la fecha de la cabecera
@@ -38,7 +38,7 @@ export class AgendaComponent implements OnInit {
   cargarDatos = () => {
     this.isLoading = true;
     this.datos = {};
-    this.agendaService.getSemana(this.fecha.format("Y-M-D")).subscribe(
+    this.avisosService.getSemana(this.fecha.format("Y-M-D")).subscribe(
       (response: any) => {
         this.datos = response;
         this.isLoading = false;
@@ -49,13 +49,16 @@ export class AgendaComponent implements OnInit {
     );
   }
   abrirDia = dia => {
-    this.router.navigate([`/agenda/dia`], { fragment: dia });
+    this.router.navigate([`/avisos/dia`], { fragment: dia });
+  }
+  abrirViaje(entrada) {
+    this.router.navigate([`/avisos/dia/entrada`], { fragment: entrada.toString() });
   }
   agregarEntrada = () => {
-    this.router.navigate([`/agenda/dia/entrada`]);
+    this.router.navigate([`/avisos/dia/entrada`]);
   }
   buscar = () => {
-    this.router.navigate([`/agenda/buscar`]);
+    this.router.navigate([`/avisos/buscar`]);
   }
   /**
    * Recupera la fecha del caledario
@@ -83,7 +86,7 @@ export class AgendaComponent implements OnInit {
     return;
   };
   cargarFecha = () => {
-    this.router.navigate([`/agenda`], { fragment: this.fecha.format("Y-M-D") });
+    this.router.navigate([`/avisos`], { fragment: this.fecha.format("Y-M-D") });
     this.cargarDatos();
     return;
   }

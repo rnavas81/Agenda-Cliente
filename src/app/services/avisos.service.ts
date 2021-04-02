@@ -6,8 +6,8 @@ import { UsuarioService } from './usuario.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AgendaService {
-  private url: string = environment.API_SERVER + '/agenda';
+export class AvisosService {
+  private url: string = environment.API_SERVER + '/aviso';
 
   constructor(
     private http: HttpClient,
@@ -48,7 +48,7 @@ export class AgendaService {
     };
     return this.http.get(url, extra);
   }
-  // Confirma una entrada de agenda
+  // Confirma una entrada de avisos
   confirmarEntrada = id => {
     const url = this.url + `/confirmar/${id}`;
     const extra = {
@@ -61,7 +61,7 @@ export class AgendaService {
     return this.http.put(url, {}, extra);
   }
 
-  // Elimina una entrada de agenda
+  // Elimina una entrada de avisos
   eliminarEntrada = id => {
     const url = this.url + `/${id}`;
     const extra = {
