@@ -13,6 +13,7 @@ export class AvisosComponent implements OnInit {
   fecha: any;
   datos: any;
   isLoading: boolean = false;
+  seleccionado:number = 0;
 
   constructor(
     private router: Router,
@@ -32,6 +33,9 @@ export class AvisosComponent implements OnInit {
   fechaALunes = () => {
     // Situa la fecha en lunes
     this.fecha.subtract(this.fecha.day() - 1, "days");
+  }
+  fechaLocal = fecha => {
+    return moment(fecha).format("D-M-Y");
   }
 
   // Carga los datos de la semana
@@ -53,6 +57,34 @@ export class AvisosComponent implements OnInit {
   }
   abrirViaje(entrada) {
     this.router.navigate([`/avisos/dia/entrada`], { fragment: entrada.toString() });
+  }
+  /**
+ * Abre el modal de confirmar entrada
+ * @param id 
+ */
+  modalConfirmar(id) {
+    this.seleccionado = id;
+    document.getElementById('confirmar-modal-open').click();
+  }
+  // TODO:incluir mensajes de feedback
+  /**
+   * Confirma una entrada
+   */
+  confirmar () {
+    this.avisosService.confirmarEntrada(this.seleccionado).subscribe(
+      (response: any) => {
+        const index = this.datos.findIndex(e => e.id == this.seleccionado);
+        this.datos.splice(index, 1);
+        document.getElementById('confirmar-modal-close').click();
+        this.seleccionado = null;
+      }, (error: any) => {
+        if (error.status === 401) this.usuarioService.salir();
+        else {
+          document.getElementById('confirmar-modal-close').click();
+          this.seleccionado = null;
+        }
+      }
+    )
   }
   agregarEntrada = () => {
     this.router.navigate([`/avisos/dia/entrada`]);

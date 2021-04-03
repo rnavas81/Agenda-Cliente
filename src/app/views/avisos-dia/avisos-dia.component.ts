@@ -23,7 +23,9 @@ export class AvisosDiaComponent implements OnInit {
     const hash = location.hash.substr(1);
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
-    this.datos = [];
+    this.datos = {
+      'pendientes':[],'confirmados':[]
+    };
   }
 
   ngOnInit(): void {
@@ -32,7 +34,14 @@ export class AvisosDiaComponent implements OnInit {
   cargarDatos = () => {
     this.avisosService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
       (response: any) => {
-        this.datos = response;
+        response.forEach(element => {
+          console.log(element);
+          
+          if(element.confirmada==0)this.datos.pendientes.push(element);
+          else if(element.confirmada==1)this.datos.confirmados.push(element);
+        });
+        console.log(this.datos);
+        
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
       }

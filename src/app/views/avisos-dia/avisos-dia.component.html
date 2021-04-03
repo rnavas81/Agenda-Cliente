@@ -28,13 +28,14 @@
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
     <div class="row pt-3 " style="height: inherit;">
-        <div *ngIf="this.datos.length>0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
-            <!-- Entradas del día -->
-            <div *ngFor="let entrada of datos" [attr.idrow]="entrada.id"
+        <div *ngIf="this.datos.confirmados.length>0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
+            <!-- Entradas pendientes del día -->
+            <div *ngFor="let entrada of datos.pendientes" [attr.idrow]="entrada.id"
                 class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
                 <div class="flex-grow-1">
                     <h5 class="pt-1">{{entrada.salidaHora}}</h5>
-                    <p><b>Salida:</b> {{entrada.salidaLugar}}</p>
+                    <p><b>Destino:</b> {{entrada.llegadaLugar}}</p>
+                    <p><b>Cliente:</b> {{entrada.cliente.nombre}}</p>
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center" title="Confirmar entrada"
                     (click)="modalConfirmar(entrada.id)">
@@ -50,10 +51,19 @@
                 </button>
             </div>
         </div>
-        <div *ngIf="this.datos.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
-            <h3>No hay entradas hoy</h3>
+        <div *ngIf="this.datos.pendientes.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
+            <h3>No hay entradas pendientes hoy</h3>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12">
+            <h4>Confirmados</h4>
+            <div *ngFor="let entrada of datos.confirmados" [attr.idrow]="entrada.id"
+                class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
+                <h5 class="mr-3 align-self-center">{{entrada.salidaHora}}</h5>
+                <div>
+                    <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
+                    <div><b>Cliente:</b> {{entrada.cliente.nombre}}</div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -104,8 +114,8 @@
 </div>
 <!-- MODAL CONFIRMAR -->
 <button (click)="confirmarModal.show()" id="confirmar-modal-open" hidden></button>
-<div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel"
-    aria-hidden="true">
+<div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="confirmarModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,7 +128,8 @@
                 <button type="button" class="btn btn-danger" (click)="this.confirmar()" data-dismiss="modal">
                     SI
                 </button>
-                <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="confirmarModal.hide()">
+                <button id="confirmar-modal-close" type="button" class="btn btn-secondary"
+                    (click)="confirmarModal.hide()">
                     NO
                 </button>
             </div>

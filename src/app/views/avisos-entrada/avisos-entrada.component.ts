@@ -7,6 +7,7 @@ import { ConductorService } from 'src/app/services/conductor.service';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-avisos-entrada',
@@ -33,7 +34,8 @@ export class AvisosEntradaComponent implements OnInit {
     clienteDetalle: null,
     presupuesto: null,
     coches: [],
-    conductores: []
+    conductores: [],
+    created_at: moment(),
   };
 
   constructor(
@@ -106,6 +108,7 @@ export class AvisosEntradaComponent implements OnInit {
    */
   cargarDatos = data => {
     this.datos = data;
+    this.datos.created_at = moment(data.created_at);
     this.formulario.controls.salidaFecha.setValue(data.salidaFecha);
     this.formulario.controls.salidaHora.setValue(data.salidaHora);
     this.formulario.controls.salidaLugar.setValue(data.salidaLugar);

@@ -5,6 +5,9 @@
     <div class="row">
         <span class="text-danger col-12 text-center">{{mensaje}}</span>
     </div>
+    <div class="row">
+        <span class="col-12 pt-0 pt-sm-3 px-5 text-bold">Fecha de creación:  {{datos.created_at.format("HH:mm:ss D/M/Y")}}</span>
+    </div>
     <form class="align-self-center row" [formGroup]="formulario" (ngSubmit)="onSubmit()">
         <div class="col-md-6 pt-3 px-5">
             <h5>Salida</h5>
