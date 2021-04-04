@@ -55,6 +55,10 @@ main.init {
 .no-resize {
   resize: none;
 }
+.required::after {
+  content:"*";
+  color: map-get($map: $theme-colors, $key: "danger");
+}
 /* Media querys desde cierto tamaño */
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {

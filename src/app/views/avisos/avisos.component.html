@@ -34,8 +34,10 @@
     <div class="row pt-3 " style="height: inherit;">
         <div *ngFor="let dia of this.datos | keyvalue;index as i" class="dia col border-right border-dark"
             [class.border-left]="i == 0">
-            <div class="fecha border-bottom border-dark text-center pb-2">
-                {{fechaLocal(dia.key)}}
+            <div class="fecha border-bottom border-dark text-center pb-2 d-flex">
+                <div class="flex-1">
+                    {{fechaLocal(dia.key)}}
+                </div>
                 <div class="btn btn-sm btn-light" (click)="abrirDia(dia.key)">
                     <i class="fas fa-pencil-alt"></i>
                 </div>

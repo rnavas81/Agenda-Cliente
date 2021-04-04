@@ -32,10 +32,13 @@ export class AvisosEntradaComponent implements OnInit {
     itinerario: null,
     cliente: { id: 0 },
     clienteDetalle: null,
-    presupuesto: null,
+    observaciones: '',
     coches: [],
     conductores: [],
     created_at: moment(),
+    respuesta: 0,
+    respuestaFecha: null,
+    respuestaDetalle: '',
   };
 
   constructor(
@@ -79,15 +82,18 @@ export class AvisosEntradaComponent implements OnInit {
     // Crea el formulario
     this.formulario = this.formBuilder.group({
       salidaFecha: ['', [Validators.required]],
-      salidaHora: ['', [Validators.required]],
-      salidaLugar: ['', [Validators.required]],
+      salidaHora: ['', []],
+      salidaLugar: ['', [Validators.maxLength(500)]],
       llegadaFecha: ['', []],
       llegadaHora: ['', []],
-      llegadaLugar: ['', []],
-      itinerario: ['', []],
-      cliente: ['', []],
-      clienteDetalle: ['', []],
-      presupuesto: ['', []],
+      llegadaLugar: ['', [Validators.maxLength(500)]],
+      itinerario: ['', [Validators.maxLength(1000)]],
+      cliente: ['', [Validators.required]],
+      clienteDetalle: ['', [Validators.maxLength(500)]],
+      observaciones: ['', [Validators.maxLength(1000)]],
+      respuesta: ['', []],
+      respuestaFecha: ['', []],
+      respuestaDetalle: ['', []],
     });
   }
 
@@ -118,7 +124,10 @@ export class AvisosEntradaComponent implements OnInit {
     this.formulario.controls.itinerario.setValue(data.itinerario);
     this.formulario.controls.cliente.setValue(data.cliente.id);
     this.formulario.controls.clienteDetalle.setValue(data.clienteDetalle);
-    this.formulario.controls.presupuesto.setValue(data.presupuesto);
+    this.formulario.controls.observaciones.setValue(data.observaciones);
+    this.formulario.controls.respuesta.setValue(data.respuesta);
+    this.formulario.controls.respuestaFecha.setValue(data.respuestaFecha);
+    this.formulario.controls.respuestaDetalle.setValue(data.respuestaDetalle);
   }
 
   volver = () => {
@@ -186,12 +195,16 @@ export class AvisosEntradaComponent implements OnInit {
       if (!esta) {
         const coche = this.coches.find(e => e.id == select);
         this.datos.coches.push(
-          { coche: coche }
+          { coche: coche,presupuesto:0 }
         );
       }
     }
     document.getElementById('coches-modal-close').click();
     return;
+  }
+  asignarPresupuesto = (value, id) => {
+    const coche = this.datos.coches.find(e => e.coche.id == id);
+    coche.presupuesto = value;
   }
   /**
    * Agrega un conductor
@@ -238,7 +251,9 @@ export class AvisosEntradaComponent implements OnInit {
       document.getElementById('btn-guardar').classList.add('disabled');
       data.cliente = this.clientes.find(e => e.id == data.cliente);
       data.coches = [];
-      this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
+      this.datos.coches.forEach(coche => 
+        data.coches.push([coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula,coche.presupuesto])
+        );
       data.conductores = [];
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.nombre));
 

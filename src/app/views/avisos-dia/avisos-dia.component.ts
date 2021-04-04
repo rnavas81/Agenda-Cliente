@@ -35,13 +35,9 @@ export class AvisosDiaComponent implements OnInit {
     this.avisosService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
       (response: any) => {
         response.forEach(element => {
-          console.log(element);
-          
           if(element.confirmada==0)this.datos.pendientes.push(element);
           else if(element.confirmada==1)this.datos.confirmados.push(element);
-        });
-        console.log(this.datos);
-        
+        });        
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
       }
@@ -134,7 +130,7 @@ export class AvisosDiaComponent implements OnInit {
       }
     )
   }
-  editar = id => {
+  abrirEntrada = id => {
     this.router.navigate([`/avisos/dia/entrada`], { fragment: id.toString() });
   }
   nuevaEntrada = () => {
