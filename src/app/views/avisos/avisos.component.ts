@@ -55,7 +55,7 @@ export class AvisosComponent implements OnInit {
   abrirDia = dia => {
     this.router.navigate([`/avisos/dia`], { fragment: dia });
   }
-  abrirViaje(entrada) {
+  abrirAviso(entrada) {
     this.router.navigate([`/avisos/dia/entrada`], { fragment: entrada.toString() });
   }
   /**

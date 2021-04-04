@@ -28,27 +28,29 @@
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
     <div class="row pt-3 " style="height: inherit;">
+        <!-- Entradas pendientes del día -->
         <div *ngIf="this.datos.confirmados.length>0" class="col-xl-8 col-lg-6 col-12 border-right border-dark">
-            <!-- Entradas pendientes del día -->
-            <div *ngFor="let entrada of datos.pendientes" [attr.idrow]="entrada.id"
-                class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
-                <div class="flex-1">
-                    <div class="h5 m-0 pt-1">{{entrada.salidaHora}}</div>
-                    <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
-                    <div><b>Cliente:</b> {{entrada.cliente.nombre}}</div>
+            <div *ngFor="let aviso of datos.pendientes" [attr.idrow]="aviso.id" class="border-bottom border-dark py-2">
+                <div class="d-flex justify-content-md-start justify-content-center "
+                    [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
+                    <div class="flex-1">
+                        <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
+                        <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
+                        <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center"
+                        title="Confirmar entrada" (click)="modalConfirmar(aviso.id)">
+                        <i class="fas fa-check-double"></i>
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center"
+                        title="Editar entrada" (click)="abrirEntrada(aviso.id)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
+                        (click)="modalEliminar(aviso.id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </div>
-                <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center" title="Confirmar entrada"
-                    (click)="modalConfirmar(entrada.id)">
-                    <i class="fas fa-check-double"></i>
-                </button>
-                <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center" title="Editar entrada"
-                    (click)="abrirEntrada(entrada.id)">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button type="submit" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
-                    (click)="modalEliminar(entrada.id)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
             </div>
         </div>
         <div *ngIf="this.datos.pendientes.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
@@ -56,15 +58,15 @@
         </div>
         <div class="col-xl-4 col-lg-6 col-12">
             <div class="mt-1 mt-sm-4 text-center h4">Confirmados</div>
-            <div *ngFor="let entrada of datos.confirmados" [attr.idrow]="entrada.id"
+            <div *ngFor="let aviso of datos.confirmados" [attr.idrow]="aviso.id"
                 class="border-bottom border-dark d-flex justify-content-md-start justify-content-center confirmado">
-                <h5 class="mr-3 align-self-center">{{entrada.salidaHora}}</h5>
+                <h5 class="mr-3 align-self-center">{{aviso.salidaHora}}</h5>
                 <div class="flex-1">
-                    <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
-                    <div><b>Cliente:</b> {{entrada.cliente.nombre}}</div>
+                    <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
+                    <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
                 </div>
                 <button type="submit" class="btn btn-sm btn-secondary align-self-center" title="Eliminar entrada"
-                    (click)="abrirEntrada(entrada.id)">
+                    (click)="abrirEntrada(aviso.id)">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>

@@ -7,11 +7,15 @@ main {
       font-weight: 500;
     }
     .entrada {
+      font-size: 1.4em;
       .confirmada {
-        background-color: map-get($map: $theme-colors, $key: "success");
+        // background-color: map-get($map: $theme-colors, $key: "success");
+        color: map-get($map: $theme-colors, $key: "grey");
+      }
+      .respondida {
+        background-color: map-get($map: $theme-colors, $key: "primary-light");
         color: map-get($map: $theme-colors, $key: "dark");
       }
-      font-size: 1.4em;
     }
   }
   @media (max-width: 1400px) {

@@ -1,0 +1,7 @@
+@import "../../style/colors.scss";
+main {
+  .respondida {
+    background-color: map-get($map: $theme-colors, $key: "primary-light");
+    color: map-get($map: $theme-colors, $key: "dark");
+  }
+}

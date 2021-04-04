@@ -43,32 +43,39 @@
                 </div>
             </div>
             <!-- @foreach($dia AS $entrada) -->
-            <div *ngFor="let viaje of dia.value" class="border-bottom border-grey p-1 entrada">
-                <div [class.confirmada]="viaje.confirmada==1">
+            <div *ngFor="let aviso of dia.value" class="border-bottom border-grey p-1 entrada">
+                <div [class.confirmada]="aviso.confirmada==1"
+                    [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
                     <div class="py-1 d-flex">
                         <div class="flex-1">
-                            {{viaje.salidaHora}}
+                            {{aviso.salidaHora}}
                         </div>
-                        <div *ngIf="viaje.confirmada == 0" class="">
-                            <button type="button" class="btn btn-sm btn-primary" (click)="modalConfirmar(viaje.id)"
+                        <div *ngIf="aviso.confirmada == 0" class="">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="modalConfirmar(aviso.id)"
                                 title="Confirmar entrada">
                                 <i class="fas fa-check-double"></i>
                             </button>
-                            <button type="button" class="btn btn-sm btn-secondary" (click)="abrirViaje(viaje.id)"
-                                title="Editar viaje">
+                            <button type="button" class="btn btn-sm btn-secondary" (click)="abrirAviso(aviso.id)"
+                                title="Editar aviso">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         </div>
+                        <div *ngIf="aviso.confirmada == 1" class="">
+                            <button type="button" class="btn btn-sm btn-secondary" (click)="abrirAviso(aviso.id)"
+                                title="ver aviso">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <!-- <p><b>Salida:</b> {{viaje.salidaLugar}}</p> -->
+                    <!-- <p><b>Salida:</b> {{aviso.salidaLugar}}</p> -->
                     <div>
                         <b>Destino:</b>
                         <div>
-                            {{viaje.llegadaLugar}}
+                            {{aviso.llegadaLugar}}
                         </div>
                         <b>Cliente:</b>
                         <div>
-                            {{viaje.cliente.nombre}}
+                            {{aviso.cliente.nombre}}
                         </div>
                     </div>
                 </div>
