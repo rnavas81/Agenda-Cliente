@@ -10,10 +10,12 @@ import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.compo
 import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
+import { ProfileComponent } from "./views/profile/profile.component";
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate:[TestLoginService] },
   { path: "login", component: LoginComponent, canActivate:[TestLoginService] },
+  { path: "profile", component: ProfileComponent, canActivate:[IsLoggedService] },
   { path: "main", component: MainComponent, canActivate: [IsLoggedService] },
   { path: "avisos", component: AvisosComponent, canActivate: [IsLoggedService] },
   { path: "avisos/dia", component: AvisosDiaComponent, canActivate: [IsLoggedService] },

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
 import { AvisosService } from "src/app/services/avisos.service";
+import { FechasService } from "src/app/services/fechas.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 
 @Component({
@@ -19,23 +20,17 @@ export class AvisosComponent implements OnInit {
     private router: Router,
     public avisosService: AvisosService,
     public usuarioService: UsuarioService,
+    public fechaService: FechasService,
   ) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
-    this.fechaALunes();
+    fechaService.alLunes(this.fecha);
   }
 
   ngOnInit(): void {
     this.cargarDatos();
-  }
-  fechaALunes = () => {
-    // Situa la fecha en lunes
-    this.fecha.subtract(this.fecha.day() - 1, "days");
-  }
-  fechaLocal = fecha => {
-    return moment(fecha).format("D-M-Y");
   }
 
   // Carga los datos de la semana
@@ -103,7 +98,7 @@ export class AvisosComponent implements OnInit {
     document.getElementById('calendar-modal-close').click();
     if (!!fecha) {
       this.fecha = moment(fecha);
-      this.fechaALunes();
+      this.fechaService.alLunes(this.fecha);
       this.cargarFecha();
     }
   }

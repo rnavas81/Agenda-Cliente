@@ -10,7 +10,7 @@ import * as moment from "moment";
 export class UsuarioService {
   username: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   id: number;
 
@@ -18,12 +18,13 @@ export class UsuarioService {
     private http: HttpClient,
     public router: Router,
   ) {
+    if (this.getUser()) this.setUser(this.getUser());
   }
 
   initial() {
     this.username = "";
     this.name = "";
-    this.lastname = "";
+    this.lastName = "";
     this.email = "";
     this.id = 0;
     sessionStorage.removeItem(environment.SESSIONSTORAGE_USER);
@@ -31,16 +32,12 @@ export class UsuarioService {
   }
 
   set = (data: any) => {
-    if (data.hasOwnProperty("username")) this.username = data.username;
-    if (data.hasOwnProperty("name")) this.name = data.name;
-    if (data.hasOwnProperty("lastname")) this.lastname = data.lastname;
-    if (data.hasOwnProperty("email")) this.email = data.email;
-    if (data.hasOwnProperty("id")) this.id = data.id;
+    this.setUser(data);
     const user = {
       id: this.id,
       username: this.username,
       name: this.name,
-      lastname: this.lastname,
+      lastName: this.lastName,
       email: this.email,
     };
     sessionStorage.setItem(
@@ -48,6 +45,19 @@ export class UsuarioService {
       JSON.stringify(user)
     );
   };
+  setUser = data => {
+    if (data.hasOwnProperty("username")) this.username = data.username;
+    if (data.hasOwnProperty("name")) this.name = data.name;
+    if (data.hasOwnProperty("lastName")) this.lastName = data.lastName;
+    if (data.hasOwnProperty("email")) this.email = data.email;
+    if (data.hasOwnProperty("id")) this.id = data.id;
+
+  }
+  getUser = () => {
+    return sessionStorage.getItem(environment.SESSIONSTORAGE_USER)
+      ? JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_USER))
+      : null;
+  }
   setToken = (token) => {
     sessionStorage.setItem(environment.SESSIONSTORAGE_TOKEN, token);
   };
@@ -98,5 +108,17 @@ export class UsuarioService {
         this.router.navigate(['/login']);
       }
     );
+  }
+  save(data){
+    const url = `${environment.API_SERVER}/user`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, data, extra);
+
   }
 }

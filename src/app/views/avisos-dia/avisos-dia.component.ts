@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { AvisosService } from 'src/app/services/avisos.service';
+import { FechasService } from 'src/app/services/fechas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class AvisosDiaComponent implements OnInit {
     private router: Router,
     public avisosService: AvisosService,
     public usuarioService: UsuarioService,
+    public fechaService: FechasService
   ) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
@@ -32,6 +34,9 @@ export class AvisosDiaComponent implements OnInit {
     this.cargarDatos();
   }
   cargarDatos = () => {
+    this.datos = {
+      'pendientes':[],'confirmados':[]
+    };
     this.avisosService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
       (response: any) => {
         response.forEach(element => {
@@ -45,12 +50,14 @@ export class AvisosDiaComponent implements OnInit {
   }
 
   anterior = () => {
-    this.fecha.subtract(1, "d");
+    // this.fecha.subtract(1, "d");
+    this.fecha = this.fechaService.anteriorDia(this.fecha);
     this.cargarDia();
     return;
   };
   posterior = () => {
-    this.fecha.add(1, "d");
+    // this.fecha.add(1, "d");
+    this.fecha = this.fechaService.posteriorDia(this.fecha);
     this.cargarDia();
     return;
   };
@@ -69,7 +76,7 @@ export class AvisosDiaComponent implements OnInit {
   }
   cargarDia = () => {
     this.router.navigate([`/avisos/dia`], { fragment: this.fecha.format("Y-M-D") });
-    this.ngOnInit();
+    this.cargarDatos();
     return;
 
   }

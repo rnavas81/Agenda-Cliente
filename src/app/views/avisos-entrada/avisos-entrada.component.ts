@@ -81,19 +81,19 @@ export class AvisosEntradaComponent implements OnInit {
     )
     // Crea el formulario
     this.formulario = this.formBuilder.group({
-      salidaFecha: ['', [Validators.required]],
-      salidaHora: ['', []],
-      salidaLugar: ['', [Validators.maxLength(500)]],
-      llegadaFecha: ['', []],
-      llegadaHora: ['', []],
-      llegadaLugar: ['', [Validators.maxLength(500)]],
-      itinerario: ['', [Validators.maxLength(1000)]],
-      cliente: ['', [Validators.required]],
-      clienteDetalle: ['', [Validators.maxLength(500)]],
-      observaciones: ['', [Validators.maxLength(1000)]],
-      respuesta: ['', []],
-      respuestaFecha: ['', []],
-      respuestaDetalle: ['', []],
+      salidaFecha: [{value:'',disabled:true}, [Validators.required]],
+      salidaHora: [{value:'',disabled:true}, []],
+      salidaLugar: [{value:'',disabled:true}, [Validators.maxLength(500)]],
+      llegadaFecha: [{value:'',disabled:true}, []],
+      llegadaHora: [{value:'',disabled:true}, []],
+      llegadaLugar: [{value:'',disabled:true}, [Validators.maxLength(500)]],
+      itinerario: [{value:'',disabled:true}, [Validators.maxLength(1000)]],
+      cliente: [{value:'',disabled:true}, [Validators.required]],
+      clienteDetalle: [{value:'',disabled:true}, [Validators.maxLength(500)]],
+      observaciones: [{value:'',disabled:true}, [Validators.maxLength(1000)]],
+      respuesta: [{value:'',disabled:true}, []],
+      respuestaFecha: [{value:'',disabled:true}, []],
+      respuestaDetalle: [{value:'',disabled:true}, []],
     });
   }
 
@@ -128,6 +128,11 @@ export class AvisosEntradaComponent implements OnInit {
     this.formulario.controls.respuesta.setValue(data.respuesta);
     this.formulario.controls.respuestaFecha.setValue(data.respuestaFecha);
     this.formulario.controls.respuestaDetalle.setValue(data.respuestaDetalle);
+    if(this.datos.confirmada == 0){
+      for(var key in this.formulario.controls){
+        this.formulario.get(key).enable();
+      }
+    }
   }
 
   volver = () => {

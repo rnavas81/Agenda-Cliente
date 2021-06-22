@@ -6,8 +6,8 @@
         <span class="text-danger col-12 text-center px-5">{{mensaje}}</span>
     </div>
     <form class="align-self-center row px-5 pt-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
-        <div class="col-12 form-group">
-            <div class="col-12 text-bold">Fecha de creación: {{datos.created_at.format("HH:mm:ss DD/MM/Y")}}</div>
+        <div class="col-12">
+            <div class="text-bold">Fecha de creación: {{datos.created_at.format("HH:mm:ss DD/MM/Y")}}</div>
         </div>
         <hr class="col-12">
         <div class="col-md-6 form-group">
@@ -16,18 +16,18 @@
                 <div class="mr-auto">
                     <label class="required" for="salidaFecha">Fecha</label>
                     <input type="date" class="form-control w-auto" formControlName="salidaFecha" test-id="salidaFecha"
-                        [value]="datos.salidaFecha" required [attr.disabled]="datos.confirmada==1">
+                        [value]="datos.salidaFecha" required>
                 </div>
                 <div>
                     <label for="salidaHora">Hora</label>
                     <input type="time" class="form-control w-auto" formControlName="salidaHora" test-id="salidaHora"
-                        [value]="datos.salidaHora" [attr.disabled]="datos.confirmada==1">
+                        [value]="datos.salidaHora">
                 </div>
             </div>
             <div class="form-group">
                 <label for="salidaLugar">Lugar</label>
                 <textarea row="2" class="form-control no-resize" formControlName="salidaLugar" test-id="salidaLugar"
-                    [value]="datos.salidaLugar" maxlength="500" [attr.disabled]="datos.confirmada==1"></textarea>
+                    [value]="datos.salidaLugar" maxlength="500"></textarea>
             </div>
         </div>
         <div class="col-md-6 form-group">
@@ -36,31 +36,30 @@
                 <div class="mr-auto">
                     <label for="llegadaFecha">Fecha</label>
                     <input type="date" class="form-control w-auto" formControlName="llegadaFecha" test-id="llegadaFecha"
-                        [value]="datos.llegadaFecha" [attr.disabled]="datos.confirmada==1">
+                        [value]="datos.llegadaFecha">
                 </div>
                 <div>
                     <label for="llegadaHora">Hora</label>
                     <input type="time" class="form-control w-auto" formControlName="llegadaHora" test-id="llegadaHora"
-                        [value]="datos.llegadaHora" [attr.disabled]="datos.confirmada==1">
+                        [value]="datos.llegadaHora">
                 </div>
             </div>
             <div class="form-group">
                 <label for="llegadaLugar">Lugar</label>
                 <textarea row="2" class="form-control no-resize" formControlName="llegadaLugar" test-id="llegadaLugar"
-                    [value]="datos.llegadaLugar" maxlength="500" [attr.disabled]="datos.confirmada==1"></textarea>
+                    [value]="datos.llegadaLugar" maxlength="500"></textarea>
             </div>
         </div>
         <div class="col-12 form-group">
             <label for="itinerario">Itinerario</label>
             <textarea row="2" class="form-control no-resize" formControlName="itinerario" test-id="itinerario"
-                [value]="datos.itinerario" maxlength="1000" [attr.disabled]="datos.confirmada==1"></textarea>
+                [value]="datos.itinerario" maxlength="1000"></textarea>
         </div>
         <hr class="col-12">
         <div class="col-12 mb-md-4 mb-3 form-group">
             <div class="form-group d-flex">
                 <label class="align-self-center m-0 mr-3 required" for="cliente">Cliente</label>
-                <select class="form-control mb-2" formControlName="cliente" test-id="cliente"
-                    [attr.disabled]="datos.confirmada==1">
+                <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
                     <option value="0" selected></option>
                     <option *ngFor="let cliente of clientes" [value]="cliente.id"
                         [attr.selected]="cliente.id == datos.cliente.id">
@@ -73,7 +72,7 @@
                 </button>
             </div>
             <textarea row="2" class="form-control no-resize" formControlName="clienteDetalle" test-id="clienteDetalle"
-                [value]="datos.clienteDetalle" maxlength="500" [attr.disabled]="datos.confirmada==1"></textarea>
+                [value]="datos.clienteDetalle" maxlength="500"></textarea>
         </div>
         <div class="col-md-6 form-group">
             <div class="mb-1">
@@ -87,7 +86,7 @@
                 <div *ngFor="let conductor of datos.conductores;index as i" class="d-flex form-group"
                     [attr.data-id]="conductor.conductor.id">
                     <input class="form-control text-uppercase w-responsive" [class.bg-light]="datos.confirmada==0"
-                        type="text" disabled [value]="conductor.conductor.nombre" [attr.disabled]="datos.confirmada==1">
+                        type="text" disabled [value]="conductor.conductor.nombre">
                     <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-danger eliminar-item" type="button"
                         (click)="eliminarItem($event,1,i)">
                         <i class="fas fa-times"></i>
@@ -107,10 +106,11 @@
                 <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group"
                     [attr.data-id]="coche.coche.id">
                     <input class="form-control text-uppercase w-responsive" [class.bg-light]="datos.confirmada==0"
-                        type="text" disabled [value]="coche.coche.matricula" [attr.disabled]="datos.confirmada==1">
+                        type="text" disabled [value]="coche.coche.matricula">
                     <input class="form-control text-right w-responsive" type="number" [value]="coche.presupuesto"
                         (change)="asignarPresupuesto($event.target.value,coche.coche.id)"
                         [attr.disabled]="datos.confirmada==1">
+                    <i class="fas fa-euro-sign align-self-center p-1"></i>
                     <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-danger eliminar-item" type="button"
                         (click)="eliminarItem($event,2,i)">
                         <i class="fas fa-times"></i>
@@ -121,7 +121,7 @@
         <div class="col-12 form-group">
             <label for="observaciones">Observaciones</label>
             <textarea row="2" class="form-control no-resize" formControlName="observaciones" test-id="observaciones"
-                [value]="datos.observaciones" maxlength="1000" [attr.disabled]="datos.confirmada==1"></textarea>
+                [value]="datos.observaciones" maxlength="1000"></textarea>
         </div>
         <hr class="col-12">
         <div class="col-12 form-group">
@@ -130,12 +130,11 @@
         <div class="col-md-3 form-group">
             <label for="respuestaFecha">Fecha</label>
             <input type="date" class="form-control w-auto" formControlName="respuestaFecha" test-id="respuestaFecha"
-                [value]="datos.respuestaFecha" [attr.disabled]="datos.confirmada==1">
+                [value]="datos.respuestaFecha">
         </div>
         <div class="col-md-3 form-group">
             <label for="respuesta">Respuesta</label>
-            <select class="form-control w-100" formControlName="respuesta" test-id="respuesta"
-                [attr.disabled]="datos.confirmada==1">
+            <select class="form-control w-100" formControlName="respuesta" test-id="respuesta">
                 <option value="0" selected></option>
                 [attr.selected]="datos.respuesta == datos.cliente.id">
                 <option value="1">Telefono</option>
@@ -150,8 +149,7 @@
         <div class="col-md-6 form-group">
             <label for="respuestaDetalle">Detalle</label>
             <textarea row="2" class="form-control no-resize" formControlName="respuestaDetalle"
-                test-id="respuestaDetalle" [value]="datos.respuestaDetalle" maxlength="1000"
-                [attr.disabled]="datos.confirmada==1"></textarea>
+                test-id="respuestaDetalle" [value]="datos.respuestaDetalle" maxlength="1000"></textarea>
         </div>
         <div class="col-12 form-group d-flex justify-content-center">
             <button *ngIf="datos.confirmada==0" type="submit" id='btn-guardar' id-test='btn-guardar'

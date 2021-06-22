@@ -21,6 +21,8 @@ import { LibroEntradaComponent } from './views/libro-entrada/libro-entrada.compo
 /************* SEGURIDAD *************/
 import { IsLoggedService } from './security/is-logged.service';
 import { TestLoginService } from './security/test-login.service';
+import { ProfileComponent } from './views/profile/profile.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { TestLoginService } from './security/test-login.service';
     LibroComponent,
     LibroDiaComponent,
     LibroEntradaComponent,
+    ProfileComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

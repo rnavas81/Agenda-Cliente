@@ -27,12 +27,14 @@
 </nav>
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
-    <div class="row pt-3 " style="height: inherit;">
+    <div class="row" style="height: inherit;">
         <!-- Entradas pendientes del día -->
         <div *ngIf="this.datos.confirmados.length>0" class="col-xl-8 col-lg-6 col-12 border-right border-dark">
-            <div *ngFor="let aviso of datos.pendientes" [attr.idrow]="aviso.id" class="border-bottom border-dark py-2">
+            <div *ngFor="let aviso of datos.pendientes" [attr.idrow]="aviso.id" class="border-bottom border-dark py-1">
                 <div class="d-flex justify-content-md-start justify-content-center "
-                    [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
+                [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
                     <div class="flex-1">
                         <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
                         <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
