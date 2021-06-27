@@ -29,12 +29,22 @@ export class LibroEntradaComponent implements OnInit {
     llegadaHora: null,
     llegadaLugar: null,
     itinerario: null,
+    kms: null,
+    contacto: null,
+    contactoTlf: null,
     cliente: { id: 0 },
     clienteDetalle: null,
-    presupuesto: null,
+    importe: null,
+    cobrado: 0,
+    cobradoFecha: null,
+    cobradoForma: null,
+    cobradoDetalles: null,
+    gastos: null,
+    facturaNombre: null,
+    facturaNumero: 0,
+    observaciones: null,
     coches: [],
     conductores: [],
-    observaciones:null,
   };
 
   constructor(
@@ -96,7 +106,7 @@ export class LibroEntradaComponent implements OnInit {
       cobradoDetalles: ['',[]],
       gastos: ['',[]],
       facturaNombre: ['',[]],
-      facturaNumero: ['',[]],
+      facturaNumero: ['',[Validators.min(0)]],
       observaciones:['',[]]
     });
    }
