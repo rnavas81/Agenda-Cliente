@@ -33,7 +33,8 @@ export class LibroEntradaComponent implements OnInit {
     clienteDetalle: null,
     presupuesto: null,
     coches: [],
-    conductores: []
+    conductores: [],
+    observaciones:null,
   };
 
   constructor(
@@ -95,7 +96,8 @@ export class LibroEntradaComponent implements OnInit {
       cobradoDetalles: ['',[]],
       gastos: ['',[]],
       facturaNombre: ['',[]],
-      factura: ['',[]],
+      facturaNumero: ['',[]],
+      observaciones:['',[]]
     });
    }
 
@@ -117,26 +119,9 @@ export class LibroEntradaComponent implements OnInit {
   cargarDatos = data => {
     this.datos = data;
 
-    this.formulario.controls.salidaFecha.setValue(data.salidaFecha);
-    this.formulario.controls.salidaHora.setValue(data.salidaHora);
-    this.formulario.controls.salidaLugar.setValue(data.salidaLugar);
-    this.formulario.controls.llegadaFecha.setValue(data.llegadaFecha);
-    this.formulario.controls.llegadaHora.setValue(data.llegadaHora);
-    this.formulario.controls.llegadaLugar.setValue(data.llegadaLugar);
-    this.formulario.controls.itinerario.setValue(data.itinerario);
-    this.formulario.controls.contacto.setValue(data.contacto);
-    this.formulario.controls.contactoTlf.setValue(data.contactoTlf);
-    this.formulario.controls.kms.setValue(data.kms);
-    this.formulario.controls.cliente.setValue(data.cliente);
-    this.formulario.controls.clienteDetalle.setValue(data.clienteDetalle);
-    this.formulario.controls.importe.setValue(data.importe);
-    this.formulario.controls.cobrado.setValue(data.cobrado);
-    this.formulario.controls.cobradoFecha.setValue(data.cobradoFecha);
-    this.formulario.controls.cobradoForma.setValue(data.cobradoForma);
-    this.formulario.controls.cobradoDetalles.setValue(data.cobradoDetalles);
-    this.formulario.controls.gastos.setValue(data.gastos);
-    this.formulario.controls.facturaNombre.setValue(data.facturaNombre);
-    this.formulario.controls.factura.setValue(data.factura);
+    for (var key in this.formulario.controls) {
+        this.formulario.controls[key].setValue(this.datos[key]);
+    }
 
   }
   showTab(idTab){

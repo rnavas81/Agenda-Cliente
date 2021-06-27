@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { AvisosService } from 'src/app/services/avisos.service';
 import { FechasService } from 'src/app/services/fechas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { coches } from 'src/environments/environment';
 
 @Component({
   selector: 'app-avisos-dia',
@@ -13,7 +14,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class AvisosDiaComponent implements OnInit {
   fecha: any;
   datos: any;
-  seleccionado: number = null;
+  seleccionado: any = null;
+  confirmarCoches: any = [];
+  coches: any = [];
 
   constructor(
     private router: Router,
@@ -26,8 +29,9 @@ export class AvisosDiaComponent implements OnInit {
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
     this.datos = {
-      'pendientes':[],'confirmados':[]
+      'pendientes': [], 'confirmados': []
     };
+    this.coches = coches;
   }
 
   ngOnInit(): void {
@@ -35,14 +39,14 @@ export class AvisosDiaComponent implements OnInit {
   }
   cargarDatos = () => {
     this.datos = {
-      'pendientes':[],'confirmados':[]
+      'pendientes': [], 'confirmados': []
     };
     this.avisosService.getByFecha(this.fecha.format('Y-M-D')).subscribe(
       (response: any) => {
         response.forEach(element => {
-          if(element.confirmada==0)this.datos.pendientes.push(element);
-          else if(element.confirmada==1)this.datos.confirmados.push(element);
-        });        
+          if (element.confirmada == 0) this.datos.pendientes.push(element);
+          else if (element.confirmada == 1) this.datos.confirmados.push(element);
+        });
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
       }
@@ -84,18 +88,31 @@ export class AvisosDiaComponent implements OnInit {
    * Abre el modal de confirmar entrada
    * @param id 
    */
-  modalConfirmar(id){
-    this.seleccionado = id;
-    document.getElementById('confirmar-modal-open').click();
+  modalConfirmar(aviso) {
+    this.seleccionado = aviso;
+    this.confirmarCoches = aviso.coches;
+
+  }
+  onConfirmarModalHide() {
+    this.confirmarCoches = [];
   }
   // TODO:incluir mensajes de feedback
   /**
    * Confirma una entrada
    */
-  confirmar () {
-    this.avisosService.confirmarEntrada(this.seleccionado).subscribe(
+  confirmar() {
+    let coches = [];
+    document.querySelectorAll("[name='confirmar-coches']:checked").forEach((cocheInput: HTMLInputElement) => {
+      const c = {
+        coche: this.coches[cocheInput.getAttribute('idCoche')].toUpperCase(),
+        presupuesto: cocheInput.getAttribute('presupuesto'),
+      };
+      coches.push(c);
+    });
+    this.avisosService.confirmarEntrada(this.seleccionado.id, coches).subscribe(
       (response: any) => {
-        const index = this.datos.findIndex(e => e.id == this.seleccionado);
+        console.log(response);        
+        const index = this.datos.findIndex(e => e.id == response.id);
         this.datos.splice(index, 1);
         document.getElementById('confirmar-modal-close').click();
         this.seleccionado = null;
@@ -113,7 +130,7 @@ export class AvisosDiaComponent implements OnInit {
    * @param id 
    */
   modalEliminar(id) {
-    this.seleccionado = id;
+    this.seleccionado = this.datos.find(x => x.id == id);
     document.getElementById('borrar-modal-open').click();
   }
   // TODO:incluir mensajes de feedback
@@ -121,7 +138,7 @@ export class AvisosDiaComponent implements OnInit {
    * Elimina una entrada
    */
   eliminar() {
-    this.avisosService.eliminarEntrada(this.seleccionado).subscribe(
+    this.avisosService.eliminarEntrada(this.seleccionado.id).subscribe(
       (response: any) => {
         const index = this.datos.findIndex(e => e.id == this.seleccionado);
         this.datos.splice(index, 1);

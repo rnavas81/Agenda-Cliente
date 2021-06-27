@@ -49,7 +49,7 @@ export class AvisosService {
     return this.http.get(url, extra);
   }
   // Confirma una entrada de avisos
-  confirmarEntrada = id => {
+  confirmarEntrada = (id, coches) => {
     const url = this.url + `/confirmar/${id}`;
     const extra = {
       headers: new HttpHeaders({
@@ -58,7 +58,7 @@ export class AvisosService {
         'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
-    return this.http.put(url, {}, extra);
+    return this.http.put(url, {coches:coches}, extra);
   }
 
   // Elimina una entrada de avisos

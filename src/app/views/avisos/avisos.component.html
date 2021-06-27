@@ -1,5 +1,7 @@
 <!-- Cabecera -->
 <app-header selected="avisos"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
 <!-- Barra de herramientas -->
 <nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top">
     <div class="btn-group">
@@ -32,9 +34,10 @@
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
     <div class="row px-1" style="height: inherit;">
-        <div *ngFor="let dia of this.datos | keyvalue;index as i" class="dia col border-right border-dark px-1"
-            [class.border-left]="i == 0">
-            <div class="fecha border-bottom border-dark text-center py-2 d-flex align-content-center">
+        <div *ngFor="let dia of this.datos | keyvalue;index as i"
+            class="dia col border-right border-dark px-1 overflow-auto h-100" [class.border-left]="i == 0">
+            <div
+                class="fecha border-bottom border-dark text-center py-2 d-flex align-content-center bg-primary-light sticky-top">
                 <div class="flex-1">
                     {{fechaService.formatoLocal(dia.key)}}
                 </div>
@@ -42,20 +45,18 @@
                     <i class="fas fa-pencil-alt"></i>
                 </div>
             </div>
-            <!-- @foreach($dia AS $entrada) -->
             <div *ngFor="let aviso of dia.value" class="border-bottom border-grey py-1 entrada">
                 <div [class.confirmada]="aviso.confirmada==1"
                     [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
                     [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
-                    [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
-                    >
+                    [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
                     <div class="py-1 d-flex">
                         <div class="flex-1">
                             {{aviso.salidaHora}}
                         </div>
                         <div *ngIf="aviso.confirmada == 0" class="">
-                            <button type="button" class="btn btn-sm btn-primary" (click)="modalConfirmar(aviso.id)"
-                                title="Confirmar entrada">
+                            <button type="button" class="btn btn-sm btn-primary"
+                                (click)="modalConfirmar(aviso);confirmarModal.show()" title="Confirmar entrada">
                                 <i class="fas fa-check-double"></i>
                             </button>
                             <button type="button" class="btn btn-sm btn-secondary" (click)="abrirAviso(aviso.id)"
@@ -109,16 +110,24 @@
     </div>
 </div>
 <!-- MODAL CONFIRMAR -->
-<button (click)="confirmarModal.show()" id="confirmar-modal-open" hidden></button>
 <div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="confirmarModalLabel" aria-hidden="true">
+    aria-labelledby="confirmarModalLabel" aria-hidden="true" (onHide)="onConfirmarModalHide()">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Confirmar entrada</h5>
             </div>
             <div class="modal-body">
-                <p>Va a confirmar esta entrada<br>¿Desea continuar?</p>
+                <p>Va a confirmar esta entrada</p>
+                <p *ngIf="confirmarCoches.length>0">
+                    Selecciona los vehiculos para confirmar
+                </p>
+                <div *ngFor="let coche of confirmarCoches" class="d-flex">
+                    <input class="form-control-sm mr-1" type="checkbox" name="confirmar-coches"
+                        [attr.idCoche]="coche.idCoche" [attr.presupuesto]="coche.presupuesto">
+                    <label class="form-control flex-1 confirmar-matricula" for="">{{coches[coche.idCoche]}}</label>
+                    <label class="form-control flex-1 confirmar-presupuesto" for="">{{coche.presupuesto}}</label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" (click)="this.confirmar()" data-dismiss="modal">

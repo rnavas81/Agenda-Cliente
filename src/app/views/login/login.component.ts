@@ -54,9 +54,12 @@ export class LoginComponent implements OnInit {
           document.getElementById('btn-acceder').classList.remove('disabled');
           this.router.navigate(['/main']);
         }, (error: any) => {
+          console.log(error.status);
+          
           switch (error.status) {
             case 403: this.mensaje = "Error en el usuario o la contraseña"; break;
             case 404: this.mensaje = "Problemas para acceder a la aplicación"; break;
+            case 429: this.mensaje= "Demasiados intentos fallidos\n\rEspere o pongase en contacto con el administrador"; break;
             default: this.mensaje = "Problema no registrado"; break;
           }
           this.cargando = false;

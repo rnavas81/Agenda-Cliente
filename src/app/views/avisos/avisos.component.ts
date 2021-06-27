@@ -4,6 +4,7 @@ import * as moment from "moment";
 import { AvisosService } from "src/app/services/avisos.service";
 import { FechasService } from "src/app/services/fechas.service";
 import { UsuarioService } from "src/app/services/usuario.service";
+import { coches } from "src/environments/environment";
 
 @Component({
   selector: "app-avisos",
@@ -11,10 +12,13 @@ import { UsuarioService } from "src/app/services/usuario.service";
   styleUrls: ["./avisos.component.scss"],
 })
 export class AvisosComponent implements OnInit {
+  toast: any;
   fecha: any;
   datos: any;
   isLoading: boolean = false;
-  seleccionado:number = 0;
+  seleccionado: any = 0;
+  confirmarCoches: any = [];
+  coches: any = [];
 
   constructor(
     private router: Router,
@@ -27,6 +31,7 @@ export class AvisosComponent implements OnInit {
     if (hash) this.fecha = moment(hash, 'Y-M-D');
     else this.fecha = moment();
     fechaService.alLunes(this.fecha);
+    this.coches = coches;
   }
 
   ngOnInit(): void {
@@ -44,6 +49,7 @@ export class AvisosComponent implements OnInit {
       },
       (error) => {
         if (error.status === 401) this.usuarioService.salir();
+        else this.toast = { text: 'Error al cargar los datos', type: 'error' }
       }
     );
   }
@@ -57,24 +63,37 @@ export class AvisosComponent implements OnInit {
  * Abre el modal de confirmar entrada
  * @param id 
  */
-  modalConfirmar(id) {
-    this.seleccionado = id;
-    document.getElementById('confirmar-modal-open').click();
+  modalConfirmar(aviso) {
+    this.seleccionado = aviso;
+    this.confirmarCoches = aviso.coches;
+  }
+  onConfirmarModalHide() {
+    this.confirmarCoches = [];
   }
   // TODO:incluir mensajes de feedback
   /**
    * Confirma una entrada
    */
-  confirmar () {
-    this.avisosService.confirmarEntrada(this.seleccionado).subscribe(
+  confirmar() {
+    let coches = [];
+    document.querySelectorAll("[name='confirmar-coches']:checked").forEach((cocheInput: HTMLInputElement) => {
+      const c = {
+        coche:this.coches[cocheInput.getAttribute('idCoche')].toUpperCase(),
+        presupuesto:cocheInput.getAttribute('presupuesto'),
+      };
+      coches.push(c);
+    });
+    this.avisosService.confirmarEntrada(this.seleccionado.id, coches).subscribe(
       (response: any) => {
-        const index = this.datos.findIndex(e => e.id == this.seleccionado);
-        this.datos.splice(index, 1);
+        const index = this.datos[response.salidaFecha].findIndex(e => e.id == this.seleccionado.id);
+        this.datos[response.salidaFecha][index].confirmada = 1;
         document.getElementById('confirmar-modal-close').click();
         this.seleccionado = null;
+        this.toast = { type: 'success', text: 'Entrada confirmada' }
       }, (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
         else {
+          this.toast = { text: 'Error al guardar los cambios', type: 'error' }
           document.getElementById('confirmar-modal-close').click();
           this.seleccionado = null;
         }

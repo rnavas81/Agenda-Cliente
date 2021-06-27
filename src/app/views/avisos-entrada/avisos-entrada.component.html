@@ -1,5 +1,5 @@
 <!-- Cabecera -->
-<app-header selected="Avisos"></app-header>
+<app-header selected="avisos"></app-header>
 <!-- Cuerpo -->
 <main class="container-fluid">
     <div class="row">
@@ -61,8 +61,7 @@
                 <label class="align-self-center m-0 mr-3 required" for="cliente">Cliente</label>
                 <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
                     <option value="0" selected></option>
-                    <option *ngFor="let cliente of clientes" [value]="cliente.id"
-                        [attr.selected]="cliente.id == datos.cliente.id">
+                    <option *ngFor="let cliente of clientes" [value]="cliente.id">
                         {{cliente.nombre.toUpperCase()+ " ("+ cliente.telefono+")"}}
                     </option>
                 </select>
@@ -74,27 +73,7 @@
             <textarea row="2" class="form-control no-resize" formControlName="clienteDetalle" test-id="clienteDetalle"
                 [value]="datos.clienteDetalle" maxlength="500"></textarea>
         </div>
-        <div class="col-md-6 form-group">
-            <div class="mb-1">
-                <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-success" type="button"
-                    (click)="conductoresModal.show()" title="Agregar un conductor">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <label class="m-0" for="conductores">Conductores</label>
-            </div>
-            <div id="conductores" class="d-flex flex-wrap flex-column">
-                <div *ngFor="let conductor of datos.conductores;index as i" class="d-flex form-group"
-                    [attr.data-id]="conductor.conductor.id">
-                    <input class="form-control text-uppercase w-responsive" [class.bg-light]="datos.confirmada==0"
-                        type="text" disabled [value]="conductor.conductor.nombre">
-                    <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-danger eliminar-item" type="button"
-                        (click)="eliminarItem($event,1,i)">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
+        <div class="col-md-12 form-group">
             <div class="mb-1">
                 <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-success" type="button"
                     (click)="cochesModal.show()" title="Agregar un coche">
@@ -104,12 +83,14 @@
             </div>
             <div id="coches" class="d-flex flex-wrap flex-column">
                 <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group"
-                    [attr.data-id]="coche.coche.id">
+                    [attr.data-id]="coche.idCoche">
                     <input class="form-control text-uppercase w-responsive" [class.bg-light]="datos.confirmada==0"
-                        type="text" disabled [value]="coche.coche.matricula">
-                    <input class="form-control text-right w-responsive" type="number" [value]="coche.presupuesto"
-                        (change)="asignarPresupuesto($event.target.value,coche.coche.id)"
-                        [attr.disabled]="datos.confirmada==1">
+                        type="text" disabled [value]="coches[coche.idCoche]">
+                    <input *ngIf="datos.confirmada==0" class="form-control text-right w-responsive" type="number"
+                        [value]="coche.presupuesto" (change)="asignarPresupuesto($event.target.value,i)">
+                    <p *ngIf="datos.confirmada!=0" class="form-control text-right w-responsive">
+                        {{coche.presupuesto}}
+                    </p>
                     <i class="fas fa-euro-sign align-self-center p-1"></i>
                     <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-danger eliminar-item" type="button"
                         (click)="eliminarItem($event,2,i)">
@@ -162,8 +143,8 @@
     </form>
 </main>
 <!-- Modal de coches -->
-<div *ngIf="datos.confirmada==0" mdbModal #cochesModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="cochesModalLabel" aria-hidden="true">
+<div mdbModal #cochesModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cochesModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -172,69 +153,31 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-header">
-                <div class="d-flex w-100">
-                    <label for="nuevo-coche" class="align-self-center m-0 pr-4 text-uppercase">Nuevo</label>
-                    <input #cochesModalInput class="form-control text-uppercase" type="text"
-                        (change)="onChangeInputModal(cochesModalSelect)">
-                </div>
-            </div>
             <div class="modal-body text-left">
-                <select #cochesModalSelect class="form-control mb-2" test-id="conductores-modal"
-                    (change)="onChangeSelectModal(cochesModalInput)">
-                    <option value="0" selected></option>
-                    <option *ngFor="let coche of coches" [value]="coche.id">
-                        {{coche.matricula.toUpperCase()}}
+                <select #cochesModalSelect class="form-control mb-2" test-id="coches-modal">
+                    <!-- <option value="0" selected></option> -->
+                    <option *ngFor="let coche of coches;index as i" [value]="i" class="text-uppercase">
+                        {{coche}}
                     </option>
                 </select>
             </div>
+            <div class="modal-header">
+                <div class="d-flex w-100">
+                    <label for="presupuesto" class="align-self-center m-0 pr-4 text-uppercase">Presupuesto</label>
+                    <input #cochesModalPresupuesto class="form-control text-uppercase" type="number">
+                </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary"
-                    (click)="onClickCoches(cochesModalInput.value,cochesModalSelect.value)">Agregar</button>
+                    (click)="onClickCoches(cochesModalSelect.value,cochesModalPresupuesto.value)">Agregar</button>
                 <button id="coches-modal-close" type="button" class="btn btn-danger"
                     (click)="cochesModal.hide()">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal de conductores -->
-<div *ngIf="datos.confirmada==0" mdbModal #conductoresModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="conductoresModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Lista de conductores</h5>
-                <button type="button" class="close" (click)="conductoresModal.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-header">
-                <div class="d-flex w-100">
-                    <label for="nuevo-conductor" class="align-self-center m-0 pr-4 text-uppercase">Nuevo</label>
-                    <input #conductorModalInput class="form-control text-uppercase" type="text"
-                        (change)="onChangeInputModal(conductorModalSelect)">
-                </div>
-            </div>
-            <div class="modal-body text-left">
-                <select #conductorModalSelect class="form-control mb-2" test-id="conductores-modal"
-                    (change)="onChangeSelectModal(conductorModalInput)">
-                    <option value="0" selected></option>
-                    <option *ngFor="let conductor of conductores" [value]="conductor.id">
-                        {{conductor.nombre.toUpperCase()}}
-                    </option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                    (click)="onClickConductores(conductorModalInput.value,conductorModalSelect.value)">Agregar</button>
-                <button id="conductores-modal-close" type="button" class="btn btn-danger"
-                    (click)="conductoresModal.hide()">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Modal para agregar clientes -->
-<div *ngIf="datos.confirmada==0" mdbModal #clienteModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+<div mdbModal #clienteModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="clienteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

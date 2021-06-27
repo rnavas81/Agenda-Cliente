@@ -49,3 +49,14 @@ main {
     }
   }
 }
+label {
+  &.confirmar-coches {
+    padding: 0 1em;
+  }
+  &.confirmar-matricula {
+    background-color: lightgoldenrodyellow;
+  }
+  &.confirmar-presupuesto {
+    background-color: rgb(214, 214, 214);
+  }
+}

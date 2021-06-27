@@ -32,16 +32,16 @@
         <div *ngIf="this.datos.confirmados.length>0" class="col-xl-8 col-lg-6 col-12 border-right border-dark">
             <div *ngFor="let aviso of datos.pendientes" [attr.idrow]="aviso.id" class="border-bottom border-dark py-1">
                 <div class="d-flex justify-content-md-start justify-content-center "
-                [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
-                [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
-                [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
+                    [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                    [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                    [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
                     <div class="flex-1">
                         <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
                         <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
                         <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center"
-                        title="Confirmar entrada" (click)="modalConfirmar(aviso.id)">
+                        title="Confirmar entrada" (click)="modalConfirmar(aviso);confirmarModal.show()">
                         <i class="fas fa-check-double"></i>
                     </button>
                     <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center"
@@ -123,14 +123,23 @@
 <!-- MODAL CONFIRMAR -->
 <button (click)="confirmarModal.show()" id="confirmar-modal-open" hidden></button>
 <div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="confirmarModalLabel" aria-hidden="true">
+    aria-labelledby="confirmarModalLabel" aria-hidden="true" (onHide)="onConfirmarModalHide()">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Confirmar entrada</h5>
             </div>
             <div class="modal-body">
-                <p>Va a confirmar esta entrada<br>¿Desea continuar?</p>
+                <p>Va a confirmar esta entrada</p>
+                <p *ngIf="confirmarCoches.length>0">
+                    Selecciona los vehiculos para confirmar
+                </p>
+                <div *ngFor="let coche of confirmarCoches" class="d-flex">
+                    <input class="form-control-sm mr-1" type="checkbox" name="confirmar-coches"
+                        [attr.idCoche]="coche.idCoche" [attr.presupuesto]="coche.presupuesto">
+                    <label class="form-control flex-1 confirmar-matricula" for="">{{coches[coche.idCoche]}}</label>
+                    <label class="form-control flex-1 confirmar-presupuesto" for="">{{coche.presupuesto}}</label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" (click)="this.confirmar()" data-dismiss="modal">
