@@ -94,22 +94,22 @@ export class LibroEntradaComponent implements OnInit {
       llegadaHora: ['', []],
       llegadaLugar: ['', []],
       itinerario: ['', []],
-      contacto:['',[]],
-      contactoTlf:['',[]],
-      kms:['',[]],
+      contacto: ['', []],
+      contactoTlf: ['', []],
+      kms: ['', []],
       cliente: ['', []],
       clienteDetalle: ['', []],
       importe: ['', []],
       cobrado: ['', []],
-      cobradoFecha: ['',[]],
-      cobradoForma: ['',[]],
-      cobradoDetalles: ['',[]],
-      gastos: ['',[]],
-      facturaNombre: ['',[]],
-      facturaNumero: ['',[Validators.min(0)]],
-      observaciones:['',[]]
+      cobradoFecha: ['', []],
+      cobradoForma: ['', []],
+      cobradoDetalles: ['', []],
+      gastos: ['', []],
+      facturaNombre: ['', []],
+      facturaNumero: ['', [Validators.min(0)]],
+      observaciones: ['', []]
     });
-   }
+  }
 
   ngOnInit(): void {
     if (this.id > 0) {
@@ -130,25 +130,28 @@ export class LibroEntradaComponent implements OnInit {
     this.datos = data;
 
     for (var key in this.formulario.controls) {
+      if (key == 'cliente') {
+        this.formulario.controls[key].setValue(this.datos[key].id, {onlySelf: true});
+      } else
         this.formulario.controls[key].setValue(this.datos[key]);
     }
 
   }
-  showTab(idTab){
+  showTab(idTab) {
     var tabs = document.querySelectorAll("[role='tab']");
     var contents = document.querySelectorAll("[role='tabpanel']");
     tabs.forEach(item => {
-      if(item.id == `tab-${idTab}`){
+      if (item.id == `tab-${idTab}`) {
         item.classList.add('active');
       } else {
         item.classList.remove('active');
       }
     })
     contents.forEach(item => {
-      if(item.id == `tabpanel-${idTab}`){
-        item.classList.add('active','show');
+      if (item.id == `tabpanel-${idTab}`) {
+        item.classList.add('active', 'show');
       } else {
-        item.classList.remove('active','show');
+        item.classList.remove('active', 'show');
       }
     })
   }

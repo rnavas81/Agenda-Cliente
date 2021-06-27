@@ -101,7 +101,7 @@
                                 <option value="0" selected></option>
                                 <option *ngFor="let cliente of clientes" [value]="cliente.id"
                                     [attr.selected]="cliente.id == datos.cliente.id">
-                                    {{cliente.nombre.toUpperCase()+ " ("+ cliente.telefono+")"}}
+                                    {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
                                 </option>
                             </select>
                             <button class="btn btn-sm btn-success h-100 mt-1 ml-2" type="button"

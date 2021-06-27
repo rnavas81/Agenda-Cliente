@@ -103,7 +103,7 @@ export class AvisosEntradaComponent implements OnInit {
 
     for (var key in this.formulario.controls) {
       if (key == 'cliente')
-        this.formulario.controls[key].setValue(this.datos[key].id);
+        this.formulario.controls[key].setValue(this.datos[key].id, {onlySelf: true});
       else
         this.formulario.controls[key].setValue(this.datos[key]);
       if (this.datos.confirmada == 0) {
