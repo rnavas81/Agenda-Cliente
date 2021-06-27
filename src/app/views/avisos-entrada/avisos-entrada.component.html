@@ -62,7 +62,7 @@
                 <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
                     <option value="0" selected></option>
                     <option *ngFor="let cliente of clientes" [value]="cliente.id">
-                        {{cliente.nombre.toUpperCase()+ " ("+ cliente.telefono+")"}}
+                        {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
                     </option>
                 </select>
                 <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-success h-100 mt-1 ml-2" type="button"
