@@ -61,7 +61,7 @@
                         {{viaje.llegadaLugar}}
                     </div>
                     <b>Cliente:</b>
-                    <div>
+                    <div *ngIf="viaje.cliente">
                         {{viaje.cliente.nombre}}
                     </div>
                 </div>
