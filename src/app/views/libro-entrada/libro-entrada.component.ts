@@ -130,8 +130,10 @@ export class LibroEntradaComponent implements OnInit {
     this.datos = data;
 
     for (var key in this.formulario.controls) {
-      if (key == 'cliente') {
-        this.formulario.controls[key].setValue(this.datos[key].id, {onlySelf: true});
+      if (key == 'cliente' && this.datos[key]) {
+        this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
+      } else if(key == 'cobrado'){
+        this.formulario.controls[key].setValue(this.datos[key]==1, { onlySelf: true });
       } else
         this.formulario.controls[key].setValue(this.datos[key]);
     }
@@ -267,7 +269,7 @@ export class LibroEntradaComponent implements OnInit {
 
   onSubmit = () => {
     this.mensaje = "";
-    const data = this.formulario.value;
+    var data = this.formulario.value;
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
@@ -276,7 +278,7 @@ export class LibroEntradaComponent implements OnInit {
       this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
       data.conductores = [];
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.nombre));
-
+      data.cobrado = data.cobrado ? 1 : 0;
       if (this.id == 0) {
         this.libroService.agregarEntrada(data).subscribe(
           response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
