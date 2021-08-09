@@ -55,7 +55,7 @@ main.init {
 .no-resize {
   resize: none;
 }
-.required::after {
+.required::before {
   content:"*";
   color: map-get($map: $theme-colors, $key: "danger");
 }

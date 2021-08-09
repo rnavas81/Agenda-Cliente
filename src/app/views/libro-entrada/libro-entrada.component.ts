@@ -88,7 +88,7 @@ export class LibroEntradaComponent implements OnInit {
     // Crea el formulario
     this.formulario = this.formBuilder.group({
       salidaFecha: ['', [Validators.required]],
-      salidaHora: ['', [Validators.required]],
+      salidaHora: ['', []],
       salidaLugar: ['', [Validators.required]],
       llegadaFecha: ['', []],
       llegadaHora: ['', []],

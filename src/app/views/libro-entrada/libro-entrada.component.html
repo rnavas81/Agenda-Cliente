@@ -29,7 +29,7 @@
                         <h5>Salida</h5>
                         <div class="form-group d-flex">
                             <div class="mr-auto">
-                                <label for="salidaFecha">Fecha</label>
+                                <label class="required" for="salidaFecha">Fecha</label>
                                 <input type="date" class="form-control w-auto" formControlName="salidaFecha"
                                     test-id="salidaFecha" [value]="datos.salidaFecha" required>
                             </div>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="salidaLugar">Lugar</label>
+                            <label class="required" for="salidaLugar">Lugar</label>
                             <textarea row="2" class="form-control no-resize" formControlName="salidaLugar"
                                 test-id="salidaLugar" [value]="datos.salidaLugar"></textarea>
                         </div>
