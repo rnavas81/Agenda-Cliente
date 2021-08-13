@@ -37,12 +37,15 @@
         <div *ngFor="let dia of this.datos | keyvalue;index as i"
             class="dia col border-right border-dark px-1 overflow-auto h-100" [class.border-left]="i == 0">
             <div
-                class="fecha border-bottom border-dark text-center py-2 d-flex align-content-center bg-primary-light sticky-top">
+                class="fecha border-bottom border-dark text-center py-2 d-flex flex-column align-content-center bg-primary-light sticky-top">
                 <div class="flex-1">
                     {{fechaService.formatoLocal(dia.key)}}
+                    <div class="btn btn-sm btn-light float-right" (click)="abrirDia(dia.key)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
                 </div>
-                <div class="btn btn-sm btn-light" (click)="abrirDia(dia.key)">
-                    <i class="fas fa-pencil-alt"></i>
+                <div class="flex-1">
+                    {{fechaService.diaLocal(dia.key)}}
                 </div>
             </div>
             <div *ngFor="let aviso of dia.value" class="border-bottom border-grey py-1 entrada">
