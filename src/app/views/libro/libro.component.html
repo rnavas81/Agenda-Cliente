@@ -43,26 +43,28 @@
                 </div>
             </div>
             <!-- @foreach($dia AS $entrada) -->
-            <div *ngFor="let viaje of dia.value" class="border-bottom border-grey py-1 ">
-                <div class="py-1 d-flex">
-                    <div class="flex-1">
-                        {{viaje.salidaHora}}
+            <div *ngFor="let viaje of dia.value" class="border-bottom border-grey py-1 entrada">
+                <div [class.facturado]="viaje.facturaNombre && viaje.facturaNombre.length>0" [class.cobrado]="viaje.cobrado==1">
+                    <div class="py-1 d-flex">
+                        <div class="flex-1">
+                            {{viaje.salidaHora}}
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" (click)="abrirViaje(viaje.id)"
+                            title="Editar viaje">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
                     </div>
-                    <button type="button" class="btn btn-sm btn-primary" (click)="abrirViaje(viaje.id)"
-                        title="Editar viaje">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                </div>
-                <!-- <h5 class="pt-1">{{viaje.salidaHora}}</h5>
-                <p><b>Salida:</b> {{viaje.salidaLugar}}</p> -->
-                <div>
-                    <b>Destino:</b>
+                    <!-- <h5 class="pt-1">{{viaje.salidaHora}}</h5>
+                    <p><b>Salida:</b> {{viaje.salidaLugar}}</p> -->
                     <div>
-                        {{viaje.llegadaLugar}}
-                    </div>
-                    <b>Cliente:</b>
-                    <div *ngIf="viaje.cliente">
-                        {{viaje.cliente.nombre}}
+                        <b>Destino:</b>
+                        <div>
+                            {{viaje.llegadaLugar}}
+                        </div>
+                        <b>Cliente:</b>
+                        <div *ngIf="viaje.cliente">
+                            {{viaje.cliente.nombre}}
+                        </div>
                     </div>
                 </div>
             </div>
