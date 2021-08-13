@@ -1,5 +1,5 @@
 <!-- Cabecera -->
-<app-header selected="agenda"></app-header>
+<app-header selected="libro"></app-header>
 <!-- Cuerpo -->
 <main class="">
     <form class="align-self-center container-xl" [formGroup]="formulario" (ngSubmit)="onSubmit()">
@@ -22,14 +22,14 @@
         </ul>
         <!-- Tabs content -->
         <div class="tab-content row">
-            <div class="tab-pane fade show active col-12 container" id="tabpanel-1" role="tabpanel"
+            <div class="tab-pane fade col-12 container show active" id="tabpanel-1" role="tabpanel"
                 aria-labelledby="ex1-tab-1">
                 <div class="row">
                     <div class="col-md-6 pt-3 px-5">
                         <h5>Salida</h5>
                         <div class="form-group d-flex">
                             <div class="mr-auto">
-                                <label for="salidaFecha">Fecha</label>
+                                <label class="required" for="salidaFecha">Fecha</label>
                                 <input type="date" class="form-control w-auto" formControlName="salidaFecha"
                                     test-id="salidaFecha" [value]="datos.salidaFecha" required>
                             </div>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="salidaLugar">Lugar</label>
+                            <label class="required" for="salidaLugar">Lugar</label>
                             <textarea row="2" class="form-control no-resize" formControlName="salidaLugar"
                                 test-id="salidaLugar" [value]="datos.salidaLugar"></textarea>
                         </div>
@@ -86,11 +86,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade container" id="tabpanel-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+            <div class="tab-pane fade col-12 container" id="tabpanel-2" role="tabpanel" aria-labelledby="ex1-tab-2">
                 <div class="row">
-                    <div class="col-6 form-group px-5">
-                        <label for="kms">Kms</label>
-                        <input type="text" class="form-control" formControlName="kms" test-id="kms" [value]="datos.kms">
+                    <div class="col-12 form-group px-5 d-flex">
+                        <label class="align-self-center m-0 mr-3" for="kms">Kms</label>
+                        <input type="text" class="form-control w-auto" formControlName="kms" test-id="kms"
+                            [value]="datos.kms">
                     </div>
                 </div>
                 <div class="row">
@@ -99,9 +100,8 @@
                             <label class="align-self-center m-0 mr-3" for="cliente">Cliente</label>
                             <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
                                 <option value="0" selected></option>
-                                <option *ngFor="let cliente of clientes" [value]="cliente.id"
-                                    [attr.selected]="cliente.id == datos.cliente.id">
-                                    {{cliente.nombre.toUpperCase()+ " ("+ cliente.telefono+")"}}
+                                <option *ngFor="let cliente of clientes" [value]="cliente.id">
+                                    {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
                                 </option>
                             </select>
                             <button class="btn btn-sm btn-success h-100 mt-1 ml-2" type="button"
@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 px-3">
+                    <div class="col-md-6 px-5">
                         <div class="mb-1">
                             <button class="btn btn-sm btn-success" type="button" (click)="conductoresModal.show()"
                                 title="Agregar un conductor">
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 px-3">
+                    <div class="col-md-6 px-5">
                         <div class="mb-1">
                             <button class="btn btn-sm btn-success" type="button" (click)="cochesModal.show()"
                                 title="Agregar un coche">
@@ -155,61 +155,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12 px-5 mb-3">
+                        <label class="align-self-center m-0 mr-3" for="cliente">Observaciones</label>
+                        <textarea row="2" class="form-control no-resize" formControlName="observaciones"
+                            test-id="observaciones" [value]="datos.observaciones"></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade container" id="tabpanel-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 mt-3 px-5">
-                            <div class="form-group d-flex">
-                                <label class="align-self-center m-0 mr-3">Importe</label>
-                                <input class="form-control text-right" type="number" formControlName="importe"
-                                    test-id="importe" [value]="datos.importe">
-                                <i class="align-self-center btn fa fa-euro-sign cursor-default"></i>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" formControlName="cobrado"
-                                        test-id="cobrado">
-                                    <label class="form-check-label" for="cobrado">Cobrado</label>
-                                </div>
+            <div class="tab-pane fade col-12 container" id="tabpanel-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                <div class="row">
+                    <div class="col-12 mt-3 px-5">
+                        <div class="form-group d-flex">
+                            <label class="align-self-center m-0 mr-3">Importe</label>
+                            <input class="form-control text-right" type="number" formControlName="importe"
+                                test-id="importe" [value]="datos.importe">
+                            <i class="align-self-center btn fa fa-euro-sign cursor-default"></i>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" formControlName="cobrado"
+                                    test-id="cobrado">
+                                <label class="form-check-label" for="cobrado">Cobrado</label>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="formulario.controls['cobrado'].value == 1" class="row">
-                        <div class="col-xl-3 col-md-4 col-sm-5 mt-3 px-5 form-group">
-                            <label for="cobradoFecha">Fecha de cobro</label>
-                            <input type="date" class="form-control w-auto" formControlName="cobradoFecha"
-                                test-id="cobradoFecha" [value]="datos.cobradoFecha">
-                        </div>
-                        <div class="col-xl-9 col-md-8 col-sm-7 mt-3 px-5 form-group">
-                            <label for="cobradoForma">Forma de cobro</label>
-                            <input type="text" class="form-control" formControlName="cobradoForma"
-                                test-id="cobradoForma" [value]="datos.cobradoForma">
-                        </div>
-                        <div class="col-12 mt-3 px-5 form-group">
-                            <label for="cobradoDetalles">Detalles de cobro</label>
-                            <input type="text" class="form-control" formControlName="cobradoDetalles"
-                                test-id="cobradoDetalles" [value]="datos.cobradoDetalles">
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="gastos">Gastos</label>
+                        <textarea row="2" class="form-control no-resize" formControlName="gastos" test-id="gastos"
+                            [value]="datos.gastos"></textarea>
                     </div>
-                    <div class="row">
-                        <div class="col-12 form-group px-5">
-                            <label for="gastos">Gastos</label>
-                            <textarea row="2" class="form-control no-resize" formControlName="gastos" test-id="gastos"
-                                [value]="datos.gastos"></textarea>
-                        </div>
+                </div>
+                <div *ngIf="formulario.controls['cobrado'].value == 1" class="row">
+                    <div class="col-xl-3 col-md-4 col-sm-5 mt-3 px-5 form-group">
+                        <label for="cobradoFecha">Fecha de cobro</label>
+                        <input type="date" class="form-control w-auto" formControlName="cobradoFecha"
+                            test-id="cobradoFecha" [value]="datos.cobradoFecha">
                     </div>
-                    <div class="row">
-                        <div class="col-12 form-group px-5">
-                            <label for="facturaNombre">Nombre de factura</label>
-                            <input type="date" class="form-control w-auto" formControlName="facturaNombre"
-                                test-id="facturaNombre" [value]="datos.facturaNombre">
-                        </div>
-                        <div class="col-12 form-group px-5">
-                            <label for="factura">Numero de factura</label>
-                            <input type="date" class="form-control w-auto" formControlName="factura" test-id="factura"
-                                [value]="datos.factura">
-                        </div>
+                    <div class="col-xl-9 col-md-8 col-sm-7 mt-3 px-5 form-group">
+                        <label for="cobradoForma">Forma de cobro</label>
+                        <input type="text" class="form-control" formControlName="cobradoForma" test-id="cobradoForma"
+                            [value]="datos.cobradoForma">
+                    </div>
+                    <div class="col-12 mt-3 px-5 form-group">
+                        <label for="cobradoDetalles">Detalles de cobro</label>
+                        <input type="text" class="form-control" formControlName="cobradoDetalles"
+                            test-id="cobradoDetalles" [value]="datos.cobradoDetalles">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="facturaNombre">Nombre de factura</label>
+                        <input type="text" class="form-control" formControlName="facturaNombre" test-id="facturaNombre"
+                            [value]="datos.facturaNombre">
+                    </div>
+                    <div class="col-12 form-group px-5">
+                        <label for="facturaNumero">Numero de factura</label>
+                        <input type="number" class="form-control" formControlName="facturaNumero"
+                            test-id="facturaNumero" [value]="datos.facturaNumero">
+                    </div>
 
-                    </div>
                 </div>
             </div>
         </div>

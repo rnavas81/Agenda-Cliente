@@ -1,0 +1,93 @@
+<!-- Cabecera -->
+<app-header></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- Cuerpo -->
+<main class="container-xl init">
+    <form class="align-self-center row px-5 pt-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+        <div class="form-group col-12">
+            <label class="m-0 align-self-center required">Nombre</label>
+            <input class="form-control w-100" type="text" formControlName="name" test-id="name">
+            <div *ngIf="(this.formulario.dirty || this.formulario.touched) && this.formulario.get('name').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('name').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+                <div *ngIf="formulario.get('name').errors.maxlength" class="small">
+                    Máximo de 255 caracteres
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-12">
+            <label class="m-0 align-self-center">Apellidos</label>
+            <input class="form-control w-100" type="text" formControlName="lastName" test-id="lastName">
+            <div *ngIf="(this.formulario.dirty || this.formulario.touched) && this.formulario.get('lastName').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('lastName').errors.maxlength" class="small">
+                    Máximo de 255 caracteres
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-12">
+            <label class="m-0 align-self-center required">Usuario</label>
+            <input class="form-control w-100" type="text" formControlName="username" test-id="username">
+            <div *ngIf="(this.formulario.dirty || this.formulario.touched) && this.formulario.get('username').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('username').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+                <div *ngIf="formulario.get('username').errors.maxlength" class="small">
+                    Máximo de 32 caracteres
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-12">
+            <label class="m-0 align-self-center required">Dirección de correo</label>
+            <input class="form-control w-100" type="email" formControlName="email" test-id="email">
+            <div *ngIf="(this.formulario.dirty || this.formulario.touched) && this.formulario.get('email').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('email').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+                <div *ngIf="formulario.get('email').errors.maxlength" class="small">
+                    Máximo de 255 caracteres
+                </div>
+                <div *ngIf="formulario.get('email').errors.email" class="small">
+                    Formato de correo no valido
+                </div>
+                <div *ngIf="!validEmail" class="small text-danger">
+                    Ese email ya está en uso
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-12">
+            <label class="m-0 align-self-center">Contraseña</label>
+            <input class="form-control w-100" type="password" formControlName="password" test-id="password">
+            <input class="form-control w-100" type="password" formControlName="password2" test-id="password2"
+                placeholder="Confirmación de contraseña">
+            <div *ngIf="(this.formulario.dirty || this.formulario.touched) && this.formulario.get('password').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('password').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+                <div *ngIf="formulario.get('password').errors.minLength" class="small">
+                    Mínimo de 8 caracteres
+                </div>
+                <div *ngIf="formulario.get('password').errors.maxlength" class="small">
+                    Máximo de 32 caracteres
+                </div>
+            </div>
+        </div>
+        <div class="col-12 form-group d-flex justify-content-center">
+            <button type="submit" id='btn-guardar' id-test='btn-guardar' class="btn btn-success mx-2">
+                <i *ngIf="cargando" class="fa fa-spinner fa-spin"></i>
+                Modificar
+            </button>
+            <button (click)="volver()" class="btn btn-danger mx-2">Cancelar</button>
+        </div>
+    </form>
+</main>

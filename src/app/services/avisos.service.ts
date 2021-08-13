@@ -6,8 +6,8 @@ import { UsuarioService } from './usuario.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AgendaService {
-  private url: string = environment.API_SERVER + '/agenda';
+export class AvisosService {
+  private url: string = environment.API_SERVER + '/aviso';
 
   constructor(
     private http: HttpClient,
@@ -48,8 +48,8 @@ export class AgendaService {
     };
     return this.http.get(url, extra);
   }
-  // Confirma una entrada de agenda
-  confirmarEntrada = id => {
+  // Confirma una entrada de avisos
+  confirmarEntrada = (id, coches) => {
     const url = this.url + `/confirmar/${id}`;
     const extra = {
       headers: new HttpHeaders({
@@ -58,10 +58,10 @@ export class AgendaService {
         'Authorization': 'Bearer ' + this.usuarioService.getToken(),
       }),
     };
-    return this.http.put(url, {}, extra);
+    return this.http.put(url, {coches:coches}, extra);
   }
 
-  // Elimina una entrada de agenda
+  // Elimina una entrada de avisos
   eliminarEntrada = id => {
     const url = this.url + `/${id}`;
     const extra = {

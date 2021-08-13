@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
+import { FechasService } from "src/app/services/fechas.service";
 import { LibroService } from "src/app/services/libro.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 
@@ -18,6 +19,7 @@ export class LibroComponent implements OnInit {
     private router: Router,
     public libroservice: LibroService,
     public usuarioService: UsuarioService,
+    public fechaService: FechasService
   ) {
     // Recupera la fecha de la cabecera
     const hash = location.hash.substr(1);
@@ -30,8 +32,7 @@ export class LibroComponent implements OnInit {
     this.cargarDatos();
   }
   fechaALunes = () => {
-    // Situa la fecha en lunes
-    this.fecha.subtract(this.fecha.day() - 1, "days");
+    this.fechaService.alLunes(this.fecha);
   }
 
   // Carga los datos de la semana
@@ -51,6 +52,9 @@ export class LibroComponent implements OnInit {
 
   abrirDia = dia => {
     this.router.navigate([`/libro/dia`], { fragment: dia });
+  }
+  abrirViaje = id => {
+    this.router.navigate([`/libro/dia/entrada`], { fragment: id.toString() });
   }
   agregarEntrada = () => {
     this.router.navigate([`/libro/dia/entrada`]);

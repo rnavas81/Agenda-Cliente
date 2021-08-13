@@ -1,0 +1,208 @@
+<!-- Cabecera -->
+<app-header selected="avisos"></app-header>
+<!-- Cuerpo -->
+<main class="container-fluid">
+    <div class="row">
+        <span class="text-danger col-12 text-center px-5">{{mensaje}}</span>
+    </div>
+    <form class="align-self-center row px-5 pt-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="col-12">
+            <div class="text-bold">Fecha de creación: {{datos.created_at.format("HH:mm:ss DD/MM/Y")}}</div>
+        </div>
+        <hr class="col-12">
+        <div class="col-md-6 form-group">
+            <h5>Salida</h5>
+            <div class="form-group d-flex">
+                <div class="mr-auto">
+                    <label class="required" for="salidaFecha">Fecha</label>
+                    <input type="date" class="form-control w-auto" formControlName="salidaFecha" test-id="salidaFecha"
+                        [value]="datos.salidaFecha" required>
+                </div>
+                <div>
+                    <label for="salidaHora">Hora</label>
+                    <input type="time" class="form-control w-auto" formControlName="salidaHora" test-id="salidaHora"
+                        [value]="datos.salidaHora">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="salidaLugar">Lugar</label>
+                <textarea row="2" class="form-control no-resize" formControlName="salidaLugar" test-id="salidaLugar"
+                    [value]="datos.salidaLugar" maxlength="500"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <h5>Llegada</h5>
+            <div class="form-group d-flex">
+                <div class="mr-auto">
+                    <label for="llegadaFecha">Fecha</label>
+                    <input type="date" class="form-control w-auto" formControlName="llegadaFecha" test-id="llegadaFecha"
+                        [value]="datos.llegadaFecha">
+                </div>
+                <div>
+                    <label for="llegadaHora">Hora</label>
+                    <input type="time" class="form-control w-auto" formControlName="llegadaHora" test-id="llegadaHora"
+                        [value]="datos.llegadaHora">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="llegadaLugar">Lugar</label>
+                <textarea row="2" class="form-control no-resize" formControlName="llegadaLugar" test-id="llegadaLugar"
+                    [value]="datos.llegadaLugar" maxlength="500"></textarea>
+            </div>
+        </div>
+        <div class="col-12 form-group">
+            <label for="itinerario">Itinerario</label>
+            <textarea row="2" class="form-control no-resize" formControlName="itinerario" test-id="itinerario"
+                [value]="datos.itinerario" maxlength="1000"></textarea>
+        </div>
+        <hr class="col-12">
+        <div class="col-12 mb-md-4 mb-3 form-group">
+            <div class="form-group d-flex">
+                <label class="align-self-center m-0 mr-3 required" for="cliente">Cliente</label>
+                <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
+                    <option value="0" selected></option>
+                    <option *ngFor="let cliente of clientes" [value]="cliente.id">
+                        {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
+                    </option>
+                </select>
+                <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-success h-100 mt-1 ml-2" type="button"
+                    (click)="clienteModal.show()" title="Agregar un nuevo cliente">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <textarea row="2" class="form-control no-resize" formControlName="clienteDetalle" test-id="clienteDetalle"
+                [value]="datos.clienteDetalle" maxlength="500"></textarea>
+        </div>
+        <div class="col-md-12 form-group">
+            <div class="mb-1">
+                <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-success" type="button"
+                    (click)="cochesModal.show()" title="Agregar un coche">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <label class="m-0" for="coches">Plazas/Presupuesto</label>
+            </div>
+            <div id="coches" class="d-flex flex-wrap flex-column">
+                <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group"
+                    [attr.data-id]="coche.idCoche">
+                    <input class="form-control text-uppercase w-responsive" [class.bg-light]="datos.confirmada==0"
+                        type="text" disabled [value]="coches[coche.idCoche]">
+                    <input *ngIf="datos.confirmada==0" class="form-control text-right w-responsive" type="number"
+                        [value]="coche.presupuesto" (change)="asignarPresupuesto($event.target.value,i)">
+                    <p *ngIf="datos.confirmada!=0" class="form-control text-right w-responsive">
+                        {{coche.presupuesto}}
+                    </p>
+                    <i class="fas fa-euro-sign align-self-center p-1"></i>
+                    <button *ngIf="datos.confirmada==0" class="btn btn-sm btn-danger eliminar-item" type="button"
+                        (click)="eliminarItem($event,2,i)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 form-group">
+            <label for="observaciones">Observaciones</label>
+            <textarea row="2" class="form-control no-resize" formControlName="observaciones" test-id="observaciones"
+                [value]="datos.observaciones" maxlength="1000"></textarea>
+        </div>
+        <hr class="col-12">
+        <div class="col-12 form-group">
+            <div class="h5">Respuesta</div>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="respuestaFecha">Fecha</label>
+            <input type="date" class="form-control w-auto" formControlName="respuestaFecha" test-id="respuestaFecha"
+                [value]="datos.respuestaFecha">
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="respuesta">Respuesta</label>
+            <select class="form-control w-100" formControlName="respuesta" test-id="respuesta">
+                <option value="0" selected></option>
+                [attr.selected]="datos.respuesta == datos.cliente.id">
+                <option value="1">Telefono</option>
+                [attr.selected]="datos.respuesta == datos.cliente.id">
+                <option value="2">Webmail</option>
+                [attr.selected]="datos.respuesta == datos.cliente.id">
+                <option value="3">Hotmail</option>
+                [attr.selected]="datos.respuesta == datos.cliente.id">
+                <option value="4">Otros</option>
+            </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="respuestaDetalle">Detalle</label>
+            <textarea row="2" class="form-control no-resize" formControlName="respuestaDetalle"
+                test-id="respuestaDetalle" [value]="datos.respuestaDetalle" maxlength="1000"></textarea>
+        </div>
+        <div class="col-12 form-group d-flex justify-content-center">
+            <button *ngIf="datos.confirmada==0" type="submit" id='btn-guardar' id-test='btn-guardar'
+                class="btn btn-success mx-2">
+                <i *ngIf="cargando" class="fa fa-spinner fa-spin"></i>
+                {{ id==0 && "Crear" || "Modificar" }}
+            </button>
+            <button (click)="volver()" class="btn btn-danger mx-2">Cancelar</button>
+        </div>
+    </form>
+</main>
+<!-- Modal de coches -->
+<div mdbModal #cochesModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cochesModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lista de coches</h5>
+                <button type="button" class="close" (click)="cochesModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left">
+                <select #cochesModalSelect class="form-control mb-2" test-id="coches-modal">
+                    <!-- <option value="0" selected></option> -->
+                    <option *ngFor="let coche of coches;index as i" [value]="i" class="text-uppercase">
+                        {{coche}}
+                    </option>
+                </select>
+            </div>
+            <div class="modal-header">
+                <div class="d-flex w-100">
+                    <label for="presupuesto" class="align-self-center m-0 pr-4 text-uppercase">Presupuesto</label>
+                    <input #cochesModalPresupuesto class="form-control text-uppercase" type="number">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="onClickCoches(cochesModalSelect.value,cochesModalPresupuesto.value)">Agregar</button>
+                <button id="coches-modal-close" type="button" class="btn btn-danger"
+                    (click)="cochesModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal para agregar clientes -->
+<div mdbModal #clienteModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="clienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar cliente</h5>
+                <button type="button" class="close" (click)="clienteModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left">
+                <div class="form-group">
+                    <label for="clienteNombreModal" class="align-self-center m-0 pr-4 text-uppercase">Nombre</label>
+                    <input #clienteNombreModal class="form-control text-uppercase" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="clienteTelefonoModal" class="align-self-center m-0 pr-4 text-uppercase">Telefono</label>
+                    <input #clienteTelefonoModal class="form-control text-uppercase" type="tel">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    (click)="onClickClientes(clienteNombreModal.value,clienteTelefonoModal.value)">Agregar</button>
+                <button id="clientes-modal-close" type="button" class="btn btn-danger"
+                    (click)="clienteModal.hide()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

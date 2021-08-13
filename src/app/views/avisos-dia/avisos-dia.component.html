@@ -1,5 +1,5 @@
 <!-- Cabecera -->
-<app-header selected="agenda"></app-header>
+<app-header selected="avisos"></app-header>
 <!-- Barra de herramientas -->
 <nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top">
     <div class="btn-group">
@@ -27,33 +27,51 @@
 </nav>
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
-    <div class="row pt-3 " style="height: inherit;">
-        <div *ngIf="this.datos.length>0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
-            <!-- Entradas del día -->
-            <div *ngFor="let entrada of datos" [attr.idrow]="entrada.id"
-                class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
-                <div class="flex-grow-1">
-                    <h5 class="pt-1">{{entrada.salidaHora}}</h5>
-                    <p><b>Salida:</b> {{entrada.salidaLugar}}</p>
+    <div class="row" style="height: inherit;">
+        <!-- Entradas pendientes del día -->
+        <div *ngIf="this.datos.confirmados.length>0" class="col-xl-8 col-lg-6 col-12 border-right border-dark">
+            <div *ngFor="let aviso of datos.pendientes" [attr.idrow]="aviso.id" class="border-bottom border-dark py-1">
+                <div class="d-flex justify-content-md-start justify-content-center "
+                    [class.respondida]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                    [class.p-1]="aviso.confirmada== 0 && aviso.respuestaFecha !=null"
+                    [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
+                    <div class="flex-1">
+                        <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
+                        <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
+                        <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center"
+                        title="Confirmar entrada" (click)="modalConfirmar(aviso);confirmarModal.show()">
+                        <i class="fas fa-check-double"></i>
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center"
+                        title="Editar entrada" (click)="abrirEntrada(aviso.id)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
+                        (click)="modalEliminar(aviso.id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </div>
-                <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center" title="Confirmar entrada"
-                    (click)="modalConfirmar(entrada.id)">
-                    <i class="fas fa-check-double"></i>
-                </button>
-                <button type="submit" class="btn btn-sm btn-secondary h-100 align-self-center" title="Editar entrada"
-                    (click)="editar(entrada.id)">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button type="submit" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
-                    (click)="modalEliminar(entrada.id)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
             </div>
         </div>
-        <div *ngIf="this.datos.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
-            <h3>No hay entradas hoy</h3>
+        <div *ngIf="this.datos.pendientes.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
+            <h3>No hay entradas pendientes hoy</h3>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-lg-6 col-12">
+            <div class="mt-1 mt-sm-4 text-center h4">Confirmados</div>
+            <div *ngFor="let aviso of datos.confirmados" [attr.idrow]="aviso.id"
+                class="border-bottom border-dark d-flex justify-content-md-start justify-content-center confirmado">
+                <h5 class="mr-3 align-self-center">{{aviso.salidaHora}}</h5>
+                <div class="flex-1">
+                    <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
+                    <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
+                </div>
+                <button type="submit" class="btn btn-sm btn-secondary align-self-center" title="Eliminar entrada"
+                    (click)="abrirEntrada(aviso.id)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
     </div>
 </main>
@@ -104,21 +122,31 @@
 </div>
 <!-- MODAL CONFIRMAR -->
 <button (click)="confirmarModal.show()" id="confirmar-modal-open" hidden></button>
-<div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel"
-    aria-hidden="true">
+<div mdbModal #confirmarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="confirmarModalLabel" aria-hidden="true" (onHide)="onConfirmarModalHide()">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Confirmar entrada</h5>
             </div>
             <div class="modal-body">
-                <p>Va a confirmar esta entrada<br>¿Desea continuar?</p>
+                <p>Va a confirmar esta entrada</p>
+                <p *ngIf="confirmarCoches.length>0">
+                    Selecciona los vehiculos para confirmar
+                </p>
+                <div *ngFor="let coche of confirmarCoches" class="d-flex">
+                    <input class="form-control-sm mr-1" type="checkbox" name="confirmar-coches"
+                        [attr.idCoche]="coche.idCoche" [attr.presupuesto]="coche.presupuesto">
+                    <label class="form-control flex-1 confirmar-matricula" for="">{{coches[coche.idCoche]}}</label>
+                    <label class="form-control flex-1 confirmar-presupuesto" for="">{{coche.presupuesto}}</label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" (click)="this.confirmar()" data-dismiss="modal">
                     SI
                 </button>
-                <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="confirmarModal.hide()">
+                <button id="confirmar-modal-close" type="button" class="btn btn-secondary"
+                    (click)="confirmarModal.hide()">
                     NO
                 </button>
             </div>

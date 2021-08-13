@@ -29,11 +29,22 @@ export class LibroEntradaComponent implements OnInit {
     llegadaHora: null,
     llegadaLugar: null,
     itinerario: null,
+    kms: null,
+    contacto: null,
+    contactoTlf: null,
     cliente: { id: 0 },
     clienteDetalle: null,
-    presupuesto: null,
+    importe: null,
+    cobrado: 0,
+    cobradoFecha: null,
+    cobradoForma: null,
+    cobradoDetalles: null,
+    gastos: null,
+    facturaNombre: null,
+    facturaNumero: 0,
+    observaciones: null,
     coches: [],
-    conductores: []
+    conductores: [],
   };
 
   constructor(
@@ -77,27 +88,28 @@ export class LibroEntradaComponent implements OnInit {
     // Crea el formulario
     this.formulario = this.formBuilder.group({
       salidaFecha: ['', [Validators.required]],
-      salidaHora: ['', [Validators.required]],
+      salidaHora: ['', []],
       salidaLugar: ['', [Validators.required]],
       llegadaFecha: ['', []],
       llegadaHora: ['', []],
       llegadaLugar: ['', []],
       itinerario: ['', []],
-      contacto:['',[]],
-      contactoTlf:['',[]],
-      kms:['',[]],
+      contacto: ['', []],
+      contactoTlf: ['', []],
+      kms: ['', []],
       cliente: ['', []],
       clienteDetalle: ['', []],
       importe: ['', []],
       cobrado: ['', []],
-      cobradoFecha: ['',[]],
-      cobradoForma: ['',[]],
-      cobradoDetalles: ['',[]],
-      gastos: ['',[]],
-      facturaNombre: ['',[]],
-      factura: ['',[]],
+      cobradoFecha: ['', []],
+      cobradoForma: ['', []],
+      cobradoDetalles: ['', []],
+      gastos: ['', []],
+      facturaNombre: ['', []],
+      facturaNumero: ['', [Validators.min(0)]],
+      observaciones: ['', []]
     });
-   }
+  }
 
   ngOnInit(): void {
     if (this.id > 0) {
@@ -117,43 +129,31 @@ export class LibroEntradaComponent implements OnInit {
   cargarDatos = data => {
     this.datos = data;
 
-    this.formulario.controls.salidaFecha.setValue(data.salidaFecha);
-    this.formulario.controls.salidaHora.setValue(data.salidaHora);
-    this.formulario.controls.salidaLugar.setValue(data.salidaLugar);
-    this.formulario.controls.llegadaFecha.setValue(data.llegadaFecha);
-    this.formulario.controls.llegadaHora.setValue(data.llegadaHora);
-    this.formulario.controls.llegadaLugar.setValue(data.llegadaLugar);
-    this.formulario.controls.itinerario.setValue(data.itinerario);
-    this.formulario.controls.contacto.setValue(data.contacto);
-    this.formulario.controls.contactoTlf.setValue(data.contactoTlf);
-    this.formulario.controls.kms.setValue(data.kms);
-    this.formulario.controls.cliente.setValue(data.cliente);
-    this.formulario.controls.clienteDetalle.setValue(data.clienteDetalle);
-    this.formulario.controls.importe.setValue(data.importe);
-    this.formulario.controls.cobrado.setValue(data.cobrado);
-    this.formulario.controls.cobradoFecha.setValue(data.cobradoFecha);
-    this.formulario.controls.cobradoForma.setValue(data.cobradoForma);
-    this.formulario.controls.cobradoDetalles.setValue(data.cobradoDetalles);
-    this.formulario.controls.gastos.setValue(data.gastos);
-    this.formulario.controls.facturaNombre.setValue(data.facturaNombre);
-    this.formulario.controls.factura.setValue(data.factura);
+    for (var key in this.formulario.controls) {
+      if (key == 'cliente' && this.datos[key]) {
+        this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
+      } else if(key == 'cobrado'){
+        this.formulario.controls[key].setValue(this.datos[key]==1, { onlySelf: true });
+      } else
+        this.formulario.controls[key].setValue(this.datos[key]);
+    }
 
   }
-  showTab(idTab){
+  showTab(idTab) {
     var tabs = document.querySelectorAll("[role='tab']");
     var contents = document.querySelectorAll("[role='tabpanel']");
     tabs.forEach(item => {
-      if(item.id == `tab-${idTab}`){
+      if (item.id == `tab-${idTab}`) {
         item.classList.add('active');
       } else {
         item.classList.remove('active');
       }
     })
     contents.forEach(item => {
-      if(item.id == `tabpanel-${idTab}`){
-        item.classList.add('active','show');
+      if (item.id == `tabpanel-${idTab}`) {
+        item.classList.add('active', 'show');
       } else {
-        item.classList.remove('active','show');
+        item.classList.remove('active', 'show');
       }
     })
   }
@@ -269,7 +269,7 @@ export class LibroEntradaComponent implements OnInit {
 
   onSubmit = () => {
     this.mensaje = "";
-    const data = this.formulario.value;
+    var data = this.formulario.value;
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
@@ -278,7 +278,7 @@ export class LibroEntradaComponent implements OnInit {
       this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
       data.conductores = [];
       this.datos.conductores.forEach(conductor => data.conductores.push(conductor.conductor.id != 0 ? conductor.conductor.id : conductor.conductor.nombre));
-
+      data.cobrado = data.cobrado ? 1 : 0;
       if (this.id == 0) {
         this.libroService.agregarEntrada(data).subscribe(
           response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),

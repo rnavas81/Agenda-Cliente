@@ -9,9 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 /************* COMPONENTES *************/
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
-import { AgendaComponent } from './views/agenda/agenda.component';
-import { AgendaDiaComponent } from './views/agenda-dia/agenda-dia.component';
-import { AgendaEntradaComponent } from './views/agenda-entrada/agenda-entrada.component';
+import { AvisosComponent } from './views/avisos/avisos.component';
+import { AvisosDiaComponent } from './views/avisos-dia/avisos-dia.component';
+import { AvisosEntradaComponent } from './views/avisos-entrada/avisos-entrada.component';
 import { MainComponent } from './views/main/main.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LibroComponent } from './views/libro/libro.component';
@@ -21,19 +21,23 @@ import { LibroEntradaComponent } from './views/libro-entrada/libro-entrada.compo
 /************* SEGURIDAD *************/
 import { IsLoggedService } from './security/is-logged.service';
 import { TestLoginService } from './security/test-login.service';
+import { ProfileComponent } from './views/profile/profile.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AgendaComponent,
-    AgendaDiaComponent,
-    AgendaEntradaComponent,
+    AvisosComponent,
+    AvisosDiaComponent,
+    AvisosEntradaComponent,
     MainComponent,
     HeaderComponent,
     LibroComponent,
     LibroDiaComponent,
     LibroEntradaComponent,
+    ProfileComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

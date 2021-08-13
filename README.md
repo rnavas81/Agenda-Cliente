@@ -1,6 +1,6 @@
-# AgendaClient
+# Cliente para la agenda de avisos y viajes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
+Este proyecto ha sido desarrollado bajo [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## Development server
 
