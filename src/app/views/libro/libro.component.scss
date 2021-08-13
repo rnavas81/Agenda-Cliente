@@ -8,13 +8,14 @@ main {
     }
     .entrada {
       font-size: 1.4em;
+      color: map-get($map: $theme-colors, $key: "dark");
       .facturado {
-        background-color: map-get($map: $theme-colors, $key: "primary-light");
+        background-color: map-get($map: $theme-colors, $key: "facturado");
         color: map-get($map: $theme-colors, $key: "dark");
       }
       .cobrado {
-        background-color: map-get($map: $theme-colors, $key: "success");
-        // color: map-get($map: $theme-colors, $key: "grey");
+        background-color: map-get($map: $theme-colors, $key: "cobrado");
+        color: map-get($map: $theme-colors, $key: "dark");
       }
     }
   }

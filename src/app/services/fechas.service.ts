@@ -5,6 +5,7 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class FechasService {
+  diasNombre:any= ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']
 
   constructor() { }
 
@@ -13,6 +14,9 @@ export class FechasService {
   }
   formatoLocal(fecha:any){
     return moment(fecha).format("DD-MM-Y");
+  }
+  diaLocal(fecha:any){
+    return this.diasNombre[moment(fecha).day()];
   }
   anteriorDia(fecha:any){
     var f = moment(fecha.toString());
