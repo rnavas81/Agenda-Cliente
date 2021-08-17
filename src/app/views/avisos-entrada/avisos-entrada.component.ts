@@ -23,7 +23,7 @@ export class AvisosEntradaComponent implements OnInit {
   formulario: FormGroup;
   cargando: boolean = false;
   datos: any = {
-    salidaFecha: null,
+    salidaFecha: moment().format("YYYY-MM-DD"),
     salidaHora: null,
     salidaLugar: null,
     llegadaFecha: null,
@@ -66,7 +66,7 @@ export class AvisosEntradaComponent implements OnInit {
     )
     // Crea el formulario
     this.formulario = this.formBuilder.group({
-      salidaFecha: [{ value: '', disabled: true }, [Validators.required]],
+      salidaFecha: [{ value: moment().format("YYYY-MM-DD"), disabled: true }, [Validators.required]],
       salidaHora: [{ value: '', disabled: true }, []],
       salidaLugar: [{ value: '', disabled: true }, [Validators.maxLength(500)]],
       llegadaFecha: [{ value: '', disabled: true }, []],
@@ -103,7 +103,7 @@ export class AvisosEntradaComponent implements OnInit {
 
     for (var key in this.formulario.controls) {
       if (key == 'cliente')
-        this.formulario.controls[key].setValue(this.datos[key].id, {onlySelf: true});
+        this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
       else
         this.formulario.controls[key].setValue(this.datos[key]);
       if (this.datos.confirmada == 0) {
@@ -180,7 +180,7 @@ export class AvisosEntradaComponent implements OnInit {
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
-      data.cliente = this.clientes.find(e => e.id == data.cliente);
+      data.cliente = data.cliente == 0 ? null : this.clientes.find(e => e.id == data.cliente);
       data.coches = this.datos.coches;
       if (this.id == 0) {
         this.avisosService.agregarEntrada(data).subscribe(

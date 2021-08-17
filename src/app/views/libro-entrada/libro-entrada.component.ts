@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { LibroService } from 'src/app/services/libro.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-libro-entrada',
@@ -38,7 +39,7 @@ export class LibroEntradaComponent implements OnInit {
     cobrado: 0,
     cobradoFecha: null,
     cobradoForma: null,
-    cobradoDetalles: null,
+    cobradoDetalle: null,
     gastos: null,
     facturaNombre: null,
     facturaNumero: 0,
@@ -87,7 +88,7 @@ export class LibroEntradaComponent implements OnInit {
     )
     // Crea el formulario
     this.formulario = this.formBuilder.group({
-      salidaFecha: ['', [Validators.required]],
+      salidaFecha: [moment().format("YYYY-MM-DD"), [Validators.required]],
       salidaHora: ['', []],
       salidaLugar: ['', [Validators.required]],
       llegadaFecha: ['', []],
@@ -103,7 +104,7 @@ export class LibroEntradaComponent implements OnInit {
       cobrado: ['', []],
       cobradoFecha: ['', []],
       cobradoForma: ['', []],
-      cobradoDetalles: ['', []],
+      cobradoDetalle: ['', []],
       gastos: ['', []],
       facturaNombre: ['', []],
       facturaNumero: ['', [Validators.min(0)]],
@@ -132,8 +133,8 @@ export class LibroEntradaComponent implements OnInit {
     for (var key in this.formulario.controls) {
       if (key == 'cliente' && this.datos[key]) {
         this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
-      } else if(key == 'cobrado'){
-        this.formulario.controls[key].setValue(this.datos[key]==1, { onlySelf: true });
+      } else if (key == 'cobrado') {
+        this.formulario.controls[key].setValue(this.datos[key] == 1, { onlySelf: true });
       } else
         this.formulario.controls[key].setValue(this.datos[key]);
     }
@@ -273,7 +274,7 @@ export class LibroEntradaComponent implements OnInit {
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
-      data.cliente = this.clientes.find(e => e.id == data.cliente);
+      data.cliente = data.cliente == 0 ? null : this.clientes.find(e => e.id == data.cliente);
       data.coches = [];
       this.datos.coches.forEach(coche => data.coches.push(coche.coche.id != 0 ? coche.coche.id : coche.coche.matricula));
       data.conductores = [];
