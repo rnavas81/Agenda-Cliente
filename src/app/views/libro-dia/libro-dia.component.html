@@ -28,7 +28,7 @@
 <!-- Cuerpo -->
 <main class="container-fluid contenido">
     <div class="row pt-3 " style="height: inherit;">
-        <div *ngIf="this.datos.length>0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
+        <div *ngIf="this.datos.length>0" class="col-sm-12 border-right border-dark">
             <!-- Entradas del día -->
             <div *ngFor="let entrada of datos" [attr.idrow]="entrada.id"
                 class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
@@ -47,11 +47,11 @@
                 </button>
             </div>
         </div>
-        <div *ngIf="this.datos.length == 0" class="col-lg-8 col-md-6 col-sm-12 border-right border-dark">
+        <div *ngIf="this.datos.length == 0" class="col-sm-12 border-right border-dark">
             <h3>No hay entradas hoy</h3>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-        </div>
+        <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+        </div> -->
     </div>
 </main>
 <!-- Modal de calendario -->
