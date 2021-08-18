@@ -38,7 +38,7 @@
                     <div class="flex-1">
                         <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
                         <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
-                        <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
+                        <div><b>Cliente:</b> {{aviso.cliente?aviso.cliente.nombre:""}}</div>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center"
                         title="Confirmar entrada" (click)="modalConfirmar(aviso);confirmarModal.show()">

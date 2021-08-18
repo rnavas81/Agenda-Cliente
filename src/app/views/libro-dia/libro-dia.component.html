@@ -35,7 +35,7 @@
                 <div class="flex-grow-1">
                     <h5 class="pt-1">{{entrada.salidaHora}}</h5>
                     <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
-                    <div><b>Cliente:</b> {{entrada.cliente.nombre}}</div>
+                    <div><b>Cliente:</b> {{entrada.cliente?entrada.cliente.nombre:""}}</div>
                 </div>
                 <button type="button" class="btn btn-sm btn-secondary h-100 align-self-center" title="Editar entrada"
                     (click)="editar(entrada.id)">
