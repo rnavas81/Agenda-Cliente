@@ -31,20 +31,23 @@
         <div *ngIf="this.datos.length>0" class="col-sm-12 border-right border-dark">
             <!-- Entradas del día -->
             <div *ngFor="let entrada of datos" [attr.idrow]="entrada.id"
-                class="border-bottom border-dark d-flex justify-content-md-start justify-content-center">
-                <div class="flex-grow-1">
-                    <h5 class="pt-1">{{entrada.salidaHora}}</h5>
-                    <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
-                    <div><b>Cliente:</b> {{entrada.cliente?entrada.cliente.nombre:""}}</div>
+                class="border-bottom border-dark entrada">
+                <div class="d-flex justify-content-md-start justify-content-center " [class.facturado]="entrada.facturaNombre && entrada.facturaNombre.length>0"
+                    [class.cobrado]="entrada.cobrado==1">
+                    <div class="flex-grow-1">
+                        <h5 class="pt-1">{{entrada.salidaHora}}</h5>
+                        <div><b>Destino:</b> {{entrada.llegadaLugar}}</div>
+                        <div><b>Cliente:</b> {{entrada.cliente?entrada.cliente.nombre:""}}</div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-secondary h-100 align-self-center"
+                        title="Editar entrada" (click)="editar(entrada.id)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
+                        (click)="modalEliminar(entrada.id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </div>
-                <button type="button" class="btn btn-sm btn-secondary h-100 align-self-center" title="Editar entrada"
-                    (click)="editar(entrada.id)">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button type="button" class="btn btn-sm btn-danger h-100 align-self-center" title="Eliminar entrada"
-                    (click)="modalEliminar(entrada.id)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
             </div>
         </div>
         <div *ngIf="this.datos.length == 0" class="col-sm-12 border-right border-dark">
