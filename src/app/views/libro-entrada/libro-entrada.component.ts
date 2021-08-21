@@ -22,6 +22,7 @@ export class LibroEntradaComponent implements OnInit {
   clientes: any = [];
   formulario: FormGroup;
   cargando: boolean = false;
+  toast: any;
   datos: any = {
     salidaFecha: null,
     salidaHora: null,
@@ -67,7 +68,8 @@ export class LibroEntradaComponent implements OnInit {
       (response: any) => this.conductores = response,
       (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
-        else this.mensaje = "Error al recuperar los conductores"
+        else this.toast = { text: "Error al recuperar los conductores", type: 'error' }
+
       }
     )
     // Recupera los coches
@@ -75,7 +77,8 @@ export class LibroEntradaComponent implements OnInit {
       (response: any) => this.coches = response,
       (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
-        else this.mensaje = "Error al recuperar los coches"
+        else this.toast = { text: "Error al recuperar los coches", type: 'error' }
+
       }
     )
     // Recupera los clientes
@@ -83,7 +86,8 @@ export class LibroEntradaComponent implements OnInit {
       (response: any) => this.clientes = response,
       (error: any) => {
         if (error.status === 401) this.usuarioService.salir();
-        else this.mensaje = "Error al recuperar los clientes"
+        else this.toast = { text: "Error al recuperar los clientes", type: 'error' }
+
       }
     )
     // Crea el formulario
@@ -118,7 +122,7 @@ export class LibroEntradaComponent implements OnInit {
         (response: any) => this.cargarDatos(response),
         (error: any) => {
           if (error.status === 401) this.usuarioService.salir();
-          else this.mensaje = "Error al recuperar los datos"
+          else this.toast = { text: "Error al recuperar los datos", type: 'error' }
         }
       );
     }
@@ -271,6 +275,7 @@ export class LibroEntradaComponent implements OnInit {
   onSubmit = () => {
     this.mensaje = "";
     var data = this.formulario.value;
+    this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
@@ -285,7 +290,8 @@ export class LibroEntradaComponent implements OnInit {
           response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
-            else this.mensaje = "Error al guardar los datos"
+            else this.toast = { text: "Error al guardar los datos", type: 'error' }
+
           }
         )
       } else {
@@ -293,14 +299,27 @@ export class LibroEntradaComponent implements OnInit {
           response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
-            else this.mensaje = "Error al guardar los datos"
+            else this.toast = { text: "Error al guardar los datos", type: 'error' }
           }
         )
       }
       this.cargando = false;
       document.getElementById('btn-guardar').classList.remove('disabled');
     } else {
+      Object.keys(this.formulario.controls).forEach(key => {
+        if (this.formulario.controls[key].status == "INVALID") {
+          var campo = "";
+          if(document.querySelector(`label[for="${key}"]`)) {
+            setTimeout(() => {
+              if(document.querySelector(`label[for="${key}"]`).innerHTML=='Lugar' && key=="salidaLugar")campo = "Lugar de salida";
+              else if(document.querySelector(`label[for="${key}"]`).innerHTML=='Lugar' && key=="llegadaLugar")campo = "Lugar de llegada";
+              else campo = document.querySelector(`label[for="${key}"]`).innerHTML;
 
+              this.toast = { text: `Error en el campo ${campo}`, type: 'error' }              
+            }, 100);
+          }
+        }
+      });
     }
 
   }

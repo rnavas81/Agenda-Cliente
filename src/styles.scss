@@ -10,6 +10,11 @@ Hoja de estilo para la aplicación
   background-color: map-get($map: $theme-colors, $key: 'primary');
   border-color: map-get($map: $theme-colors, $key: 'primary');
 }
+.btn-success:focus, .btn-success.focus {
+  background-color: map-get($map: $theme-colors, $key: 'success');
+  border-color: map-get($map: $theme-colors, $key: 'success');
+
+}
 
 body {
   min-height: 100vh;

@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
       password:['', [Validators.maxLength(32),Validators.minLength(8)]],
       password2:['', [Validators.maxLength(32),Validators.minLength(8)]],
     });
-    console.log(this.user);
   }
 
   onSubmit(){
@@ -49,7 +48,6 @@ export class ProfileComponent implements OnInit {
       delete (data.password2);
       this.user.save(data).subscribe(
         (response: any) => {
-          console.log(response);
           this.toast = { text: 'Cambios guardados', type: 'success' }
           this.user.set(response);
         }, (error: any) => {
