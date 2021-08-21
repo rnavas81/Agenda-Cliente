@@ -1,5 +1,7 @@
 <!-- Cabecera -->
 <app-header selected="libro"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
 <!-- Cuerpo -->
 <main class="">
     <form class="align-self-center container-xl" [formGroup]="formulario" (ngSubmit)="onSubmit()">

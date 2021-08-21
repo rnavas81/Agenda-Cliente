@@ -40,6 +40,7 @@ export class AvisosEntradaComponent implements OnInit {
     respuestaDetalle: '',
     confirmada: 0
   };
+  toast: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -103,9 +104,9 @@ export class AvisosEntradaComponent implements OnInit {
 
     for (var key in this.formulario.controls) {
       if (key == 'cliente')
-        this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
-      else
-        this.formulario.controls[key].setValue(this.datos[key]);
+        if (this.datos[key]) this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
+        else
+          this.formulario.controls[key].setValue(this.datos[key]);
       if (this.datos.confirmada == 0) {
         this.formulario.get(key).enable();
       }
@@ -176,18 +177,19 @@ export class AvisosEntradaComponent implements OnInit {
 
   onSubmit = () => {
     this.mensaje = "";
-    const data = this.formulario.value;
+    var data = this.formulario.value;
+    this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);
     if (this.formulario.valid) {
       this.cargando = true;
       document.getElementById('btn-guardar').classList.add('disabled');
-      data.cliente = data.cliente == 0 ? null : this.clientes.find(e => e.id == data.cliente);
+      data.cliente = data.cliente > 0 ? this.clientes.find(e => e.id == data.cliente) : null;
       data.coches = this.datos.coches;
       if (this.id == 0) {
         this.avisosService.agregarEntrada(data).subscribe(
           response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
-            else this.mensaje = "Error al guardar los datos"
+            else this.toast = { text: 'Error al guardar los datos', type: 'error' }
           }
         )
       } else {
@@ -195,13 +197,19 @@ export class AvisosEntradaComponent implements OnInit {
           response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
           error => {
             if (error.status === 401) this.usuarioService.salir();
-            else this.mensaje = "Error al guardar los datos"
+            else this.toast = { text: 'Error al guardar los datos', type: 'error' }
           }
         )
       }
       this.cargando = false;
       document.getElementById('btn-guardar').classList.remove('disabled');
     } else {
+      Object.keys(this.formulario.controls).forEach(key => {
+        if (!this.formulario.controls[key].valid) {
+          var campo = document.querySelector(`label[for="${key}"]`).textContent;
+          this.toast = { text: `Error en el campo ${campo}`, type: 'error' }
+        }
+      });
 
     }
 

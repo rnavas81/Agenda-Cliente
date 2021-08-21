@@ -111,7 +111,6 @@ export class AvisosDiaComponent implements OnInit {
     });
     this.avisosService.confirmarEntrada(this.seleccionado.id, coches).subscribe(
       (response: any) => {
-        console.log(response);        
         const index = this.datos.findIndex(e => e.id == response.id);
         this.datos.splice(index, 1);
         document.getElementById('confirmar-modal-close').click();
