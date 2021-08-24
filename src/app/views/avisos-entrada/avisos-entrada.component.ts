@@ -101,12 +101,10 @@ export class AvisosEntradaComponent implements OnInit {
   cargarDatos = (data = null) => {
     if (!!data) this.datos = data;
     this.datos.created_at = moment(this.datos.created_at);
-
     for (var key in this.formulario.controls) {
-      if (key == 'cliente')
-        if (this.datos[key]) this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
+      if (key == 'cliente' && this.datos[key]) this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
         else
-          this.formulario.controls[key].setValue(this.datos[key]);
+          this.formulario.controls[key].setValue(this.datos[key], { onlySelf: true });
       if (this.datos.confirmada == 0) {
         this.formulario.get(key).enable();
       }
@@ -178,6 +176,8 @@ export class AvisosEntradaComponent implements OnInit {
   onSubmit = () => {
     this.mensaje = "";
     var data = this.formulario.value;
+    console.log(this.datos,this.formulario.value);
+    
     this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);
     if (this.formulario.valid) {
       this.cargando = true;
