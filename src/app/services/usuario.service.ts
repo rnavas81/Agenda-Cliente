@@ -109,7 +109,7 @@ export class UsuarioService {
       }
     );
   }
-  save(data){
+  save(data) {
     const url = `${environment.API_SERVER}/user`;
     const extra = {
       headers: new HttpHeaders({
@@ -120,5 +120,64 @@ export class UsuarioService {
     }
     return this.http.put(url, data, extra);
 
+  }
+  /**
+   * Recupera los usuarios del sistema
+   * @returns Lista de usuarios
+   */
+  getUsers() {
+    const url = `${environment.API_SERVER}/users`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  get(id) {
+    const url = `${environment.API_SERVER}/user/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  delete(id) {
+    const url = `${environment.API_SERVER}/user/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.delete(url, extra);
+  }
+  create(data) {
+    const url = `${environment.API_SERVER}/user`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.post(url, data, extra);
+  }
+  update(id, data) {
+    const url = `${environment.API_SERVER}/user/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, data, extra);
   }
 }
