@@ -11,6 +11,8 @@ import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
 import { ProfileComponent } from "./views/profile/profile.component";
+import { UsuarioComponent } from "./views/usuario/usuario.component";
+import { UsuariosComponent } from "./views/usuarios/usuarios.component";
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate:[TestLoginService] },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: "libro", component: LibroComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia", component: LibroDiaComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia/entrada", component: LibroEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "usuarios", component: UsuariosComponent, canActivate: [IsLoggedService] },
+  { path: "usuario", component: UsuarioComponent, canActivate: [IsLoggedService] },
   { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 

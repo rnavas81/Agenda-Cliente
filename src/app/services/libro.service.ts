@@ -64,7 +64,7 @@ export class LibroService {
 
   // Agrega una nueva entrada
   agregarEntrada = data => {
-    const url = this.url + ``;
+    const url = this.url;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
