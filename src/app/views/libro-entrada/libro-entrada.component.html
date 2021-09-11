@@ -4,11 +4,11 @@
 <app-toast [toast]="this.toast"></app-toast>
 <!-- Cuerpo -->
 <main class="">
-    <form class="align-self-center container-xl" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="align-self-center container-fluid" [formGroup]="formulario" (ngSubmit)="onSubmit()">
         <div class="row">
             <span class="text-danger col-12 text-center">{{mensaje}}</span>
         </div>
-        <ul class="nav nav-tabs mb-3 col-12 row" role="tablist">
+        <ul class="nav nav-tabs mb-3 row" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="tab-1" data-mdb-toggle="tab" (click)="showTab(1)" role="tab"
                     aria-controls="tabs-1" aria-selected="true">Datos básicos</a>

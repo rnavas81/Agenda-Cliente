@@ -1,0 +1,57 @@
+#toolbar {
+    label {
+        color: whitesmoke;
+        min-width: 80px;
+    }
+    #campos-busqueda {
+        transition: all 1.5s ease-in-out;
+        height: 0;
+        overflow: hidden;
+    }
+    #campos-busqueda {
+        &.abierto {
+            height: 350px;
+        }
+        // Small devices (landscape phones, 576px and up)
+        @media (min-width: 576px) {
+            &.abierto {
+                height: 300px;
+            }
+
+        }
+
+        // Medium devices (tablets, 768px and up)
+        @media (min-width: 768px) {
+            &.abierto {
+                height: 250px;
+            }            
+        }
+        // Large devices (desktops, 992px and up)
+        @media (min-width: 992px) { 
+            &.abierto {
+                height: 220px;
+            }            
+        }
+        
+        // Extra large devices (large desktops, 1200px and up)
+        @media (min-width: 1200px) { 
+            &.abierto {
+                height: 180px;
+            }            
+        }
+    }
+}
+main {
+    table {
+        td {
+            tr {
+                &.cobrado {
+                    background-color: var(--cobrado);
+                }
+            }
+            &.cargando {
+                padding: 200px;
+            }
+        }
+    }
+}
