@@ -101,12 +101,10 @@ export class AvisosEntradaComponent implements OnInit {
   cargarDatos = (data = null) => {
     if (!!data) this.datos = data;
     this.datos.created_at = moment(this.datos.created_at);
-
     for (var key in this.formulario.controls) {
-      if (key == 'cliente')
-        if (this.datos[key]) this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
-        else
-          this.formulario.controls[key].setValue(this.datos[key]);
+      if (key == 'cliente' && this.datos[key]) this.formulario.controls[key].setValue(this.datos[key].id, { onlySelf: true });
+      else
+        this.formulario.controls[key].setValue(this.datos[key], { onlySelf: true });
       if (this.datos.confirmada == 0) {
         this.formulario.get(key).enable();
       }
@@ -186,16 +184,16 @@ export class AvisosEntradaComponent implements OnInit {
       data.coches = this.datos.coches;
       if (this.id == 0) {
         this.avisosService.agregarEntrada(data).subscribe(
-          response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
-          error => {
+          response => this.volver()
+          , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: 'Error al guardar los datos', type: 'error' }
           }
         )
       } else {
         this.avisosService.modificarEntrada(this.id, data).subscribe(
-          response => this.router.navigate(["/avisos/dia"], { fragment: this.datos.salidaFecha }),
-          error => {
+          response => this.volver()
+          , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: 'Error al guardar los datos', type: 'error' }
           }

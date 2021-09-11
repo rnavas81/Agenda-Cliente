@@ -111,8 +111,8 @@ export class AvisosDiaComponent implements OnInit {
     });
     this.avisosService.confirmarEntrada(this.seleccionado.id, coches).subscribe(
       (response: any) => {
-        const index = this.datos.findIndex(e => e.id == response.id);
-        this.datos.splice(index, 1);
+        const index = this.datos.pendientes.findIndex(e => e.id == response.id);
+        this.datos.pendientes.splice(index, 1);
         document.getElementById('confirmar-modal-close').click();
         this.seleccionado = null;
       }, (error: any) => {
@@ -129,7 +129,7 @@ export class AvisosDiaComponent implements OnInit {
    * @param id 
    */
   modalEliminar(id) {
-    this.seleccionado = this.datos.find(x => x.id == id);
+    this.seleccionado = this.datos.pendientes.find(x => x.id == id);
     document.getElementById('borrar-modal-open').click();
   }
   // TODO:incluir mensajes de feedback
@@ -139,8 +139,8 @@ export class AvisosDiaComponent implements OnInit {
   eliminar() {
     this.avisosService.eliminarEntrada(this.seleccionado.id).subscribe(
       (response: any) => {
-        const index = this.datos.findIndex(e => e.id == this.seleccionado);
-        this.datos.splice(index, 1);
+        const index = this.datos.pendientes.findIndex(e => e.id == this.seleccionado);
+        this.datos.pendientes.splice(index, 1);
         document.getElementById('borrar-modal-close').click();
         this.seleccionado = null;
 

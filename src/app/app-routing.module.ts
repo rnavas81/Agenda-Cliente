@@ -5,12 +5,15 @@ import { TestLoginService } from "./security/test-login.service";
 import { AvisosDiaComponent } from "./views/avisos-dia/avisos-dia.component";
 import { AvisosEntradaComponent } from "./views/avisos-entrada/avisos-entrada.component";
 import { AvisosComponent } from "./views/avisos/avisos.component";
+import { BuscadorComponent } from "./views/buscador/buscador.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
 import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
 import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
 import { MainComponent } from "./views/main/main.component";
 import { ProfileComponent } from "./views/profile/profile.component";
+import { UsuarioComponent } from "./views/usuario/usuario.component";
+import { UsuariosComponent } from "./views/usuarios/usuarios.component";
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate:[TestLoginService] },
@@ -23,6 +26,9 @@ const routes: Routes = [
   { path: "libro", component: LibroComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia", component: LibroDiaComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia/entrada", component: LibroEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "usuarios", component: UsuariosComponent, canActivate: [IsLoggedService] },
+  { path: "usuario", component: UsuarioComponent, canActivate: [IsLoggedService] },
+  { path: "buscador", component: BuscadorComponent, canActivate: [IsLoggedService] },
   { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 

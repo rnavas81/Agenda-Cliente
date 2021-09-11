@@ -17,12 +17,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { LibroComponent } from './views/libro/libro.component';
 import { LibroDiaComponent } from './views/libro-dia/libro-dia.component';
 import { LibroEntradaComponent } from './views/libro-entrada/libro-entrada.component';
+import { UsuariosComponent } from './views/usuarios/usuarios.component';
 
 /************* SEGURIDAD *************/
 import { IsLoggedService } from './security/is-logged.service';
 import { TestLoginService } from './security/test-login.service';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { UsuarioComponent } from './views/usuario/usuario.component';
+import { BuscadorComponent } from './views/buscador/buscador.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { ToastComponent } from './components/toast/toast.component';
     LibroEntradaComponent,
     ProfileComponent,
     ToastComponent,
+    UsuariosComponent,
+    UsuarioComponent,
+    BuscadorComponent,
   ],
   imports: [
     BrowserModule,
