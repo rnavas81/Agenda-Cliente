@@ -287,8 +287,8 @@ export class LibroEntradaComponent implements OnInit {
       data.cobrado = data.cobrado ? 1 : 0;
       if (this.id == 0) {
         this.libroService.agregarEntrada(data).subscribe(
-          response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
-          error => {
+          response => this.volver()
+          , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: "Error al guardar los datos", type: 'error' }
 
@@ -296,8 +296,8 @@ export class LibroEntradaComponent implements OnInit {
         )
       } else {
         this.libroService.modificarEntrada(this.id, data).subscribe(
-          response => this.router.navigate(["/libro/dia"], { fragment: this.datos.salidaFecha }),
-          error => {
+          response => this.volver()
+          , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: "Error al guardar los datos", type: 'error' }
           }
@@ -309,13 +309,13 @@ export class LibroEntradaComponent implements OnInit {
       Object.keys(this.formulario.controls).forEach(key => {
         if (this.formulario.controls[key].status == "INVALID") {
           var campo = "";
-          if(document.querySelector(`label[for="${key}"]`)) {
+          if (document.querySelector(`label[for="${key}"]`)) {
             setTimeout(() => {
-              if(document.querySelector(`label[for="${key}"]`).innerHTML=='Lugar' && key=="salidaLugar")campo = "Lugar de salida";
-              else if(document.querySelector(`label[for="${key}"]`).innerHTML=='Lugar' && key=="llegadaLugar")campo = "Lugar de llegada";
+              if (document.querySelector(`label[for="${key}"]`).innerHTML == 'Lugar' && key == "salidaLugar") campo = "Lugar de salida";
+              else if (document.querySelector(`label[for="${key}"]`).innerHTML == 'Lugar' && key == "llegadaLugar") campo = "Lugar de llegada";
               else campo = document.querySelector(`label[for="${key}"]`).innerHTML;
 
-              this.toast = { text: `Error en el campo ${campo}`, type: 'error' }              
+              this.toast = { text: `Error en el campo ${campo}`, type: 'error' }
             }, 100);
           }
         }
