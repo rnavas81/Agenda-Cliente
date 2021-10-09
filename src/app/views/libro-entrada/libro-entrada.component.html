@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 pt-0 pt-sm-3 px-5">
-                        <h5>Llegada</h5>
+                        <h5>{{labels.destino}}</h5>
                         <div class="form-group d-flex">
                             <div class="mr-auto">
                                 <label for="llegadaFecha">Fecha</label>
@@ -99,7 +99,7 @@
                 <div class="row">
                     <div class="col-12 px-5 mb-3">
                         <div class="form-group d-flex">
-                            <label class="align-self-center m-0 mr-3 required" for="cliente">Cliente</label>
+                            <label class="align-self-center m-0 mr-3 required" for="cliente">{{labels.cliente}}</label>
                             <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
                                 <option value="0" selected></option>
                                 <option *ngFor="let cliente of clientes" [value]="cliente.id">
@@ -142,7 +142,7 @@
                                 title="Agregar un coche">
                                 <i class="fas fa-plus"></i>
                             </button>
-                            <label class="m-0" for="coches">Coches</label>
+                            <label class="m-0" for="coches">{{labels.vehiculos}}</label>
                         </div>
                         <div id="coches" class="d-flex flex-wrap flex-column">
                             <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group"
@@ -172,8 +172,8 @@
                             <label class="align-self-center m-0 mr-3">Importe</label>
                             <input class="form-control text-right" type="number" formControlName="importe"
                                 test-id="importe" [value]="datos.importe">
-                            <i class="align-self-center fas fa-euro-sign cursor-default"></i>
-                            <div class="form-check">
+                            <i class="align-self-center fas fa-euro-sign cursor-default mr-2"></i>
+                            <div class="form-check align-self-center">
                                 <input type="checkbox" class="form-check-input" formControlName="cobrado"
                                     test-id="cobrado">
                                 <label class="form-check-label" for="cobrado">Cobrado</label>
@@ -207,12 +207,12 @@
                 </div>
                 <div class="row">
                     <div class="col-12 form-group px-5">
-                        <label for="facturaNombre">Nombre de factura</label>
+                        <label for="facturaNombre">{{labels.factura_a}}</label>
                         <input type="text" class="form-control" formControlName="facturaNombre" test-id="facturaNombre"
                             [value]="datos.facturaNombre">
                     </div>
                     <div class="col-12 form-group px-5">
-                        <label for="facturaNumero">Numero de factura</label>
+                        <label for="facturaNumero">{{labels.factura_numero}}</label>
                         <input type="number" class="form-control" formControlName="facturaNumero"
                             test-id="facturaNumero" [value]="datos.facturaNumero">
                     </div>
@@ -240,7 +240,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Lista de coches</h5>
+                <h5 class="modal-title">{{labels.vehiculos_lista}}</h5>
                 <button type="button" class="close" (click)="cochesModal.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -312,7 +312,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar cliente</h5>
+                <h5 class="modal-title">{{labels.cliente_agregar}}</h5>
                 <button type="button" class="close" (click)="clienteModal.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

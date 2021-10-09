@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
+import { language } from "src/app/languages/es-es";
 import { FechasService } from "src/app/services/fechas.service";
 import { LibroService } from "src/app/services/libro.service";
 import { UsuarioService } from "src/app/services/usuario.service";
@@ -14,6 +15,7 @@ export class LibroComponent implements OnInit {
   fecha: any;
   datos: any;
   isLoading: boolean = false;
+  labels = language;
 
   constructor(
     private router: Router,

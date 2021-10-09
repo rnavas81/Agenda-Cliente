@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from "moment";
+import { language } from "src/app/languages/es-es";
 import { AvisosService } from "src/app/services/avisos.service";
 import { FechasService } from "src/app/services/fechas.service";
 import { UsuarioService } from "src/app/services/usuario.service";
@@ -19,6 +20,7 @@ export class AvisosComponent implements OnInit {
   seleccionado: any = 0;
   confirmarCoches: any = [];
   coches: any = [];
+  labels = language;
 
   constructor(
     private router: Router,
@@ -78,8 +80,8 @@ export class AvisosComponent implements OnInit {
     let coches = [];
     document.querySelectorAll("[name='confirmar-coches']:checked").forEach((cocheInput: HTMLInputElement) => {
       const c = {
-        coche:this.coches[cocheInput.getAttribute('idCoche')].toUpperCase(),
-        presupuesto:cocheInput.getAttribute('presupuesto'),
+        coche: this.coches[cocheInput.getAttribute('idCoche')].toUpperCase(),
+        presupuesto: cocheInput.getAttribute('presupuesto'),
       };
       coches.push(c);
     });
