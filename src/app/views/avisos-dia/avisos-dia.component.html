@@ -37,8 +37,8 @@
                     [class.rounded]="aviso.confirmada== 0 && aviso.respuestaFecha !=null">
                     <div class="flex-1">
                         <div class="h5 m-0 pt-1">{{aviso.salidaHora}}</div>
-                        <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
-                        <div><b>Cliente:</b> {{aviso.cliente?aviso.cliente.nombre:""}}</div>
+                        <div><b>{{labels.destino}}:</b> {{aviso.llegadaLugar}}</div>
+                        <div><b>{{labels.cliente}}:</b> {{aviso.cliente?aviso.cliente.nombre:""}}</div>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary h-100 align-self-center"
                         title="Confirmar entrada" (click)="modalConfirmar(aviso);confirmarModal.show()">
@@ -64,8 +64,8 @@
                 class="border-bottom border-dark d-flex justify-content-md-start justify-content-center confirmado">
                 <h5 class="mr-3 align-self-center">{{aviso.salidaHora}}</h5>
                 <div class="flex-1">
-                    <div><b>Destino:</b> {{aviso.llegadaLugar}}</div>
-                    <div><b>Cliente:</b> {{aviso.cliente.nombre}}</div>
+                    <div><b>{{labels.destino}}:</b> {{aviso.llegadaLugar}}</div>
+                    <div><b>{{labels.cliente}}:</b> {{aviso.cliente.nombre}}</div>
                 </div>
                 <button type="submit" class="btn btn-sm btn-secondary align-self-center" title="Eliminar entrada"
                     (click)="abrirEntrada(aviso.id)">
@@ -132,7 +132,7 @@
             <div class="modal-body">
                 <p>Va a confirmar esta entrada</p>
                 <p *ngIf="confirmarCoches.length>0">
-                    Selecciona los vehiculos para confirmar
+                    {{labels.vehiculos_confirmar}}
                 </p>
                 <div *ngFor="let coche of confirmarCoches" class="d-flex">
                     <input class="form-control-sm mr-1" type="checkbox" name="confirmar-coches"

@@ -39,7 +39,7 @@
                     <input type="text" class="form-control flex-1" formControlName="salida" test-id="salida">
                 </div>
                 <div class="form-group form-inline flex-fill">
-                    <label class="mr-2 align-self-center justify-content-start" for="llegada">Llegada</label>
+                    <label class="mr-2 align-self-center justify-content-start" for="llegada">{{labels.destino}}</label>
                     <input type="text" class="form-control flex-1" formControlName="llegada" test-id="llegada">
                 </div>
             </div>
@@ -52,45 +52,6 @@
                     </option>
                 </select>
             </div>
-            <!-- <div class="form-group form-inline flex-fill">
-                <div class="w-50">
-                    <div>
-                        <label class="mr-2" for="">Conductores</label>
-                        <button class="btn btn-sm btn-light" title="Agregar coche" (click)="conductoresModal.show()">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div id="conductores" class="d-flex flex-wrap flex-column">
-                        <div *ngFor="let conductor of buscarConductores;index as i" class="d-flex form-group">
-                            <input class="form-control bg-light text-uppercase w-responsive" type="text" disabled
-                                [value]="conductor.nombre">
-                            <button class="btn btn-sm btn-danger eliminar-item" type="button"
-                                (click)="eliminarItem($event,1,i)">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-50">
-                    <div>
-                        <label class="mr-2" for="">Coches</label>
-                        <button class="btn btn-sm btn-light" title="Agregar coche" (click)="cochesModal.show();">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="d-flex flex-wrap flex-column">
-                        <div *ngFor="let coche of buscarCoches;index as i" class="d-flex form-group">
-                            <input class="form-control bg-light text-uppercase w-responsive" type="text" disabled
-                                [value]="coche.matricula">
-                            <button class="btn btn-sm btn-danger eliminar-item" type="button"
-                                (click)="eliminarItem($event,2,i)">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
         </form>
     </div>
     <div class="btn-toolbar justify-content-between">
@@ -118,11 +79,11 @@
         <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Fecha Salida</th>
-                <th scope="col">Fecha Llegada</th>
-                <th scope="col d-sm-none">Lugar Salida</th>
-                <th scope="col">Lugar Llegada</th>
-                <th scope="col">Cliente</th>
+                <th scope="col">{{labels.fecha_salida}}</th>
+                <th scope="col">{{labels.fecha_destino}}</th>
+                <th scope="col d-sm-none">{{labels.lugar_salida}}</th>
+                <th scope="col">{{labels.lugar_destino}}</th>
+                <th scope="col">{{labels.cliente}}</th>
                 <th scope="col" class="botones"></th>
             </tr>
         </thead>
@@ -154,60 +115,3 @@
         </tbody>
     </table>
 </main>
-
-<!-- Modal de coches -->
-<!-- <div mdbModal #cochesModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cochesModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Lista de coches</h5>
-                <button type="button" class="close" (click)="cochesModal.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-left">
-                <select #cochesModalSelect class="form-control mb-2" test-id="conductores-modal">
-                    <option value="0" selected></option>
-                    <option *ngFor="let coche of filtrarCoches()" [value]="coche.id">
-                        {{coche.matricula.toUpperCase()}}
-                    </option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                    (click)="agregarItem(2,cochesModalSelect.value)">Agregar</button>
-                <button id="coches-modal-close" type="button" class="btn btn-danger"
-                    (click)="cochesModal.hide()">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- Modal de conductores -->
-<!-- <div mdbModal #conductoresModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="conductoresModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Lista de conductores</h5>
-                <button type="button" class="close" (click)="conductoresModal.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-left">
-                <select #conductorModalSelect class="form-control mb-2" test-id="conductores-modal">
-                    <option value="0" selected></option>
-                    <option *ngFor="let conductor of filtrarConductores()" [value]="conductor.id">
-                        {{conductor.nombre.toUpperCase()}}
-                    </option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                    (click)="agregarItem(1,conductorModalSelect.value)">Agregar</button>
-                <button id="conductores-modal-close" type="button" class="btn btn-danger"
-                    (click)="conductoresModal.hide()">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div> -->

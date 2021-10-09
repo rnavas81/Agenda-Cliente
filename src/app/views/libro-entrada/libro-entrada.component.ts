@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { LibroService } from 'src/app/services/libro.service';
 import * as moment from 'moment';
+import { language } from 'src/app/languages/es-es';
 
 @Component({
   selector: 'app-libro-entrada',
@@ -48,6 +49,7 @@ export class LibroEntradaComponent implements OnInit {
     coches: [],
     conductores: [],
   };
+  labels = language;
 
   constructor(
     private formBuilder: FormBuilder,
