@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as moment from 'moment';
 import { coches } from 'src/environments/environment';
+import { language } from 'src/app/languages/es-es';
 
 @Component({
   selector: 'app-avisos-entrada',
@@ -41,6 +42,7 @@ export class AvisosEntradaComponent implements OnInit {
     confirmada: 0
   };
   toast: any;
+  labels = language;
 
   constructor(
     private formBuilder: FormBuilder,

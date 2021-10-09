@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { language } from 'src/app/languages/es-es';
 import { LibroService } from 'src/app/services/libro.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -14,6 +15,7 @@ export class LibroDiaComponent implements OnInit {
   datos: any;
   modalBorrar: any;
   seleccionado: number = null;
+  labels = language;
 
   constructor(
     private router: Router,

@@ -47,7 +47,8 @@
             </div>
             <!-- @foreach($dia AS $entrada) -->
             <div *ngFor="let viaje of dia.value" class="border-bottom border-grey py-1 entrada">
-                <div [class.facturado]="viaje.facturaNombre && viaje.facturaNombre.length>0" [class.cobrado]="viaje.cobrado==1">
+                <div [class.facturado]="viaje.facturaNombre && viaje.facturaNombre.length>0"
+                    [class.cobrado]="viaje.cobrado==1">
                     <div class="py-1 d-flex">
                         <div class="flex-1">
                             {{viaje.salidaHora}}
@@ -64,7 +65,7 @@
                         <div>
                             {{viaje.llegadaLugar}}
                         </div>
-                        <b>Cliente:</b>
+                        <b>{{labels.cliente}}:</b>
                         <div *ngIf="viaje.cliente">
                             {{viaje.cliente.nombre}}
                         </div>
