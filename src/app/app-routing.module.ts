@@ -6,6 +6,7 @@ import { AvisosDiaComponent } from "./views/avisos-dia/avisos-dia.component";
 import { AvisosEntradaComponent } from "./views/avisos-entrada/avisos-entrada.component";
 import { AvisosComponent } from "./views/avisos/avisos.component";
 import { BuscadorComponent } from "./views/buscador/buscador.component";
+import { ExportComponent } from "./views/export/export.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
 import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
 import { LibroComponent } from "./views/libro/libro.component";
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent, canActivate: [IsLoggedService] },
   { path: "usuario", component: UsuarioComponent, canActivate: [IsLoggedService] },
   { path: "buscador", component: BuscadorComponent, canActivate: [IsLoggedService] },
+  { path: "exportar", component: ExportComponent, canActivate: [IsLoggedService] },
   { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 

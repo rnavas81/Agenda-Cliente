@@ -2,6 +2,9 @@
  * Variables de idioma
  */
 export const language = {
+    // COMUNES
+    cualquiera: "Cualquiera",
+    // CAMPOS ESPECIFICOS
     aviso: "Aviso",
     avisos: "Avisos",
     destino: "Destino",
@@ -15,6 +18,10 @@ export const language = {
     vehiculos: "Vehículos",
     vehiculos_lista: "Lista de vehículos",
     vehiculos_confirmar: "Selecciona los vehículos para confirmar",
-    factura_a: "Facturar a",
+    facturar_a: "Facturar a",
     factura_numero: "Número de factura",
+    viajes_para: "Para viajes",
+    importe:'Importe',
+    cobrado:'Cobrado',
+    fecha_cobro:'Fecha de cobro'
 }

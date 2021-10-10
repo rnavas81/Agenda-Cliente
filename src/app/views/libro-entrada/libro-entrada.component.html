@@ -4,7 +4,7 @@
 <app-toast [toast]="this.toast"></app-toast>
 <!-- Cuerpo -->
 <main class="">
-    <form class="align-self-center container-fluid" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="align-self-center container-fluid" [formGroup]="formulario" >
         <div class="row">
             <span class="text-danger col-12 text-center">{{mensaje}}</span>
         </div>
@@ -207,9 +207,15 @@
                 </div>
                 <div class="row">
                     <div class="col-12 form-group px-5">
-                        <label for="facturaNombre">{{labels.factura_a}}</label>
-                        <input type="text" class="form-control" formControlName="facturaNombre" test-id="facturaNombre"
-                            [value]="datos.facturaNombre">
+                        <label for="facturarA">{{labels.facturar_a}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="facturarA" test-id="facturarA"
+                            [value]="datos.facturarA"> -->
+                        <select class="form-control" formControlName="facturarA" test-id="facturarA">
+                            <option value="0" selected></option>
+                            <option *ngFor="let cliente of clientes" [value]="cliente.id">
+                                {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-12 form-group px-5">
                         <label for="facturaNumero">{{labels.factura_numero}}</label>
@@ -222,7 +228,7 @@
         </div>
         <div class="row">
             <div class="col-12 mb-5 d-flex justify-content-center">
-                <button type="submit" id='btn-guardar' id-test='btn-guardar' type="submit" class="btn btn-success mx-2">
+                <button type="submit" id='btn-guardar' id-test='btn-guardar' type="submit" class="btn btn-success mx-2" (click)="onSubmit()">
                     <i *ngIf="cargando" class="fa fa-spinner fa-spin"></i>
                     {{ id==0 && "Crear" || "Modificar" }}
                 </button>
