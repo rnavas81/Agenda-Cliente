@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { language } from 'src/app/languages/es-es';
 import { AvisosService } from 'src/app/services/avisos.service';
 import { FechasService } from 'src/app/services/fechas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -17,6 +18,7 @@ export class AvisosDiaComponent implements OnInit {
   seleccionado: any = null;
   confirmarCoches: any = [];
   coches: any = [];
+  labels = language;
 
   constructor(
     private router: Router,
