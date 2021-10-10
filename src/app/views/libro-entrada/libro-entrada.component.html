@@ -208,8 +208,6 @@
                 <div class="row">
                     <div class="col-12 form-group px-5">
                         <label for="facturarA">{{labels.facturar_a}}</label>
-                        <!-- <input type="text" class="form-control" formControlName="facturarA" test-id="facturarA"
-                            [value]="datos.facturarA"> -->
                         <select class="form-control" formControlName="facturarA" test-id="facturarA">
                             <option value="0" selected></option>
                             <option *ngFor="let cliente of clientes" [value]="cliente.id">
