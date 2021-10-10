@@ -114,7 +114,16 @@ export class AvisosEntradaComponent implements OnInit {
   }
 
   volver = () => {
-    this._location.back();
+    if (history.length > 1) {
+      this._location.back();
+    } else {
+      if (this.id == 0) {
+        this.router.navigate([`/avisos`]);
+      } else {
+        var date = this.formulario.controls["salidaFecha"].value;
+        this.router.navigate([`/avisos`], { fragment: moment(date).format("YYYY-MM-DD") });
+      }
+    }
   }
   eliminarItem = (event, tipo, index) => {
     // event.target.parentNode.parentNode.remove();
@@ -186,7 +195,9 @@ export class AvisosEntradaComponent implements OnInit {
       data.coches = this.datos.coches;
       if (this.id == 0) {
         this.avisosService.agregarEntrada(data).subscribe(
-          response => this.volver()
+          response => {
+            this.toast = { text: 'Datos guardados correctamente', type: 'success' }
+          }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: 'Error al guardar los datos', type: 'error' }
@@ -194,7 +205,9 @@ export class AvisosEntradaComponent implements OnInit {
         )
       } else {
         this.avisosService.modificarEntrada(this.id, data).subscribe(
-          response => this.volver()
+          response => {
+            this.toast = { text: 'Datos guardados correctamente', type: 'success' }
+          }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: 'Error al guardar los datos', type: 'error' }

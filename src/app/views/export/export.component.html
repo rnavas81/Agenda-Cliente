@@ -1,0 +1,39 @@
+<main class="container-fluid py-2">
+    <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center" scope="col">{{labels.fecha_salida}}</th>
+                <th class="text-center" scope="col">{{labels.fecha_destino}}</th>
+                <th class="text-center" scope="col">{{labels.lugar_destino}}</th>
+                <th class="text-center" scope="col d-sm-none">{{labels.importe}}</th>
+                <th class="text-center" scope="col d-sm-none">{{labels.cobrado}}</th>
+                <th class="text-center" scope="col d-sm-none">{{labels.fecha_cobro}}</th>
+                <th class="text-center" scope="col">{{labels.factura_numero}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of datos;index as i" class="cursor-default">
+                <td class="text-center">{{fechasService.formatoLocal(row.salidaFecha)}}</td>
+                <td class="text-center">{{fechasService.formatoLocal(row.llegadaFecha)}}</td>
+                <td>{{row.llegadaLugar}}</td>
+                <td class="text-right">
+                    <div *ngIf="row.tipo == 2">{{row.importe}} <i class="fas fa-euro-sign"></i></div>
+                </td>
+                <td>
+                    <div *ngIf="row.tipo == 2">
+                        {{row.cobrado == 0 ? 'NO' : 'SI'}}
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div *ngIf="row.tipo == 2">
+                        {{row.cobradoFecha && fechasService.formatoLocal(row.cobradoFecha)}}
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="row.tipo == 2">{{row.facturaNumero}}</div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</main>
