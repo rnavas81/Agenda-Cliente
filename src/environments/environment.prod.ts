@@ -1,9 +1,10 @@
 export const environment = {
   production: true,
-  API_SERVER:'https://gestion-bus.herokuapp.com/public/api',
+  API_SERVER: 'https://gestion-bus.herokuapp.com/public/api',
   LOCALSTORAGE_REMEMBERME: 'be26111bec3ebb835635c6bd05c0771b-c9cea9e467b22aca08a0002d23e2385d',
-  SESSIONSTORAGE_USER:     'be26111bec3ebb835635c6bd05c0771b-9ac8e3da44dba3d2bac0174b8c8817b5',
-  SESSIONSTORAGE_TOKEN:    'be26111bec3ebb835635c6bd05c0771b-97225af1f379c3ace215d39f674d6483',
+  SESSIONSTORAGE_USER: 'be26111bec3ebb835635c6bd05c0771b-9ac8e3da44dba3d2bac0174b8c8817b5',
+  SESSIONSTORAGE_TOKEN: 'be26111bec3ebb835635c6bd05c0771b-97225af1f379c3ace215d39f674d6483',
+  SESSIONSTORAGE_SEARCH: 'be26111bec3ebb835635c6bd05c0771b-cd0e52d2f6807f1f0b347d801967907f',
 };
 
 export const coches = [

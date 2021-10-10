@@ -7,7 +7,7 @@
     <div class="row">
         <span class="text-danger col-12 text-center px-5">{{mensaje}}</span>
     </div>
-    <form class="align-self-center row px-5 pt-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="align-self-center row px-5 pt-3" [formGroup]="formulario">
         <div class="col-12">
             <div class="text-bold">Fecha de creación: {{datos.created_at.format("HH:mm:ss DD/MM/Y")}}</div>
         </div>
@@ -137,7 +137,7 @@
         </div>
         <div class="col-12 form-group d-flex justify-content-center">
             <button *ngIf="datos.confirmada==0" type="submit" id='btn-guardar' id-test='btn-guardar'
-                class="btn btn-success mx-2">
+                class="btn btn-success mx-2" (click)="onSubmit()">
                 <i *ngIf="cargando" class="fa fa-spinner fa-spin"></i>
                 {{ id==0 && "Crear" || "Modificar" }}
             </button>

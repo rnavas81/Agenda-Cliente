@@ -99,6 +99,7 @@ export class UsuarioService {
     return this.http.post(url, {}, extra);
   }
   salir() {
+    sessionStorage.clear();
     this.logout().subscribe(
       (response) => {
         this.initial();

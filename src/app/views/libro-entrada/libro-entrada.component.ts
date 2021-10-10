@@ -43,7 +43,7 @@ export class LibroEntradaComponent implements OnInit {
     cobradoForma: null,
     cobradoDetalle: null,
     gastos: null,
-    facturaNombre: null,
+    facturarA: null,
     facturaNumero: 0,
     observaciones: null,
     coches: [],
@@ -112,7 +112,7 @@ export class LibroEntradaComponent implements OnInit {
       cobradoForma: ['', []],
       cobradoDetalle: ['', []],
       gastos: ['', []],
-      facturaNombre: ['', []],
+      facturarA: ['', []],
       facturaNumero: ['', [Validators.min(0)]],
       observaciones: ['', []]
     });
@@ -166,7 +166,16 @@ export class LibroEntradaComponent implements OnInit {
   }
 
   volver = () => {
-    this._location.back();
+    if (history.length > 1) {
+      this._location.back();      
+    } else {
+      if (this.id == 0) {
+        this.router.navigate([`/libro`]);
+      } else {
+        var date = this.formulario.controls["salidaFecha"].value;
+        this.router.navigate([`/libro`], { fragment: moment(date).format("YYYY-MM-DD") });
+      }
+    }
   }
   eliminarItem = (event, tipo, index) => {
     // event.target.parentNode.parentNode.remove();
@@ -275,6 +284,8 @@ export class LibroEntradaComponent implements OnInit {
   }
 
   onSubmit = () => {
+    console.log("onsubmit");
+
     this.mensaje = "";
     var data = this.formulario.value;
     this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);
@@ -289,7 +300,9 @@ export class LibroEntradaComponent implements OnInit {
       data.cobrado = data.cobrado ? 1 : 0;
       if (this.id == 0) {
         this.libroService.agregarEntrada(data).subscribe(
-          response => this.volver()
+          response => {
+            this.toast = {text:"Datos guardados correctamente",type:"success"}
+          }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: "Error al guardar los datos", type: 'error' }
@@ -298,7 +311,9 @@ export class LibroEntradaComponent implements OnInit {
         )
       } else {
         this.libroService.modificarEntrada(this.id, data).subscribe(
-          response => this.volver()
+          response => {
+            this.toast = {text:"Datos guardados correctamente",type:"success"}
+          }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
             else this.toast = { text: "Error al guardar los datos", type: 'error' }

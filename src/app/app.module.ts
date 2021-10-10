@@ -26,6 +26,7 @@ import { ProfileComponent } from './views/profile/profile.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { UsuarioComponent } from './views/usuario/usuario.component';
 import { BuscadorComponent } from './views/buscador/buscador.component';
+import { ExportComponent } from './views/export/export.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { BuscadorComponent } from './views/buscador/buscador.component';
     UsuariosComponent,
     UsuarioComponent,
     BuscadorComponent,
+    ExportComponent,
   ],
   imports: [
     BrowserModule,
