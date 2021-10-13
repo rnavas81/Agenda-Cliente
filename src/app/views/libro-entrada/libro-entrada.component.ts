@@ -96,25 +96,25 @@ export class LibroEntradaComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       salidaFecha: [moment().format("YYYY-MM-DD"), [Validators.required]],
       salidaHora: ['', []],
-      salidaLugar: ['', [Validators.required]],
+      salidaLugar: ['', [Validators.required,Validators.maxLength(500)]],
       llegadaFecha: ['', []],
       llegadaHora: ['', []],
-      llegadaLugar: ['', [Validators.required]],
-      itinerario: ['', []],
-      contacto: ['', []],
-      contactoTlf: ['', []],
+      llegadaLugar: ['', [Validators.required,Validators.maxLength(500)]],
+      itinerario: ['', [Validators.maxLength(1000)]],
+      contacto: ['', [Validators.maxLength(100)]],
+      contactoTlf: ['', [Validators.maxLength(12)]],
       kms: ['', []],
       cliente: ['', [Validators.required]],
-      clienteDetalle: ['', []],
+      clienteDetalle: ['', [Validators.maxLength(500)]],
       importe: ['', []],
       cobrado: ['', []],
       cobradoFecha: ['', []],
-      cobradoForma: ['', []],
-      cobradoDetalle: ['', []],
-      gastos: ['', []],
+      cobradoForma: ['', [Validators.maxLength(255)]],
+      cobradoDetalle: ['', [Validators.maxLength(500)]],
+      gastos: ['', [Validators.maxLength(500)]],
       facturarA: ['', []],
       facturaNumero: ['', [Validators.min(0)]],
-      observaciones: ['', []]
+      observaciones: ['', [Validators.maxLength(1000)]]
     });
   }
 

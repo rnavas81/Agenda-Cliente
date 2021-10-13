@@ -111,9 +111,21 @@ export class UsuarioComponent implements OnInit {
         )
       }
     } else {
-      this.formulario.get('name').markAsDirty();
-      this.formulario.get('lastname').markAsDirty();
-      this.formulario.get('email').markAsDirty();
+
+      Object.keys(this.formulario.controls).forEach(key => {
+        if (this.formulario.controls[key].status == "INVALID") {
+          var campo = "";
+          if (document.querySelector(`label[for="${key}"]`)) {
+            setTimeout(() => {
+              if (document.querySelector(`label[for="${key}"]`).innerHTML == 'Lugar' && key == "salidaLugar") campo = "Lugar de salida";
+              else if (document.querySelector(`label[for="${key}"]`).innerHTML == 'Lugar' && key == "llegadaLugar") campo = "Lugar de llegada";
+              else campo = document.querySelector(`label[for="${key}"]`).innerHTML;
+
+              this.toast = { text: `Error en el campo ${campo}`, type: 'error' }
+            }, 100);
+          }
+        }
+      });
     }
 
   }
