@@ -7,6 +7,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class ClienteService {
+  api = environment.API_SERVER + "/cliente";
 
   constructor(
     private http: HttpClient,
@@ -14,7 +15,7 @@ export class ClienteService {
   ) { }
 
   get = (id: number = null) => {
-    const url = environment.API_SERVER + '/cliente' + (id > 0 ? `/${id}` : '');
+    const url = this.api + (id > 0 ? `/${id}` : '');
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -24,5 +25,38 @@ export class ClienteService {
     };
     return this.http.get(url, extra);
 
+  }
+
+  delete(id) {
+    const url = `${this.api}/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      })
+    }
+    return this.http.delete(url, extra);
+  }
+  create(data) {
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      })
+    }
+    return this.http.post(this.api, data, extra);
+  }
+  update(id, data) {
+    const url = `${this.api}/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      })
+    }
+    return this.http.put(url, data, extra);
   }
 }

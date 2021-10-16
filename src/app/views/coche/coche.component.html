@@ -1,0 +1,43 @@
+<!-- Cabecera -->
+<app-header [selected]="entities"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- Barra de herramientas -->
+<nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top z-index-400">
+    <div class="btn-group">
+    </div>
+    <div class="btn-group d-flex">
+        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">
+            {{labels[entity]}}
+        </p>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-sm btn-light"
+            [attr.title]="this.data.id==0?labels.action('add',entity):labels.action('edit')" (click)="save()">
+            <i class="fas fa-save"></i>
+        </button>
+        <button class="btn btn-sm btn-light" [title]="labels.volver" (click)="goBack()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</nav>
+<!-- Cuerpo -->
+<main class="container-xl">
+    <form class="align-self-center row px-5 pt-3" [formGroup]="formulario">
+        <div class="form-group col-12">
+            <label for="matricula" class="m-0 align-self-center required">{{labels.matricula}}</label>
+            <input class="form-control w-100 text-uppercase" type="text" formControlName="matricula"
+                test-id="matricula">
+            <div *ngIf="(this.formulario.get('matricula').dirty || this.formulario.get('matricula').touched) && this.formulario.get('matricula').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('matricula').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+                <div *ngIf="formulario.get('matricula').errors.maxlength" class="small">
+                    Máximo de 500 caracteres
+                </div>
+            </div>
+        </div>
+
+    </form>
+</main>
