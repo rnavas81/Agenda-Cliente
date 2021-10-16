@@ -6,6 +6,12 @@ import { AvisosDiaComponent } from "./views/avisos-dia/avisos-dia.component";
 import { AvisosEntradaComponent } from "./views/avisos-entrada/avisos-entrada.component";
 import { AvisosComponent } from "./views/avisos/avisos.component";
 import { BuscadorComponent } from "./views/buscador/buscador.component";
+import { ClienteComponent } from "./views/cliente/cliente.component";
+import { ClientesComponent } from "./views/clientes/clientes.component";
+import { CocheComponent } from "./views/coche/coche.component";
+import { CochesComponent } from "./views/coches/coches.component";
+import { ConductorComponent } from "./views/conductor/conductor.component";
+import { ConductoresComponent } from "./views/conductores/conductores.component";
 import { ExportComponent } from "./views/export/export.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
 import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
@@ -31,6 +37,15 @@ const routes: Routes = [
   { path: "usuario", component: UsuarioComponent, canActivate: [IsLoggedService] },
   { path: "buscador", component: BuscadorComponent, canActivate: [IsLoggedService] },
   { path: "exportar", component: ExportComponent, canActivate: [IsLoggedService] },
+  { path: "cliente", component: ClienteComponent, canActivate: [IsLoggedService] },
+  { path: "cliente/:id", component: ClienteComponent, canActivate: [IsLoggedService] },
+  { path: "clientes", component: ClientesComponent, canActivate: [IsLoggedService] },
+  { path: "vehiculo", component: CocheComponent, canActivate: [IsLoggedService] },
+  { path: "vehiculo/:id", component: CocheComponent, canActivate: [IsLoggedService] },
+  { path: "vehiculos", component: CochesComponent, canActivate: [IsLoggedService] },
+  { path: "conductor", component: ConductorComponent, canActivate: [IsLoggedService] },
+  { path: "conductor/:id", component: ConductorComponent, canActivate: [IsLoggedService] },
+  { path: "conductores", component: ConductoresComponent, canActivate: [IsLoggedService] },
   { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 

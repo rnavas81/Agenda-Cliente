@@ -22,6 +22,16 @@ body {
 main.init {
   height: calc(100vh - 60px);
 }
+.text-wrap {
+  word-break: break-all;
+}
+table {
+  
+  // Celdas de tipo fecha
+  td.date {
+    min-width: 100px;
+  }
+}
 .cursor-default {
   cursor: default;
 }
@@ -35,13 +45,22 @@ main.init {
 .imagen-central {
   max-width: 300px;
 }
-.navbar-brand {
-  font-size: 1rem;
+nav {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+  &#toolbar {
+    top: 40px;
+  }
+
+  .navbar-brand:hover {
+    font-weight: bold;
+  }
 }
 .z-index-100 {
   z-index: 100;
 }
-.z-index-200 {
+.z-index-400 {
   z-index: 200;
 }
 .z-index-300 {
