@@ -63,8 +63,6 @@ export class UsuarioComponent implements OnInit {
   cargarDatos(data) {
     this.data = data;
     for (var key in data) if (this.formulario.contains(key)) this.formulario.controls[key].setValue(data[key])
-
-
   }
 
   guardarDatos() {

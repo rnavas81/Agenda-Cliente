@@ -3,7 +3,7 @@
 <!-- Toast -->
 <app-toast [toast]="this.toast"></app-toast>
 <!-- Barra de herramientas -->
-<nav id="toolbar" class="bg-dark d-flex flex-column p-2 sticky-top">
+<nav id="toolbar" class="bg-dark d-flex flex-column p-2 sticky-top z-index-400">
     <div id="campos-busqueda">
         <!-- Formulario con los campos para buscar -->
         <form class="pt-1" [formGroup]="formulario">
@@ -88,16 +88,16 @@
     </div>
 </nav>
 <!-- Cuerpo -->
-<main class="container-fluid px-0">
-    <table class="table table-sm table-striped">
+<main class="container-fluid px-0 table-responsive">
+    <table class="table table-sm table-striped ">
         <thead>
             <tr>
                 <th scope="col"></th>
                 <th scope="col">{{labels.fecha_salida}}</th>
                 <th scope="col">{{labels.fecha_destino}}</th>
-                <th scope="col d-sm-none">{{labels.lugar_salida}}</th>
-                <th scope="col">{{labels.lugar_destino}}</th>
-                <th scope="col">{{labels.cliente}}</th>
+                <th scope="col" class="w-25">{{labels.lugar_salida}}</th>
+                <th scope="col" class="w-25">{{labels.lugar_destino}}</th>
+                <th scope="col" class="w-25">{{labels.cliente}}</th>
                 <th scope="col" class="botones"></th>
             </tr>
         </thead>
@@ -108,11 +108,11 @@
                     <b *ngIf="row.tipo == 1" title="Aviso">A</b>
                     <b *ngIf="row.tipo == 2" title="Viaje">V</b>
                 </th>
-                <td>{{fechasService.formatoLocal(row.salidaFecha)}}</td>
-                <td>{{fechasService.formatoLocal(row.llegadaFecha)}}</td>
-                <td d-sm-none>{{row.salidaLugar}}</td>
-                <td>{{row.llegadaLugar}}</td>
-                <td>{{row.cliente && row.cliente.nombre}}</td>
+                <td class="date">{{fechasService.formatoLocal(row.salidaFecha)}}</td>
+                <td class="date">{{fechasService.formatoLocal(row.llegadaFecha)}}</td>
+                <td class="text-wrap">{{row.salidaLugar}}</td>
+                <td class="text-wrap">{{row.llegadaLugar}}</td>
+                <td class="text-wrap">{{row.cliente && row.cliente.nombre}}</td>
                 <td>
                     <button class="btn btn-sm btn-info align-self-center" title="Abrir" (click)="abrirEntrda(i);">
                         <i class="fas fa-eye"></i>
