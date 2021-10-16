@@ -36,7 +36,7 @@ export class ClienteComponent implements OnInit {
     // Crea el formulario
     this.formulario = this.formBuilder.group({
       nombre: [this.data.nombre, [Validators.required, Validators.maxLength(500)]],
-      telefono: [this.data.telefono, [Validators.maxLength(255)]],
+      telefono: [this.data.telefono, [Validators.maxLength(16)]],
     });
   }
 
@@ -67,7 +67,7 @@ export class ClienteComponent implements OnInit {
     if (this.formulario.valid) {
       const data = { ...this.formulario.value };
       for (var key in data) {
-        data[key] = data.key.toUpperCase();
+        data[key] = data[key].toUpperCase();
       }
       if (this.data.id == 0) {
         this.service.create(data).subscribe(
