@@ -27,6 +27,12 @@ import { ToastComponent } from './components/toast/toast.component';
 import { UsuarioComponent } from './views/usuario/usuario.component';
 import { BuscadorComponent } from './views/buscador/buscador.component';
 import { ExportComponent } from './views/export/export.component';
+import { ClienteComponent } from './views/cliente/cliente.component';
+import { ClientesComponent } from './views/clientes/clientes.component';
+import { ConductorComponent } from './views/conductor/conductor.component';
+import { ConductoresComponent } from './views/conductores/conductores.component';
+import { CocheComponent } from './views/coche/coche.component';
+import { CochesComponent } from './views/coches/coches.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +52,12 @@ import { ExportComponent } from './views/export/export.component';
     UsuarioComponent,
     BuscadorComponent,
     ExportComponent,
+    ClienteComponent,
+    ClientesComponent,
+    ConductorComponent,
+    ConductoresComponent,
+    CocheComponent,
+    CochesComponent,
   ],
   imports: [
     BrowserModule,

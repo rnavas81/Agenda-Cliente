@@ -48,7 +48,7 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.delete(this.seleccionado).subscribe(
       (success: any) => {
         const index = this.datos.findIndex(x => x.id == this.seleccionado);
-        if (index) this.datos.splice(index, 1);
+        if (index > -1) this.datos.splice(index, 1);
         document.getElementById("borrar-modal-close").click();
       },
       (error: any) => {

@@ -1,18 +1,35 @@
-<header class="container-fluid bg-light sticky-top">
+<header class="container-fluid bg-light sticky-top z-index-500">
     <div class="row">
         <div class="col-4 col-sm-2 d-hidden-sm align-self-center">
             <img class="logo btn m-0 p-0" [src]="'assets/logo.png'" alt="Autobuses Rivilla" srcset=""
                 routerLink="/main">
         </div>
         <div class="align-items-center col-9 col-md col-sm-8 d-flex p-0">
-            <nav class="navbar navbar-expand navbar-light ">
-                <a class="navbar-brand" routerLink="/avisos" [class.text-black-50]="selected != 'avisos'">Avisos</a>
-                <a class="navbar-brand" routerLink="/libro" [class.text-black-50]="selected != 'libro'">Libro</a>
-                <a class="navbar-brand" routerLink="/buscador" [class.text-black-50]="selected != 'buscador'">Buscador</a>
-                <a class="navbar-brand" routerLink="/usuarios" [class.text-black-50]="selected != 'usuarios'">Usuarios</a>
-                <!-- 
-                <a class="navbar-brand" routerLink="#configuracion"
-                    [class.text-black-50]="selected != 'configuracion'">Configuración</a> -->
+            <nav class="nav">
+                <li class="nav-item">
+                    <a class="navbar-brand" routerLink="/avisos" [class.text-black-50]="selected != 'avisos'">{{labels.avisos}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand" routerLink="/libro" [class.text-black-50]="selected != 'libro'">{{labels.libros}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand" routerLink="/buscador"
+                        [class.text-black-50]="selected != 'buscador'">{{labels.buscador}}</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="navbar-brand dropdown-toggle text-black-50" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false" (click)="dropdown($event)">Configuración</a>
+                    <div id="dropdownConfig" class="bg-light border-0 dropdown-menu rounded-0 -0" style="display: none;">
+                        <a class="navbar-brand w-100 pl-2" routerLink="/clientes"
+                            [class.text-black-50]="selected != 'clientes'">{{labels.clientes}}</a>
+                        <a class="navbar-brand w-100 pl-2" routerLink="/conductores"
+                            [class.text-black-50]="selected != 'conductores'">{{labels.conductores}}</a>
+                        <a class="navbar-brand w-100 pl-2" routerLink="/vehiculos"
+                            [class.text-black-50]="selected != 'vehiculos'">{{labels.vehiculos}}</a>
+                        <a class="navbar-brand w-100 pl-2" routerLink="/usuarios"
+                            [class.text-black-50]="selected != 'usuarios'">{{labels.usuarios}}</a>
+                    </div>
+                </li>
             </nav>
         </div>
         <div class="align-items-center col-3 col-sm-2 d-flex justify-content-end p-0">
@@ -20,10 +37,10 @@
                 <p class="m-0 mr-3 text-black-50 font-weight-bold text-uppercase cursor-default">
                     {{usuarioService.username}}</p>
             </div>
-            <div class="btn btn-sm btn-dark ml-md-2" title="Editar perfil" routerLink="/profile">
+            <div class="btn btn-sm btn-dark ml-md-2" title="{{labels.action('edit','profile')}}" routerLink="/profile">
                 <i class="fas fa-user"></i>
             </div>
-            <div class="btn btn-sm btn-outline-dark ml-1 ml-md-2 mr-2" title="Salir" (click)="salir()">
+            <div class="btn btn-sm btn-outline-dark ml-1 ml-md-2 mr-2" title="{{labels.salir}}" (click)="salir()">
                 <i class="fas fa-sign-out-alt"></i>
             </div>
         </div>
