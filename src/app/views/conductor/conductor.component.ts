@@ -64,7 +64,7 @@ export class ConductorComponent implements OnInit {
     if (this.formulario.valid) {
       const data = { ...this.formulario.value };
       for (var key in data) {
-        data[key] = data[key].toUpperCase();
+        data[key] = data[key] ? data[key].toUpperCase() : "";
       }
       if (this.data.id == 0) {
         this.service.create(data).subscribe(
