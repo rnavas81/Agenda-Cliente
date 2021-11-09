@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { language } from 'src/app/languages/es-es';
 import { BuscarService } from 'src/app/services/buscar-service';
-import { ClienteService } from 'src/app/services/cliente.service';
 import { FechasService } from 'src/app/services/fechas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { environment } from 'src/environments/environment';
@@ -18,7 +17,6 @@ export class BuscadorComponent implements OnInit {
   loading: boolean = false;
   toast: any;
   formulario: FormGroup;
-  clientes: any = [];
   buscarConductores: any = [];
   datos: any = [];
   labels = language;
@@ -26,29 +24,19 @@ export class BuscadorComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
-    private clienteService: ClienteService,
     public fechasService: FechasService,
     private buscarService: BuscarService,
     private router: Router,
   ) {
-    // Recupera los clientes
-    this.clienteService.get().subscribe(
-      (response: any) => this.clientes = response,
-      (error: any) => {
-        if (error.status === 401) this.usuarioService.salir();
-        else this.toast = { text: "Error al recuperar los clientes", type: 'error' }
-
-      }
-    )
     this.formulario = this.formBuilder.group({
       tipo: [0],
       desde: [null],
       hasta: [null],
       salida: [null, [Validators.maxLength(250)]],
       llegada: [null, [Validators.maxLength(250)]],
-      cliente: [0],
+      cliente: [null, [Validators.maxLength(250)]],
       cobrado: [-1],
-      facturarA: [0],
+      facturarA: [null, [Validators.maxLength(250)]],
       facturaNumero: [null, [Validators.maxLength(250)]],
     });
   }
@@ -103,7 +91,6 @@ export class BuscadorComponent implements OnInit {
   limpiarFormulario(): void {
     this.formulario.reset();
     this.formulario.controls['tipo'].setValue(0);
-    this.formulario.controls['cliente'].setValue(0);
     this.formulario.controls['cobrado'].setValue(false);
     sessionStorage.removeItem(environment.SESSIONSTORAGE_SEARCH);
   }
