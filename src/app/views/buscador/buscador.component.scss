@@ -10,12 +10,12 @@
     }
     #campos-busqueda {
         &.abierto {
-            height: 400px;
+            height: 350px;
         }
         // Small devices (landscape phones, 576px and up)
         @media (min-width: 576px) {
             &.abierto {
-                height: 350px;
+                height: 300px;
             }
 
         }
@@ -23,20 +23,20 @@
         // Medium devices (tablets, 768px and up)
         @media (min-width: 768px) {
             &.abierto {
-                height: 300px;
+                height: 250px;
             }            
         }
         // Large devices (desktops, 992px and up)
         @media (min-width: 992px) { 
             &.abierto {
-                height: 270px;
+                height: 220px;
             }            
         }
         
         // Extra large devices (large desktops, 1200px and up)
         @media (min-width: 1200px) { 
             &.abierto {
-                height: 250px;
+                height: 200px;
             }            
         }
     }
