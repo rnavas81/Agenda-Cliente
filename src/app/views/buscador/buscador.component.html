@@ -23,45 +23,45 @@
                     <input type="date" class="form-control w-auto" formControlName="hasta" test-id="hasta">
                 </div>
             </div>
-            <fieldset *ngIf="this.formulario.controls['tipo'].value!=1" class="form-group form-inline">
+            <fieldset *ngIf="this.formulario.controls['tipo'].value!=1" class="d-flex flex-wrap flex-fill">
                 <legend class="grey-text h6">{{labels.viajes_para}}</legend>
-                <label class="form-check-label justify-content-start" for="cobrado">Cobrado</label>
-                <select class="form-control w-auto mr-1" formControlName="cobrado" test-id="cobrado">
-                    <option value="-1">Todos</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                </select>
-                <label class="align-self-center justify-content-start mr-1"
-                    for="facturarA">{{labels.facturar_a}}</label>
-                <!-- <input type="text" class="form-control" formControlName="facturarA" test-id="facturarA"> -->
-                <select class="form-control" formControlName="facturarA" test-id="facturarA">
-                    <option value="0" selected>{{labels.cualquiera}}</option>
-                    <option *ngFor="let cliente of clientes" [value]="cliente.id">
-                        {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
-                    </option>
-                </select>
-                <label class="align-self-center justify-content-start mr-1"
-                    for="facturaNumero">{{labels.factura_numero}}</label>
-                <input type="text" class="form-control" formControlName="facturaNumero" test-id="facturaNumero">
+                <div class="form-group form-inline pr-2">
+                    <label class="form-check-label justify-content-start" for="cobrado">Cobrado</label>
+                    <select class="form-control w-auto mr-1" formControlName="cobrado" test-id="cobrado">
+                        <option value="-1">Todos</option>
+                        <option value="1">Si</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline pr-2 flex-fill">
+                    <label class="align-self-center justify-content-start mr-1"
+                        for="facturarA">{{labels.facturar_a}}</label>
+                    <input type="text" class="form-control flex-1" formControlName="facturarA" test-id="facturarA">
+                    <label class="align-self-center justify-content-start mr-1"
+                        for="facturaNumero">{{labels.factura_numero}}</label>
+                    <input type="text" class="form-control flex-1" formControlName="facturaNumero"
+                        test-id="facturaNumero">
+                </div>
             </fieldset>
             <div class="d-flex flex-wrap flex-fill">
                 <div class="form-group form-inline pr-2 flex-fill">
                     <label class="mr-2 align-self-center justify-content-start" for="salida">Salida</label>
                     <input type="text" class="form-control flex-1" formControlName="salida" test-id="salida">
                 </div>
-                <div class="form-group form-inline flex-fill">
+                <div class="form-group form-inline pr-2 flex-fill">
                     <label class="mr-2 align-self-center justify-content-start" for="llegada">{{labels.destino}}</label>
                     <input type="text" class="form-control flex-1" formControlName="llegada" test-id="llegada">
                 </div>
-            </div>
-            <div class="form-group form-inline flex-fill">
-                <label class="align-self-center justify-content-start mr-2" for="cliente">Cliente</label>
-                <select class="form-control flex-1" formControlName="cliente" test-id="cliente">
+                <div class="form-group form-inline flex-fill">
+                    <label class="align-self-center justify-content-start mr-2" for="cliente">Cliente</label>
+                    <input type="text" class="form-control flex-1" formControlName="cliente" test-id="cliente">
+                    <!-- <select class="form-control flex-1" formControlName="cliente" test-id="cliente">
                     <option value="0" selected></option>
                     <option *ngFor="let cliente of clientes" [value]="cliente.id">
                         {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
                     </option>
-                </select>
+                </select> -->
+                </div>
             </div>
         </form>
     </div>
