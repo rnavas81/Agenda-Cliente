@@ -13,10 +13,12 @@ export class FechasService {
     fecha.subtract(fecha.day() - 1, "days");
   }
   formatoLocal(fecha:any){
-    return moment(fecha).format("DD-MM-Y");
+    if(fecha!==null)return moment(fecha).format("DD-MM-Y");
+    else return "";
   }
   diaLocal(fecha:any){
-    return this.diasNombre[moment(fecha).day()];
+    if(fecha!==null)return this.diasNombre[moment(fecha).day()];
+    else return "";
   }
   anteriorDia(fecha:any){
     var f = moment(fecha.toString());

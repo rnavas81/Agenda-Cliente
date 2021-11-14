@@ -19,7 +19,9 @@ export class BuscadorComponent implements OnInit {
   formulario: FormGroup;
   buscarConductores: any = [];
   datos: any = [];
+  dataTable: any = [];
   labels = language;
+  sorts: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,9 +44,9 @@ export class BuscadorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem(environment.SESSIONSTORAGE_SEARCH)){
+    if (sessionStorage.getItem(environment.SESSIONSTORAGE_SEARCH)) {
       const data_form = JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_SEARCH));
-      for(var key in data_form){
+      for (var key in data_form) {
         this.formulario.controls[key].setValue(data_form[key]);
       }
       this.cambiarFormulario();
@@ -76,6 +78,7 @@ export class BuscadorComponent implements OnInit {
       ).subscribe(
         (success: any) => {
           this.datos = success;
+          this.sortData();
           sessionStorage.setItem(
             environment.SESSIONSTORAGE_SEARCH,
             JSON.stringify(this.formulario.value)
@@ -88,6 +91,65 @@ export class BuscadorComponent implements OnInit {
       )
     }
   }
+  setSort(type): void {
+    if (this.sorts.includes(`A${type}`)) {
+      this.sorts.splice(this.sorts.findIndex(x => x == `A${type}`), 1);
+      this.sorts.unshift(`B${type}`);
+    } else if (this.sorts.includes(`B${type}`)) {
+      this.sorts.splice(this.sorts.findIndex(x => x == `B${type}`), 1);
+    } else {
+      this.sorts.unshift(`A${type}`);
+    }
+    this.sortData();
+  }
+  sortData() {
+    this.dataTable = [...this.datos];
+    if (this.sorts.length > 0) {
+      this.sorts.forEach(item => {
+        var order = item[0];
+        var field = item.substring(1);
+        switch (field) {
+          case "salidaFecha":
+          case "llegadaFecha":
+            this.dataTable = this.dataTable.sort((a: any, b: any) => {
+              if (order == "A") {
+                if (a.salidaFecha > b.salidaFecha) return 1;
+                else if (a.salidaFecha < b.salidaFecha) return -1;
+              } else {
+                if (a.salidaFecha > b.salidaFecha) return -1;
+                else if (a.salidaFecha < b.salidaFecha) return 1;
+              }
+              return 0;
+            });
+            break;
+          case "cliente":
+            this.dataTable = this.dataTable.sort((a: any, b: any) => {
+              if (order == "A") {
+                if (a.cliente.nombre > b.cliente.nombre) return 1;
+                else if (a.cliente.nombre < b.cliente.nombre) return -1;
+              } else {
+                if (a.cliente.nombre > b.cliente.nombre) return -1;
+                else if (a.cliente.nombre < b.cliente.nombre) return 1;
+              }
+              return 0;
+            });
+            break;
+          default:
+            this.dataTable.sort((a: any, b: any) => {
+              if (order == "A") {
+                if (a[field] > b[field]) return 1;
+                else if (a[field] < b[field]) return -1;
+              } else {
+                if (a[field] > b[field]) return -1;
+                else if (a[field] < b[field]) return 1;
+              }
+              return 0;
+            });
+            break;
+        }
+      });
+    }
+  }
   limpiarFormulario(): void {
     this.formulario.reset();
     this.formulario.controls['tipo'].setValue(0);
@@ -96,26 +158,25 @@ export class BuscadorComponent implements OnInit {
   }
   abrirEntrda = (index) => {
     var url;
-    if (this.datos[index].tipo == 1) {//Abre un aviso
+    if (this.dataTable[index].tipo == 1) {//Abre un aviso
       url = this.router.serializeUrl(
-        this.router.createUrlTree([`/avisos/dia/entrada`], { fragment: this.datos[index].id.toString() })
+        this.router.createUrlTree([`/avisos/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
       );
     } else {//Abre un viaje
       url = this.router.serializeUrl(
-        this.router.createUrlTree([`/libro/dia/entrada`], { fragment: this.datos[index].id.toString() })
+        this.router.createUrlTree([`/libro/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
       );
     }
     window.open(url, '_blank');
 
   }
   exportar = () => {
-    // this.router.navigate(['exportar',{data:this.datos}]);
     const key = Math.random().toString(36).slice(2);
-    sessionStorage.setItem(key,JSON.stringify(this.datos));
+    sessionStorage.setItem(key, JSON.stringify(this.dataTable));
     var url = this.router.serializeUrl(
-      this.router.createUrlTree([`exportar`,{key:key}])
+      this.router.createUrlTree([`exportar`, { key: key }])
     );
-    var open = window.open(url,'_blank');
-    
+    var open = window.open(url, '_blank');
+
   }
 }

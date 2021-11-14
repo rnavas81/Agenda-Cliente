@@ -43,6 +43,13 @@
 }
 main {
     table {
+        thead {
+            tr {
+                th {
+                    cursor: pointer;
+                }
+            }
+        }
         td {
             tr {
                 &.cobrado {
