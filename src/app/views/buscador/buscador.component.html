@@ -92,17 +92,35 @@
     <table class="table table-sm table-striped ">
         <thead>
             <tr>
-                <th scope="col"></th>
-                <th scope="col">{{labels.fecha_salida}}</th>
-                <th scope="col">{{labels.fecha_destino}}</th>
-                <th scope="col" class="w-25">{{labels.lugar_salida}}</th>
-                <th scope="col" class="w-25">{{labels.lugar_destino}}</th>
-                <th scope="col" class="w-25">{{labels.cliente}}</th>
+                <th scope="col" (click)="setSort('tipo');">
+                    <i *ngIf="sorts.includes('Atipo')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('Btipo')" class="fas fa-sort-down"></i>
+                </th>
+                <th scope="col" (click)="setSort('salidaFecha');">
+                    <i *ngIf="sorts.includes('AsalidaFecha')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('BsalidaFecha')" class="fas fa-sort-down"></i>
+                    {{labels.fecha_salida}}</th>
+                <th scope="col" (click)="setSort('llegadaFecha');">
+                    <i *ngIf="sorts.includes('AllegadaFecha')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('BllegadaFecha')" class="fas fa-sort-down"></i>
+                    {{labels.fecha_destino}}</th>
+                <th scope="col" (click)="setSort('salidaLugar');" class="w-25">
+                    <i *ngIf="sorts.includes('AsalidaLugar')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('BsalidaLugar')" class="fas fa-sort-down"></i>
+                    {{labels.lugar_salida}}</th>
+                <th scope="col" (click)="setSort('llegadaLugar');" class="w-25">
+                    <i *ngIf="sorts.includes('AllegadaLugar')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('BllegadaLugar')" class="fas fa-sort-down"></i>
+                    {{labels.lugar_destino}}</th>
+                <th scope="col" (click)="setSort('cliente');" class="w-25">
+                    <i *ngIf="sorts.includes('Acliente')" class="fas fa-sort-up"></i>
+                    <i *ngIf="sorts.includes('Bcliente')" class="fas fa-sort-down"></i>
+                    {{labels.cliente}}</th>
                 <th scope="col" class="botones"></th>
             </tr>
         </thead>
         <tbody *ngIf="loading==false">
-            <tr *ngFor="let row of datos;index as i" class="cursor-default"
+            <tr *ngFor="let row of dataTable;index as i" class="cursor-default"
                 [class.bg-cobrado]="row.tipo==2 && row.cobrado==1" [class.z-depth-1]="i%2==0">
                 <th scope="row">
                     <b *ngIf="row.tipo == 1" title="Aviso">A</b>
