@@ -45,6 +45,7 @@ export class LibroEntradaComponent implements OnInit {
     gastos: null,
     facturarA: null,
     facturaNumero: 0,
+    facturaNombre:null,
     observaciones: null,
     coches: [],
     conductores: [],
@@ -114,6 +115,7 @@ export class LibroEntradaComponent implements OnInit {
       gastos: ['', [Validators.maxLength(500)]],
       facturarA: ['', []],
       facturaNumero: ['', [Validators.min(0)]],
+      facturaNombre: ['', [Validators.min(0)]],
       observaciones: ['', [Validators.maxLength(1000)]]
     });
   }
@@ -284,8 +286,6 @@ export class LibroEntradaComponent implements OnInit {
   }
 
   onSubmit = () => {
-    console.log("onsubmit");
-
     this.mensaje = "";
     var data = this.formulario.value;
     this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);

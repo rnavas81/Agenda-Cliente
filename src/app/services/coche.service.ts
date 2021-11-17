@@ -49,9 +49,7 @@ export class CocheService {
     return this.http.post(this.api, data, extra);
   }
   update(id, data) {
-    const url = this.api+"/"+id;
-    console.log(this.api,url);
-    
+    const url = this.api+"/"+id;    
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

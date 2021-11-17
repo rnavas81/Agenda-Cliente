@@ -20,9 +20,7 @@ export class ExportComponent implements OnInit {
     const key=this.route.snapshot.paramMap.get('key');
     if(sessionStorage.getItem(key)){
       this.datos = JSON.parse(sessionStorage.getItem(key));
-    }
-    console.log(this.datos);
-    
+    }    
   }
 
 }
