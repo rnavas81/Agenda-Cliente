@@ -33,6 +33,7 @@ export const language = {
     vehiculos_confirmar: "Selecciona los vehículos para confirmar",
     facturar_a: "Facturar a",
     factura_numero: "Número de factura",
+    factura_nombre: "Nombre de la factura",
     viajes_para: "Para viajes",
     importe: 'Importe',
     cobrado: 'Cobrado',
@@ -107,5 +108,12 @@ export const language = {
         var string = `Error ${action} ${entity}`;
         return string;
     },
-
+    importar: "Importar",
+    importarForm: {
+        fichero: "Fichero de importación",
+        tipo: "Tipo de entradas",
+        dondeGuardar: "Donde guardar",
+        historico: "Historico",
+        actual: "Actual",
+    }
 }

@@ -13,6 +13,7 @@ import { CochesComponent } from "./views/coches/coches.component";
 import { ConductorComponent } from "./views/conductor/conductor.component";
 import { ConductoresComponent } from "./views/conductores/conductores.component";
 import { ExportComponent } from "./views/export/export.component";
+import { ImportarComponent } from "./views/importar/importar.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
 import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
 import { LibroComponent } from "./views/libro/libro.component";
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: "conductor", component: ConductorComponent, canActivate: [IsLoggedService] },
   { path: "conductor/:id", component: ConductorComponent, canActivate: [IsLoggedService] },
   { path: "conductores", component: ConductoresComponent, canActivate: [IsLoggedService] },
+  { path: "importar", component: ImportarComponent, canActivate: [IsLoggedService] },
   { path: "**", redirectTo: "", canActivate: [IsLoggedService] },
 ];
 

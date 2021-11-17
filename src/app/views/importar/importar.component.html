@@ -1,0 +1,69 @@
+<!-- Cabecera -->
+<app-header selected="importar"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
+
+<!-- Barra de herramientas -->
+<nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top z-index-400">
+    <div class="btn-group">
+    </div>
+    <div class="btn-group d-flex">
+        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">
+            {{labels[entity]}}
+        </p>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-sm btn-light" [title]="labels[entity]" (click)="importar()">
+            <i class="fas fa-upload"></i>
+        </button>
+    </div>
+</nav>
+<!-- Cuerpo -->
+<main class="container-xl">
+    <form *ngIf="importado==0" class="align-self-center row px-5 pt-3" [formGroup]="formulario">
+        <div class="form-group col-12">
+            <label for="nombre" class="form-label required">{{labels.importarForm.fichero}}</label>
+            <input class="form-control-file w-100 text-uppercase p-0" type="file" formControlName="fichero"
+                test-id="fichero" accept=".xls, .xlsx" (change)="fileChange($event)">
+            <div *ngIf="(this.formulario.get('fichero').dirty || this.formulario.get('fichero').touched) && this.formulario.get('fichero').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formulario.get('fichero').errors.required" class="small">
+                    Este campo es necesario
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-6">
+            <label for="nombre" class="form-label">{{labels.importarForm.tipo}}</label>
+            <select formControlName="tipo" class="form-control w-auto">
+                <option value="1">Agenda</option>
+                <option value="2">Libro</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label for="nombre" class="form-label">{{labels.importarForm.dondeGuardar}}</label>
+            <select formControlName="donde" class="form-control w-auto">
+                <option value="1">{{labels.importarForm.historico}}</option>
+                <option value="2">{{labels.importarForm.actual}}</option>
+            </select>
+        </div>
+    </form>
+    <div *ngIf="importado==1" class="cargando">
+        <i class="fas fa-spinner fa-spin fa-10x text-secondary"></i>
+    </div>
+    <div *ngIf="importado>1" class="align-self-center row px-5 pt-3">
+        <div class="col-10">
+            <h3>Importación finalizada</h3>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-sm btn-light" title="Nueva" (click)="nueva()">
+                <i class="fas fa-undo-alt"></i>
+            </button>
+        </div>
+        <div *ngIf="importado==2" class="col-12">
+            <p>Importación correcta</p>
+        </div>
+        <div *ngIf="importado==3" class="col-12">
+            <p class="text-danger">Error al importar</p>
+        </div>
+    </div>
+</main>
