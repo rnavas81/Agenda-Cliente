@@ -33,6 +33,7 @@ import { ConductorComponent } from './views/conductor/conductor.component';
 import { ConductoresComponent } from './views/conductores/conductores.component';
 import { CocheComponent } from './views/coche/coche.component';
 import { CochesComponent } from './views/coches/coches.component';
+import { ImportarComponent } from './views/importar/importar.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CochesComponent } from './views/coches/coches.component';
     ConductoresComponent,
     CocheComponent,
     CochesComponent,
+    ImportarComponent,
   ],
   imports: [
     BrowserModule,
