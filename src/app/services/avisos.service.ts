@@ -100,4 +100,15 @@ export class AvisosService {
     };
     return this.http.put(url, data, extra);
   }
+  getHistorico = (id) => {
+    const url = this.url + `/historico/${id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.usuarioService.getToken(),
+      }),
+    };
+    return this.http.get(url, extra);
+  }
 }

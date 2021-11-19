@@ -1,0 +1,109 @@
+<!-- Cabecera -->
+<app-header selected="avisos"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- Barra de herramientas -->
+<nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top z-index-400">
+    <div class="btn-group">
+    </div>
+    <div class="btn-group d-flex">
+        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">
+            {{labels[entity]}}
+        </p>
+    </div>
+    <div class="btn-group">
+        <!-- <button class="btn btn-sm btn-light" [title]="labels.volver" (click)="goBack()">
+            <i class="fas fa-reply"></i>
+        </button> -->
+    </div>
+</nav>
+<!-- Cuerpo -->
+<main class="container-fluid">
+    <div class="row">
+        <span class="text-danger col-12 text-center px-5">{{mensaje}}</span>
+    </div>
+    <form class="align-self-center row px-5 pt-3">
+        <div class="col-12">
+            <div class="text-bold">Fecha de creación: {{fechas.formatoCompleto(datos.created_at)}}</div>
+        </div>
+        <hr class="col-12">
+        <div class="col-md-6 form-group">
+            <h5>Salida</h5>
+            <div class="form-group d-flex">
+                <div class="mr-auto">
+                    <label class="" for="salidaFecha">Fecha</label>
+                    <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.salidaFecha)}}</span>
+                </div>
+                <div>
+                    <label for="salidaHora">Hora</label>
+                    <span type="time" class="form-control w-auto" readonly>{{datos.salidaHora}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="salidaLugar">Lugar</label>
+                <textarea row="2" class="form-control no-resize" [value]="datos.salidaLugar" readonly></textarea>
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <h5>{{labels.destino}}</h5>
+            <div class="form-group d-flex">
+                <div class="mr-auto">
+                    <label for="llegadaFecha">Fecha</label>
+                    <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.llegadaFecha)}}</span>
+                </div>
+                <div>
+                    <label for="llegadaHora">Hora</label>
+                    <span type="time" class="form-control w-auto" readonly>{{datos.llegadaHora}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="llegadaLugar">Lugar</label>
+                <textarea row="2" class="form-control no-resize" [value]="datos.llegadaLugar" readonly></textarea>
+            </div>
+        </div>
+        <div class="col-12 form-group">
+            <label for="itinerario">Itinerario</label>
+            <textarea row="2" class="form-control no-resize" [value]="datos.itinerario" readonly></textarea>
+        </div>
+        <hr class="col-12">
+        <div class="col-12 mb-md-4 mb-3 form-group">
+            <div class="form-group d-flex">
+                <label for="cliente" class="align-self-center m-0 mr-3 ">{{labels.cliente}}</label>
+                <span class="form-control" readonly>{{datos.idCliente}}</span>
+            </div>
+            <label for="clienteDetalle">Detalles del cliente</label>
+            <textarea row="2" class="form-control no-resize" [value]="datos.clienteDetalle" readonly></textarea>
+        </div>
+        <div class="col-md-12 form-group">
+            <div class="mb-1">
+                <label class="m-0" for="coches">Plazas/Presupuesto</label>
+            </div>
+            <div id="coches" class="d-flex flex-wrap flex-column">
+                <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group">
+                    <span class="form-control text-uppercase w-responsive" readonly>{{coche}}<i
+                            class="fas fa-euro-sign align-self-center p-1"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 form-group">
+            <label for="observaciones">Observaciones</label>
+            <textarea row="2" class="form-control no-resize" [value]="datos.observaciones" readonly></textarea>
+        </div>
+        <hr class="col-12">
+        <div class="col-12 form-group">
+            <div class="h5">Respuesta</div>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="respuestaFecha">Fecha</label>
+            <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.respuestaFecha)}}</span>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="respuesta">Respuesta</label>
+            <span class="form-control w-auto" readonly>{{datos.respuesta}}</span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="respuestaDetalle">Detalle</label>
+            <textarea row="2" class="form-control no-resize" [value]="datos.respuestaDetalle" readonly></textarea>
+        </div>
+    </form>
+</main>

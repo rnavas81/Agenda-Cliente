@@ -55,6 +55,9 @@ main {
                 &.cobrado {
                     background-color: var(--cobrado);
                 }
+                &.historico {
+                    background-color: var(--historico);
+                }
             }
             &.cargando {
                 padding: 200px;

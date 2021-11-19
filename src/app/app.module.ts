@@ -34,6 +34,8 @@ import { ConductoresComponent } from './views/conductores/conductores.component'
 import { CocheComponent } from './views/coche/coche.component';
 import { CochesComponent } from './views/coches/coches.component';
 import { ImportarComponent } from './views/importar/importar.component';
+import { LibroEntradaHistoricoComponent } from './views/libro-entrada-historico/libro-entrada-historico.component';
+import { AvisoEntradaHistoricoComponent } from './views/aviso-entrada-historico/aviso-entrada-historico.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { ImportarComponent } from './views/importar/importar.component';
     CocheComponent,
     CochesComponent,
     ImportarComponent,
+    LibroEntradaHistoricoComponent,
+    AvisoEntradaHistoricoComponent,
   ],
   imports: [
     BrowserModule,
