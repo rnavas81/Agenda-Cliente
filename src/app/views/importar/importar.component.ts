@@ -19,7 +19,7 @@ export class ImportarComponent implements OnInit {
   formulario: FormGroup;
   importado: number = 0;
   fichero: File;
-  importResult: boolean=true;
+  importResult: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,15 +51,14 @@ export class ImportarComponent implements OnInit {
       this.importado = 1;
 
       const data = { ...this.formulario.value };
-      this.servicio.send(data,this.fichero).subscribe(
+      this.servicio.send(data, this.fichero).subscribe(
         (success: any) => {
-          console.log(success);          
-          this.importado=2;
+          this.importado = 2;
         },
         (error: any) => {
-          console.log(error);          
-          if (error.status === 401) this.usuarioService.salir();
-          else this.importado=3;
+          if (error.status == 201) this.importado = 2;
+          else if (error.status === 401) this.usuarioService.salir();
+          else this.importado = 3;
         }
       )
     }

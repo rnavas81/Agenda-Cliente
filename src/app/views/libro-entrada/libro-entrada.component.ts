@@ -286,8 +286,6 @@ export class LibroEntradaComponent implements OnInit {
   }
 
   onSubmit = () => {
-    console.log("onsubmit");
-
     this.mensaje = "";
     var data = this.formulario.value;
     this.formulario.controls['cliente'].setValue(data.cliente == 0 ? null : data.cliente);
