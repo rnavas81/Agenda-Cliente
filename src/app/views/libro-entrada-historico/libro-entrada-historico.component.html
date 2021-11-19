@@ -1,0 +1,197 @@
+<!-- Cabecera -->
+<app-header selected="libro"></app-header>
+<!-- Toast -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- Barra de herramientas -->
+<nav id="toolbar" class="btn-toolbar bg-dark justify-content-between p-2 d-flex sticky-top z-index-400">
+    <div class="btn-group">
+    </div>
+    <div class="btn-group d-flex">
+        <p class="align-self-center m-0 font-weight-bold text-light text-uppercase">
+            {{labels[entity]}}
+        </p>
+    </div>
+    <div class="btn-group">
+        <!-- <button class="btn btn-sm btn-light" [title]="labels.volver" (click)="goBack()">
+            <i class="fas fa-reply"></i>
+        </button> -->
+    </div>
+</nav>
+<!-- Cuerpo -->
+<main class="">
+    <form class="align-self-center container-fluid">
+        <ul class="nav nav-tabs mb-3 row" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="tab-1" data-mdb-toggle="tab" (click)="showTab(1)" role="tab"
+                    aria-controls="tabs-1" aria-selected="true">Datos básicos</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="tab-2" data-mdb-toggle="tab" (click)="showTab(2)" role="tab"
+                    aria-controls="tabs-2" aria-selected="false">Detalles</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="tab-3" data-mdb-toggle="tab" (click)="showTab(3)" role="tab"
+                    aria-controls="tabs-3" aria-selected="false">Economico</a>
+            </li>
+        </ul>
+        <!-- Tabs content -->
+        <div class="tab-content row">
+            <div class="tab-pane fade col-12 container show active" id="tabpanel-1" role="tabpanel"
+                aria-labelledby="ex1-tab-1">
+                <div class="row">
+                    <div class="col-md-6 pt-3 px-5">
+                        <h5>Salida</h5>
+                        <div class="form-group d-flex">
+                            <div class="mr-auto">
+                                <label class="" for="salidaFecha">Fecha</label>
+                                <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.salidaFecha)}}</span>
+                            </div>
+                            <div>
+                                <label for="salidaHora">Hora</label>
+                                <span class="form-control w-auto" readonly>{{datos.salidaHora}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="salidaLugar">Lugar</label>
+                            <textarea row="2" readonly class="form-control no-resize" test-id="salidaLugar"
+                                [value]="datos.salidaLugar"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pt-0 pt-sm-3 px-5">
+                        <h5>{{labels.destino}}</h5>
+                        <div class="form-group d-flex">
+                            <div class="mr-auto">
+                                <label for="llegadaFecha">Fecha</label>
+                                <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.llegadaFecha)}}</span>
+                            </div>
+                            <div>
+                                <label for="llegadaHora">Hora</label>
+                                <span class="form-control w-auto" readonly>{{datos.llegadaHora}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="llegadaLugar">Lugar</label>
+                            <textarea row="2" readonly class="form-control no-resize" test-id="llegadaLugar"
+                                [value]="datos.llegadaLugar"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="itinerario">Itinerario</label>
+                        <textarea row="2" readonly class="form-control no-resize" test-id="itinerario"
+                            [value]="datos.itinerario"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="contacto">Contacto</label>
+                        <span class="form-control" readonly >{{datos.contacto}}</span>
+                    </div>
+                    <div class="col-12 form-group px-5">
+                        <label for="contactoTlf">Telefono contacto</label>
+                        <span class="form-control" readonly >{{datos.contactoTlf}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade col-12 container" id="tabpanel-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                <div class="row">
+                    <div class="col-12 form-group px-5 d-flex">
+                        <label class="align-self-center m-0 mr-3" for="kms">Kms</label>
+                        <span class="form-control w-25" readonly >{{datos.kms}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-5 mb-3">
+                        <div class="form-group d-flex">
+                            <label class="align-self-center m-0 mr-3 " for="cliente">{{labels.cliente}}</label>
+                            <span class="form-control" readonly>{{datos.idCliente}}</span>
+                        </div>
+                        <textarea row="2" readonly class="form-control no-resize" test-id="clienteDetalle"
+                            [value]="datos.clienteDetalle"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 px-5">
+                        <div class="mb-1">
+                            <label class="m-0" for="conductores">Conductores</label>
+                        </div>
+                        <div id="conductores" class="d-flex flex-wrap flex-column">
+                            <div *ngFor="let conductor of datos.conductores;index as i" class="d-flex form-group">
+                                <span class="form-control text-uppercase w-responsive" readonly>{{conductor}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-5">
+                        <div class="mb-1">
+                            <label class="m-0" for="coches">{{labels.vehiculos}}</label>
+                        </div>
+                        <div id="coches" class="d-flex flex-wrap flex-column">
+                            <div *ngFor="let coche of datos.coches;index as i" class="d-flex form-group">
+                                <span class="form-control text-uppercase w-responsive" readonly>{{coche}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-5 mb-3">
+                        <label class="align-self-center m-0 mr-3" for="cliente">Observaciones</label>
+                        <textarea row="2" readonly class="form-control no-resize" test-id="observaciones"
+                            [value]="datos.observaciones"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade col-12 container" id="tabpanel-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                <div class="row">
+                    <div class="col-12 mt-3 px-5">
+                        <div class="form-group d-flex">
+                            <label class="align-self-center m-0 mr-3">Importe</label>
+                            <span class="form-control text-right" readonly>{{datos.importe}}</span>
+                            <i class="align-self-center fas fa-euro-sign cursor-default mr-2"></i>
+                            <div class="form-check align-self-center">
+                                <input type="checkbox" class="form-check-input" disabled [value]="datos.cobrado">
+                                <label class="form-check-label" for="cobrado">Cobrado</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="gastos">Gastos</label>
+                        <textarea row="2" readonly class="form-control no-resize" test-id="gastos"
+                            [value]="datos.gastos"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="datos.cobrado == 1" class="row">
+                    <div class="col-xl-3 col-md-4 col-sm-5 mt-3 px-5 form-group">
+                        <label for="cobradoFecha">Fecha de cobro</label>
+                        <span class="form-control w-auto" readonly>{{fechas.formatoLocal(datos.cobradoFecha)}}</span>
+                    </div>
+                    <div class="col-xl-9 col-md-8 col-sm-7 mt-3 px-5 form-group">
+                        <label for="cobradoForma">Forma de cobro</label>
+                        <span class="form-control" readonly>{{datos.cobradoForma}}</span>
+                    </div>
+                    <div class="col-12 mt-3 px-5 form-group">
+                        <label for="cobradoDetalle">Detalles de cobro</label>
+                        <span class="form-control" readonly>{{datos.cobradoDetalle}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group px-5">
+                        <label for="facturarA">{{labels.facturar_a}}</label>
+                        <span class="form-control" readonly>{{datos.facturarA}}</span>
+                    </div>
+                    <div class="col-12 form-group px-5">
+                        <label for="facturaNumero">{{labels.factura_numero}}</label>
+                        <span class="form-control" readonly>{{datos.facturaNumero}}</span>
+                    </div>
+                    <div class="col-12 form-group px-5">
+                        <label for="facturaNombre">{{labels.factura_nombre}}</label>
+                        <span class="form-control" readonly>{{datos.facturaNombre}}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</main>

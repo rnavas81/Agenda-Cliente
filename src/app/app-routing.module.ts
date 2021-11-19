@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AvisoEntradaHistoricoComponent } from "./views/aviso-entrada-historico/aviso-entrada-historico.component";
 import { IsLoggedService } from "./security/is-logged.service";
 import { TestLoginService } from "./security/test-login.service";
 import { AvisosDiaComponent } from "./views/avisos-dia/avisos-dia.component";
@@ -15,6 +16,7 @@ import { ConductoresComponent } from "./views/conductores/conductores.component"
 import { ExportComponent } from "./views/export/export.component";
 import { ImportarComponent } from "./views/importar/importar.component";
 import { LibroDiaComponent } from "./views/libro-dia/libro-dia.component";
+import { LibroEntradaHistoricoComponent } from "./views/libro-entrada-historico/libro-entrada-historico.component";
 import { LibroEntradaComponent } from "./views/libro-entrada/libro-entrada.component";
 import { LibroComponent } from "./views/libro/libro.component";
 import { LoginComponent } from "./views/login/login.component";
@@ -31,9 +33,11 @@ const routes: Routes = [
   { path: "avisos", component: AvisosComponent, canActivate: [IsLoggedService] },
   { path: "avisos/dia", component: AvisosDiaComponent, canActivate: [IsLoggedService] },
   { path: "avisos/dia/entrada", component: AvisosEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "avisos/dia/entrada/historico/:id", component: AvisoEntradaHistoricoComponent, canActivate: [IsLoggedService] },
   { path: "libro", component: LibroComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia", component: LibroDiaComponent, canActivate: [IsLoggedService] },
   { path: "libro/dia/entrada", component: LibroEntradaComponent, canActivate: [IsLoggedService] },
+  { path: "libro/dia/entrada/historico/:id", component: LibroEntradaHistoricoComponent, canActivate: [IsLoggedService] },
   { path: "usuarios", component: UsuariosComponent, canActivate: [IsLoggedService] },
   { path: "usuario", component: UsuarioComponent, canActivate: [IsLoggedService] },
   { path: "buscador", component: BuscadorComponent, canActivate: [IsLoggedService] },

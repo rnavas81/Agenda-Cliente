@@ -22,6 +22,14 @@
                     <label class="align-self-center justify-content-start ml-1" for="hasta">Hasta</label>
                     <input type="date" class="form-control w-auto" formControlName="hasta" test-id="hasta">
                 </div>
+                <div class="form-group form-inline pr-2">
+                    <label class="align-self-center justify-content-start" for="origen">Origen</label>
+                    <select class="form-control w-auto" formControlName="origen" test-id="origen">
+                        <option value="0">Actual</option>
+                        <option value="1">Histórico</option>
+                        <option value="2">Ambos</option>
+                    </select>
+                </div>
             </div>
             <fieldset *ngIf="this.formulario.controls['tipo'].value!=1" class="d-flex flex-wrap flex-fill">
                 <legend class="grey-text h6">{{labels.viajes_para}}</legend>
@@ -99,38 +107,46 @@
                 <th scope="col" (click)="setSort('salidaFecha');">
                     <i *ngIf="sorts.includes('AsalidaFecha')" class="fas fa-sort-up"></i>
                     <i *ngIf="sorts.includes('BsalidaFecha')" class="fas fa-sort-down"></i>
-                    {{labels.fecha_salida}}</th>
+                    {{labels.fecha_salida}}
+                </th>
                 <th scope="col" (click)="setSort('llegadaFecha');">
                     <i *ngIf="sorts.includes('AllegadaFecha')" class="fas fa-sort-up"></i>
                     <i *ngIf="sorts.includes('BllegadaFecha')" class="fas fa-sort-down"></i>
-                    {{labels.fecha_destino}}</th>
+                    {{labels.fecha_destino}}
+                </th>
                 <th scope="col" (click)="setSort('salidaLugar');" class="w-25">
                     <i *ngIf="sorts.includes('AsalidaLugar')" class="fas fa-sort-up"></i>
                     <i *ngIf="sorts.includes('BsalidaLugar')" class="fas fa-sort-down"></i>
-                    {{labels.lugar_salida}}</th>
+                    {{labels.lugar_salida}}
+                </th>
                 <th scope="col" (click)="setSort('llegadaLugar');" class="w-25">
                     <i *ngIf="sorts.includes('AllegadaLugar')" class="fas fa-sort-up"></i>
                     <i *ngIf="sorts.includes('BllegadaLugar')" class="fas fa-sort-down"></i>
-                    {{labels.lugar_destino}}</th>
+                    {{labels.lugar_destino}}
+                </th>
                 <th scope="col" (click)="setSort('cliente');" class="w-25">
                     <i *ngIf="sorts.includes('Acliente')" class="fas fa-sort-up"></i>
                     <i *ngIf="sorts.includes('Bcliente')" class="fas fa-sort-down"></i>
-                    {{labels.cliente}}</th>
+                    {{labels.cliente}}
+                </th>
                 <th scope="col" class="botones"></th>
             </tr>
         </thead>
         <tbody *ngIf="loading==false">
             <tr *ngFor="let row of dataTable;index as i" class="cursor-default"
-                [class.bg-cobrado]="row.tipo==2 && row.cobrado==1" [class.z-depth-1]="i%2==0">
+                [class.bg-cobrado]="row.tipo==2 && row.cobrado==1" [class.bg-historico]="row.tipo==3 || row.tipo==4"
+                [class.z-depth-1]="i%2==0">
                 <th scope="row">
-                    <b *ngIf="row.tipo == 1" title="Aviso">A</b>
-                    <b *ngIf="row.tipo == 2" title="Viaje">V</b>
+                    <div *ngIf="this.tipo == 0">
+                        <b *ngIf="row.tipo == 1 || row.tipo==3" title="Aviso">A</b>
+                        <b *ngIf="row.tipo == 2 || row.tipo==4" title="Viaje">V</b>
+                    </div>
                 </th>
                 <td class="date">{{fechasService.formatoLocal(row.salidaFecha)}}</td>
                 <td class="date">{{fechasService.formatoLocal(row.llegadaFecha)}}</td>
                 <td class="text-wrap">{{row.salidaLugar}}</td>
                 <td class="text-wrap">{{row.llegadaLugar}}</td>
-                <td class="text-wrap">{{row.cliente && row.cliente.nombre}}</td>
+                <td class="text-wrap">{{row.idCliente}}</td>
                 <td>
                     <button class="btn btn-sm btn-info align-self-center" title="Abrir" (click)="abrirEntrda(i);">
                         <i class="fas fa-eye"></i>

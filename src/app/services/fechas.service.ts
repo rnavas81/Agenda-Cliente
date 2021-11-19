@@ -16,6 +16,10 @@ export class FechasService {
     if(fecha!==null)return moment(fecha).format("DD-MM-Y");
     else return "";
   }
+  formatoCompleto(fecha:any){
+    if(fecha!==null)return moment(fecha).format("HH:mm DD-MM-Y");
+    else return "";
+  }
   diaLocal(fecha:any){
     if(fecha!==null)return this.diasNombre[moment(fecha).day()];
     else return "";
