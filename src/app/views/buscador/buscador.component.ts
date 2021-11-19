@@ -22,6 +22,7 @@ export class BuscadorComponent implements OnInit {
   dataTable: any = [];
   labels = language;
   sorts: any = [];
+  tipo:number=0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +35,7 @@ export class BuscadorComponent implements OnInit {
       tipo: [0],
       desde: [null],
       hasta: [null],
+      origen: [0],
       salida: [null, [Validators.maxLength(250)]],
       llegada: [null, [Validators.maxLength(250)]],
       cliente: [null, [Validators.maxLength(250)]],
@@ -71,6 +73,8 @@ export class BuscadorComponent implements OnInit {
   buscar(): void {
     if (this.formulario.valid) {
       this.loading = true;
+      this.tipo = this.formulario.controls['tipo'].value;
+      console.log(this.tipo);      
       this.buscarService.get(this.formulario.value).pipe(
         finalize(
           () => this.loading = false
@@ -153,19 +157,36 @@ export class BuscadorComponent implements OnInit {
   limpiarFormulario(): void {
     this.formulario.reset();
     this.formulario.controls['tipo'].setValue(0);
+    this.formulario.controls['origen'].setValue(0);
     this.formulario.controls['cobrado'].setValue(false);
     sessionStorage.removeItem(environment.SESSIONSTORAGE_SEARCH);
+    this.tipo=0;
   }
   abrirEntrda = (index) => {
     var url;
-    if (this.dataTable[index].tipo == 1) {//Abre un aviso
+    switch (this.dataTable[index].tipo) {
+      case 1://Abre un aviso
+        url = this.router.serializeUrl(
+          this.router.createUrlTree([`/avisos/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
+        );
+        break;
+      case 2://Abre un viaje
+        url = this.router.serializeUrl(
+          this.router.createUrlTree([`/libro/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
+        );
+        break;
+      case 3://Abre un aviso del historico
       url = this.router.serializeUrl(
-        this.router.createUrlTree([`/avisos/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
+        this.router.createUrlTree([`/avisos/dia/entrada/historico/${this.dataTable[index].id}`])
       );
-    } else {//Abre un viaje
+        break;
+      case 4://Abre un viaje del historico
       url = this.router.serializeUrl(
-        this.router.createUrlTree([`/libro/dia/entrada`], { fragment: this.dataTable[index].id.toString() })
+        this.router.createUrlTree([`/libro/dia/entrada/historico/${this.dataTable[index].id}`])
       );
+        break;
+      default:
+        break;
     }
     window.open(url, '_blank');
 
