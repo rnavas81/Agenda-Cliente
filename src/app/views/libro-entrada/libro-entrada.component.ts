@@ -45,7 +45,7 @@ export class LibroEntradaComponent implements OnInit {
     gastos: null,
     facturarA: null,
     facturaNumero: 0,
-    facturaNombre:null,
+    facturaNombre: null,
     observaciones: null,
     coches: [],
     conductores: [],
@@ -62,10 +62,6 @@ export class LibroEntradaComponent implements OnInit {
     private _location: Location,
     public usuarioService: UsuarioService,
   ) {
-    // Recupera el id de la cabecera
-    const hash = location.hash.substr(1);
-    if (hash) this.id = parseInt(hash);
-    else this.id = 0;
     // Recupera los conductores
     this.conductorService.get().subscribe(
       (response: any) => this.conductores = response,
@@ -97,10 +93,10 @@ export class LibroEntradaComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       salidaFecha: [moment().format("YYYY-MM-DD"), [Validators.required]],
       salidaHora: ['', []],
-      salidaLugar: ['', [Validators.required,Validators.maxLength(500)]],
+      salidaLugar: ['', [Validators.required, Validators.maxLength(500)]],
       llegadaFecha: ['', []],
       llegadaHora: ['', []],
-      llegadaLugar: ['', [Validators.required,Validators.maxLength(500)]],
+      llegadaLugar: ['', [Validators.required, Validators.maxLength(500)]],
       itinerario: ['', [Validators.maxLength(1000)]],
       contacto: ['', [Validators.maxLength(100)]],
       contactoTlf: ['', [Validators.maxLength(12)]],
@@ -121,6 +117,10 @@ export class LibroEntradaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Recupera el id de la cabecera
+    const hash = location.hash.substr(1);
+    if (hash) this.id = parseInt(hash);
+    else this.id = 0;
     if (this.id > 0) {
       this.libroService.get(this.id).subscribe(
         (response: any) => this.cargarDatos(response),
@@ -169,7 +169,7 @@ export class LibroEntradaComponent implements OnInit {
 
   volver = () => {
     if (history.length > 1) {
-      this._location.back();      
+      this._location.back();
     } else {
       if (this.id == 0) {
         this.router.navigate([`/libro`]);
@@ -300,8 +300,10 @@ export class LibroEntradaComponent implements OnInit {
       data.cobrado = data.cobrado ? 1 : 0;
       if (this.id == 0) {
         this.libroService.agregarEntrada(data).subscribe(
-          response => {
-            this.toast = {text:"Datos guardados correctamente",type:"success"}
+          (response: any) => {
+            this.toast = { text: "Datos guardados correctamente", type: "success" }
+            this._location.replaceState(`/libro/dia/entrada#${response.id}`);
+            this.ngOnInit();
           }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
@@ -312,7 +314,7 @@ export class LibroEntradaComponent implements OnInit {
       } else {
         this.libroService.modificarEntrada(this.id, data).subscribe(
           response => {
-            this.toast = {text:"Datos guardados correctamente",type:"success"}
+            this.toast = { text: "Datos guardados correctamente", type: "success" }
           }
           , error => {
             if (error.status === 401) this.usuarioService.salir();

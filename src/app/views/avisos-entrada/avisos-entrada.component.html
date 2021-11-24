@@ -10,9 +10,9 @@
     <form class="align-self-center row px-5 pt-3" [formGroup]="formulario">
         <div class="col-12 d-flex justify-content-between" >
             <div class="form-group form-inline">
-                <label class="mr-2" for="itinerario">Fecha de aviso</label>
-                <input type="date" class="form-control w-auto" formControlName="fecha_aviso" test-id="fecha_aviso"
-                    [value]="datos.fecha_aviso" required>
+                <label class="mr-2" for="fecha_aviso">Fecha de aviso</label>
+                <input type="date" class="form-control w-auto" formControlName="fecha_aviso" id="fecha_aviso"
+                    [value]="datos.fecha_aviso">
             </div>
             <div class="form-group form-inline">                
                 <label class="mr-2" for="itinerario">Fecha de creación</label>
@@ -25,18 +25,18 @@
             <div class="form-group d-flex justify-content-between">
                 <div class="">
                     <label class="required" for="salidaFecha">Fecha</label>
-                    <input type="date" class="form-control w-auto" formControlName="salidaFecha" test-id="salidaFecha"
+                    <input type="date" class="form-control w-auto" formControlName="salidaFecha" id="salidaFecha"
                         [value]="datos.salidaFecha" required>
                 </div>
                 <div>
                     <label for="salidaHora">Hora</label>
-                    <input type="time" class="form-control w-auto" formControlName="salidaHora" test-id="salidaHora"
+                    <input type="time" class="form-control w-auto" formControlName="salidaHora" id="salidaHora"
                         [value]="datos.salidaHora">
                 </div>
             </div>
             <div class="form-group">
                 <label for="salidaLugar">Lugar</label>
-                <textarea row="2" class="form-control no-resize" formControlName="salidaLugar" test-id="salidaLugar"
+                <textarea row="2" class="form-control no-resize" formControlName="salidaLugar" id="salidaLugar"
                     [value]="datos.salidaLugar" maxlength="500"></textarea>
             </div>
         </div>
@@ -45,31 +45,31 @@
             <div class="form-group d-flex">
                 <div class="mr-auto">
                     <label for="llegadaFecha">Fecha</label>
-                    <input type="date" class="form-control w-auto" formControlName="llegadaFecha" test-id="llegadaFecha"
+                    <input type="date" class="form-control w-auto" formControlName="llegadaFecha" id="llegadaFecha"
                         [value]="datos.llegadaFecha">
                 </div>
                 <div>
                     <label for="llegadaHora">Hora</label>
-                    <input type="time" class="form-control w-auto" formControlName="llegadaHora" test-id="llegadaHora"
+                    <input type="time" class="form-control w-auto" formControlName="llegadaHora" id="llegadaHora"
                         [value]="datos.llegadaHora">
                 </div>
             </div>
             <div class="form-group">
                 <label for="llegadaLugar">Lugar</label>
-                <textarea row="2" class="form-control no-resize" formControlName="llegadaLugar" test-id="llegadaLugar"
+                <textarea row="2" class="form-control no-resize" formControlName="llegadaLugar" id="llegadaLugar"
                     [value]="datos.llegadaLugar" maxlength="500"></textarea>
             </div>
         </div>
         <div class="col-12 form-group">
             <label for="itinerario">Itinerario</label>
-            <textarea row="2" class="form-control no-resize" formControlName="itinerario" test-id="itinerario"
+            <textarea row="2" class="form-control no-resize" formControlName="itinerario" id="itinerario"
                 [value]="datos.itinerario" maxlength="1000"></textarea>
         </div>
         <hr class="col-12">
         <div class="col-12 mb-md-4 mb-3 form-group">
             <div class="form-group d-flex">
                 <label for="cliente" class="align-self-center m-0 mr-3 required">{{labels.cliente}}</label>
-                <select class="form-control mb-2" formControlName="cliente" test-id="cliente">
+                <select class="form-control mb-2" formControlName="cliente" id="cliente">
                     <option value="0" selected></option>
                     <option *ngFor="let cliente of clientes" [value]="cliente.id">
                         {{cliente.nombre.toUpperCase()}}{{cliente.telefono && " ("+ cliente.telefono+")"}}
@@ -81,7 +81,7 @@
                 </button>
             </div>
             <label for="clienteDetalle">Detalles del cliente</label>
-            <textarea row="2" class="form-control no-resize" formControlName="clienteDetalle" test-id="clienteDetalle"
+            <textarea row="2" class="form-control no-resize" formControlName="clienteDetalle" id="clienteDetalle"
                 [value]="datos.clienteDetalle" maxlength="500"></textarea>
         </div>
         <div class="col-md-12 form-group">
@@ -112,7 +112,7 @@
         </div>
         <div class="col-12 form-group">
             <label for="observaciones">Observaciones</label>
-            <textarea row="2" class="form-control no-resize" formControlName="observaciones" test-id="observaciones"
+            <textarea row="2" class="form-control no-resize" formControlName="observaciones" id="observaciones"
                 [value]="datos.observaciones" maxlength="1000"></textarea>
         </div>
         <hr class="col-12">
@@ -121,12 +121,12 @@
         </div>
         <div class="col-md-3 form-group">
             <label for="respuestaFecha">Fecha</label>
-            <input type="date" class="form-control w-auto" formControlName="respuestaFecha" test-id="respuestaFecha"
+            <input type="date" class="form-control w-auto" formControlName="respuestaFecha" id="respuestaFecha"
                 [value]="datos.respuestaFecha">
         </div>
         <div class="col-md-3 form-group">
             <label for="respuesta">Respuesta</label>
-            <select class="form-control w-100" formControlName="respuesta" test-id="respuesta">
+            <select class="form-control w-100" formControlName="respuesta" id="respuesta">
                 <option value="0" selected></option>
                 [attr.selected]="datos.respuesta == datos.cliente.id">
                 <option value="1">Telefono</option>
@@ -141,7 +141,7 @@
         <div class="col-md-6 form-group">
             <label for="respuestaDetalle">Detalle</label>
             <textarea row="2" class="form-control no-resize" formControlName="respuestaDetalle"
-                test-id="respuestaDetalle" [value]="datos.respuestaDetalle" maxlength="1000"></textarea>
+                id="respuestaDetalle" [value]="datos.respuestaDetalle" maxlength="1000"></textarea>
         </div>
         <div class="col-12 form-group d-flex justify-content-center">
             <button *ngIf="datos.confirmada==0" type="submit" id='btn-guardar' id-test='btn-guardar'
@@ -165,7 +165,7 @@
                 </button>
             </div>
             <div class="modal-body text-left">
-                <select #cochesModalSelect class="form-control mb-2" test-id="coches-modal">
+                <select #cochesModalSelect class="form-control mb-2" id="coches-modal">
                     <!-- <option value="0" selected></option> -->
                     <option *ngFor="let coche of coches;index as i" [value]="i" class="text-uppercase">
                         {{coche}}

@@ -57,10 +57,6 @@ export class AvisosEntradaComponent implements OnInit {
     public usuarioService: UsuarioService,
     public fechas: FechasService,
   ) {
-    // Recupera el id de la cabecera
-    const hash = location.hash.substr(1);
-    if (hash) this.id = parseInt(hash);
-    else this.id = 0;
     this.coches = coches;
     // Recupera los clientes
     this.clienteService.get().subscribe(
@@ -90,6 +86,10 @@ export class AvisosEntradaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Recupera el id de la cabecera
+    const hash = location.hash.substr(1);
+    if (hash) this.id = parseInt(hash);
+    else this.id = 0;
     if (this.id > 0) {
       this.avisosService.get(this.id).subscribe(
         (response: any) => this.cargarDatos(response),
@@ -199,8 +199,11 @@ export class AvisosEntradaComponent implements OnInit {
       data.coches = this.datos.coches;
       if (this.id == 0) {
         this.avisosService.agregarEntrada(data).subscribe(
-          response => {
+          (response: any) => {
+            console.log(response);            
             this.toast = { text: 'Datos guardados correctamente', type: 'success' }
+            this._location.replaceState(`/avisos/dia/entrada#${response.id}`);
+            this.ngOnInit();
           }
           , error => {
             if (error.status === 401) this.usuarioService.salir();
