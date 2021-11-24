@@ -10,6 +10,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import * as moment from 'moment';
 import { coches } from 'src/environments/environment';
 import { language } from 'src/app/languages/es-es';
+import { FechasService } from 'src/app/services/fechas.service';
 
 @Component({
   selector: 'app-avisos-entrada',
@@ -39,7 +40,8 @@ export class AvisosEntradaComponent implements OnInit {
     respuesta: 0,
     respuestaFecha: null,
     respuestaDetalle: '',
-    confirmada: 0
+    confirmada: 0,
+    fecha_aviso: null,
   };
   toast: any;
   labels = language;
@@ -53,6 +55,7 @@ export class AvisosEntradaComponent implements OnInit {
     private clienteService: ClienteService,
     private _location: Location,
     public usuarioService: UsuarioService,
+    public fechas: FechasService,
   ) {
     // Recupera el id de la cabecera
     const hash = location.hash.substr(1);
@@ -82,6 +85,7 @@ export class AvisosEntradaComponent implements OnInit {
       respuesta: [{ value: '', disabled: true }, []],
       respuestaFecha: [{ value: '', disabled: true }, []],
       respuestaDetalle: [{ value: '', disabled: true }, []],
+      fecha_aviso: [{ value: moment().format("YYYY-MM-DD"), disabled: true }, []],
     });
   }
 

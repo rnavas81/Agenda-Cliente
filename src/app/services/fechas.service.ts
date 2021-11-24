@@ -17,7 +17,7 @@ export class FechasService {
     else return "";
   }
   formatoCompleto(fecha:any){
-    if(fecha!==null)return moment(fecha).format("HH:mm DD-MM-Y");
+    if(fecha!==null)return moment(fecha).format("DD/MM/Y HH:mm");
     else return "";
   }
   diaLocal(fecha:any){
