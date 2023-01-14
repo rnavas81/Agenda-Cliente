@@ -8,6 +8,10 @@ RUN apk add --update nodejs nodejs-npm &&\
 
 COPY package*.json ./
 
-CMD mkdir ./node_modules; npm install; npm start;
+# CMD mkdir ./node_modules; npm install; npm start;
+CMD npm i -g npm-check-updates &&\
+    ncu -u &&\
+    npm install --legacy-peer-deps &&\
+    npm start;
 
 EXPOSE 4200
